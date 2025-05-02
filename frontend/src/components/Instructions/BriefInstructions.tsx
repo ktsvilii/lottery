@@ -27,42 +27,42 @@ export const BriefInstructions: FC = () => {
           <div className='timeline-start mb-7 sm:text-end'>
             <StepHeader title='Connect MetaMask wallet' />
           </div>
-          <hr />
+          <hr className='bg-neutral' />
         </li>
 
         {/* Step 2 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-end mb-7'>
             <StepHeader title='Get some Sepolia ETH' />
           </div>
-          <hr />
+          <hr className='bg-neutral' />{' '}
         </li>
 
         {/* Step 2 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-start mb-7'>
             <StepHeader title='Buy a ticket' />
           </div>
-          <hr />
+          <hr className='bg-neutral' />
         </li>
 
         {/* Step 3 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-end mb-7'>
             <StepHeader title='Submit your 5 Lucky Numbers' />
           </div>
-          <hr />
+          <hr className='bg-neutral' />
         </li>
 
         {/* Step 4 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-start mb-3 sm:text-end'>
             <StepHeader title='Check results and Claim your prize' />

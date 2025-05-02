@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts\Lottery.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> Lottery.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/68</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/58</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/92</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+&nbsp;
+import {VRFConsumerBaseV2Plus} from "@chainlink/contracts/src/v0.8/vrf/dev/VRFConsumerBaseV2Plus.sol";
+import {VRFV2PlusClient} from "@chainlink/contracts/src/v0.8/vrf/dev/libraries/VRFV2PlusClient.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+&nbsp;
+contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
+    address private immutable contractOwner;
+    uint256 private immutable subscriptionId;
+&nbsp;
+    bytes32 internal constant KEY_HASH =
+        0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae;
+&nbsp;
+    uint256 public constant TICKET_PRICE_WEI = 1e14; // 100000000000000 ~ 0.0001 ETH ~ 1$
+    uint8 public constant NUMBER_RANGE = 37;
+&nbsp;
+    uint16 public constant REQUEST_CONFIRMATIONS = 3;
+    uint32 public constant CALLBACK_GAS_LIMIT = 200_000;
+    uint8 public constant NUMBER_OF_WORDS = 1;
+&nbsp;
+    // --- Storage Variables ---
+    uint256 public jackpot;
+    uint256 private operationsBalance;
+    uint256 private ownerBalance;
+    uint256 public nextTicketId;
+&nbsp;
+    uint256[5] private DEFAULT_COMBINATION;
+&nbsp;
+    struct LotteryTicket {
+        uint256 id;
+        address owner;
+        uint256 purchaseTimestamp;
+        uint256[5] playerCombination;
+        uint256[5] winningCombination;
+        uint256 randomWord;
+        bool isRewardClaimed;
+        bool playerCombinationSubmitted;
+        bool winningCombinationGenerated;
+    }
+&nbsp;
+    mapping(address =&gt; uint256) public addressToActiveTicketNumber;
+    mapping(uint256 =&gt; LotteryTicket) public tickets;
+    mapping(uint256 =&gt; uint256) public requestIdToTicketId;
+&nbsp;
+    event TicketPurchased(address indexed player, uint256 indexed ticketNumber);
+    event PlayerCombinationSubmitted(
+        address indexed player,
+        uint256[5] combination
+    );
+    event RandomNumberGenerated(
+        uint256 indexed requestId,
+        uint256 indexed ticketNumber,
+        uint256 number
+    );
+    event WinningCombinationGenerated(
+        uint256 indexed ticketNumber,
+        uint256[5] combination
+    );
+    event LotteryResults(
+        address indexed owner,
+        uint256 indexed ticketNumber,
+        uint256[5] playerCombination,
+        uint256[5] winningCombination,
+        uint8 matchingNumbers,
+        uint256 indexed rewardAmount
+    );
+    event RewardClaimed(
+        address indexed player,
+        uint256 indexed ticketId,
+        uint256 indexed amount
+    );
+&nbsp;
+<span class="fstat-no" title="function not covered" >    modifier _onlyOwner() {</span>
+<span class="cstat-no" title="statement not covered" >        require(msg.sender == contractOwner, "Only for owner")</span>;
+        _;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    constructor(</span>
+        uint256 _subscriptionId
+    ) VRFConsumerBaseV2Plus(0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B) {
+        contractOwner = msg.sender;
+        subscriptionId = _subscriptionId;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function getContractOwner() public view returns (address) {</span>
+<span class="cstat-no" title="statement not covered" >        return contractOwner;</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function getJackpot() public view returns (uint256) {</span>
+<span class="cstat-no" title="statement not covered" >        return jackpot;</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function getActiveTicketNumber(</span>
+        address walletAddress
+    ) public view returns (uint256) {
+<span class="cstat-no" title="statement not covered" >        return addressToActiveTicketNumber[walletAddress];</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function buyTicket() public payable {</span>
+<span class="cstat-no" title="statement not covered" >        require(tx.origin == msg.sender, "Only real users!")</span>;
+<span class="cstat-no" title="statement not covered" >        require(msg.value == TICKET_PRICE_WEI, "Transaction value is too low!")</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        LotteryTicket memory newTicket = LotteryTicket({</span>
+            id: nextTicketId++,
+            owner: msg.sender,
+            purchaseTimestamp: block.timestamp,
+            playerCombination: DEFAULT_COMBINATION,
+            winningCombination: DEFAULT_COMBINATION,
+            randomWord: 0,
+            isRewardClaimed: false,
+            playerCombinationSubmitted: false,
+            winningCombinationGenerated: false
+        });
+&nbsp;
+        tickets[newTicket.id] = newTicket;
+        addressToActiveTicketNumber[msg.sender] = newTicket.id;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        distribute(msg.value)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit TicketPurchased(msg.sender, newTicket.id);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function submitCombination(</span>
+        uint256 ticketId,
+        uint256[5] memory playerCombination
+    ) public {
+<span class="cstat-no" title="statement not covered" >        LotteryTicket storage searchedTicket = tickets[ticketId];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        require(searchedTicket.owner == msg.sender, "You are not the owner")</span>;
+<span class="cstat-no" title="statement not covered" >        require(</span>
+            !searchedTicket.playerCombinationSubmitted,
+            "Already submitted"
+        );
+&nbsp;
+        searchedTicket.playerCombination = playerCombination;
+        searchedTicket.playerCombinationSubmitted = true;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit PlayerCombinationSubmitted(msg.sender, playerCombination);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        _requestRandomNumber(ticketId)</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function getResults(uint256 ticketId) external nonReentrant {</span>
+<span class="cstat-no" title="statement not covered" >        LotteryTicket storage ticket = tickets[ticketId];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        require(</span>
+            ticket.owner == msg.sender,
+            "Only ticket owner can use the ticket"
+        );
+<span class="cstat-no" title="statement not covered" >        require(ticket.owner != address(0), "Ticket does not exist")</span>;
+<span class="cstat-no" title="statement not covered" >        require(ticket.randomWord != 0, "Combination is not generated yet")</span>;
+<span class="cstat-no" title="statement not covered" >        require(</span>
+            !ticket.winningCombinationGenerated,
+            "Winning combination already generated"
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        _generateWinningCombination(ticket)</span>;
+        ticket.winningCombinationGenerated = true;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit WinningCombinationGenerated(ticketId, ticket.winningCombination);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        uint8 matchingNumbers = _checkWinningCombination(</span>
+            ticket.playerCombination,
+            ticket.winningCombination
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        uint256 rewardAmount = _calculateReward(matchingNumbers);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit LotteryResults(</span>
+            ticket.owner,
+            ticket.id,
+            ticket.playerCombination,
+            ticket.winningCombination,
+            matchingNumbers,
+            rewardAmount
+        );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (rewardAmount &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            uint256 payout = rewardAmount;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (jackpot &gt;= rewardAmount) {</span>
+                jackpot -= rewardAmount;
+            } else {
+                payout = jackpot;
+                jackpot = 0;
+            }
+&nbsp;
+            ticket.isRewardClaimed = true;
+            delete addressToActiveTicketNumber[ticket.owner];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            emit RewardClaimed(ticket.owner, ticketId, payout);</span>
+<span class="cstat-no" title="statement not covered" >            _sendReward(ticket.owner, payout)</span>;
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function _requestRandomNumber(uint256 ticketId) private returns (uint256) {</span>
+<span class="cstat-no" title="statement not covered" >        uint256 requestId = s_vrfCoordinator.requestRandomWords(</span>
+            VRFV2PlusClient.RandomWordsRequest({
+                keyHash: KEY_HASH,
+                subId: subscriptionId,
+                requestConfirmations: REQUEST_CONFIRMATIONS,
+                callbackGasLimit: CALLBACK_GAS_LIMIT,
+                numWords: NUMBER_OF_WORDS,
+                extraArgs: VRFV2PlusClient._argsToBytes(
+                    VRFV2PlusClient.ExtraArgsV1({nativePayment: false})
+                )
+            })
+        );
+&nbsp;
+        requestIdToTicketId[requestId] = ticketId;
+<span class="cstat-no" title="statement not covered" >        return requestId;</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function fulfillRandomWords(</span>
+        uint256 requestId,
+        uint256[] calldata randomWords
+    ) internal override {
+<span class="cstat-no" title="statement not covered" >        uint256 ticketId = requestIdToTicketId[requestId];</span>
+        tickets[ticketId].randomWord = randomWords[0];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        emit RandomNumberGenerated(requestId, ticketId, randomWords[0]);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function _generateWinningCombination(</span>
+        LotteryTicket storage ticket
+    ) internal {
+<span class="cstat-no" title="statement not covered" >        uint8[37] memory used;</span>
+<span class="cstat-no" title="statement not covered" >        uint256 count = 0;</span>
+<span class="cstat-no" title="statement not covered" >        bytes32 randomBytes = keccak256(abi.encode(ticket.randomWord));</span>
+<span class="cstat-no" title="statement not covered" >        uint24 randomIndex = 0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        while (count &lt; 5) {</span>
+<span class="cstat-no" title="statement not covered" >            if (randomIndex &gt;= 32) {</span>
+                randomBytes = keccak256(abi.encode(randomBytes));
+                randomIndex = 0;
+            }
+<span class="cstat-no" title="statement not covered" >            uint8 number = uint8(randomBytes[randomIndex]) % NUMBER_RANGE;</span>
+            randomIndex++;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (used[number] == 0) {</span>
+                used[number] = 1;
+                ticket.winningCombination[count] = number;
+                count++;
+            }
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function _checkWinningCombination(</span>
+        uint256[5] memory playerCombination,
+        uint256[5] memory winningCombination
+    ) internal pure returns (uint8) {
+<span class="cstat-no" title="statement not covered" >        uint8 matches = 0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        for (uint8 i = 0; i &lt; winningCombination.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            if (winningCombination[i] == playerCombination[i]) {</span>
+                matches += 1;
+            }
+        }
+<span class="cstat-no" title="statement not covered" >        return matches;</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function _calculateReward(</span>
+        uint8 matchingNumbers
+    ) internal view returns (uint256) {
+<span class="cstat-no" title="statement not covered" >        if (matchingNumbers == 0 || matchingNumbers == 1) {</span>
+<span class="cstat-no" title="statement not covered" >            return 0;</span>
+        } else <span class="cstat-no" title="statement not covered" >if (matchingNumbers == 2) {</span>
+<span class="cstat-no" title="statement not covered" >            return TICKET_PRICE_WEI;</span>
+        } else <span class="cstat-no" title="statement not covered" >if (matchingNumbers == 3) {</span>
+<span class="cstat-no" title="statement not covered" >            return (jackpot * 5) / 100;</span>
+        } else <span class="cstat-no" title="statement not covered" >if (matchingNumbers == 4) {</span>
+<span class="cstat-no" title="statement not covered" >            return (jackpot * 30) / 100;</span>
+        } else <span class="cstat-no" title="statement not covered" >if (matchingNumbers == 5) {</span>
+<span class="cstat-no" title="statement not covered" >            return jackpot;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            revert("Unexpected matching number count")</span>;
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function _sendReward(address recipient, uint256 amount) internal {</span>
+<span class="cstat-no" title="statement not covered" >        require(amount &gt; 0, "No reward to send")</span>;
+<span class="cstat-no" title="statement not covered" >        (bool success, ) = payable(recipient).call{value: amount}("");</span>
+<span class="cstat-no" title="statement not covered" >        require(success, "Reward transfer failed")</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function distribute(uint256 amount) private {</span>
+        jackpot += (amount * 85) / 100;
+        operationsBalance += (amount * 10) / 100;
+        ownerBalance += (amount * 5) / 100;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function withdrawOwnerBalance() public payable _onlyOwner {</span>
+<span class="cstat-no" title="statement not covered" >        require(ownerBalance &gt; 0, "Nothing to withdraw")</span>;
+<span class="cstat-no" title="statement not covered" >        uint256 amount = ownerBalance;</span>
+        ownerBalance = 0;
+<span class="cstat-no" title="statement not covered" >        (bool success, ) = payable(contractOwner).call{value: amount}("");</span>
+<span class="cstat-no" title="statement not covered" >        require(success, "OwnerBalance withdrawal failed")</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function withdrawOperationsBalance() public payable _onlyOwner {</span>
+<span class="cstat-no" title="statement not covered" >        require(operationsBalance &gt; 0, "Nothing to withdraw")</span>;
+<span class="cstat-no" title="statement not covered" >        uint256 amount = operationsBalance;</span>
+        operationsBalance = 0;
+<span class="cstat-no" title="statement not covered" >        (bool success, ) = payable(contractOwner).call{value: amount}("");</span>
+<span class="cstat-no" title="statement not covered" >        require(success, "OperationsBalance withdrawal failed")</span>;
+    }
+&nbsp;
+    receive() external payable {
+        distribute(msg.value);
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    fallback() external payable {</span>
+<span class="cstat-no" title="statement not covered" >        revert("Invalid call")</span>;
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Apr 30 2025 09:15:40 GMT-0500 (Central Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

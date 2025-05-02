@@ -4,7 +4,7 @@ export const ThemeToggler = () => {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'luxury' : 'light');
+    setTheme(theme === 'light' ? 'black' : 'light');
   };
 
   return (

@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo } from 'react';
-import { useAccount, useBalance, useSwitchChain } from 'wagmi';
-import { sepolia } from 'viem/chains';
-import { Step0 } from '../components';
+
+import { BuyTicketStep, CheckResultsStep, CountdownStep, SubmitCombinationStep } from '../components';
+import { useGameContext } from './GameContext';
 
 type Step = {
   id: number;
@@ -9,14 +9,10 @@ type Step = {
 };
 
 type StepContextType = {
-  address: string | undefined;
-  started: boolean;
   step: number;
   steps: Step[];
-  hasEnoughEth: boolean;
-  isConnected: boolean;
-  handleNext: () => void;
-  goToOriginalStep: () => void;
+  nextStep: () => void;
+  goToFirstStep: () => void;
 };
 
 const StepContext = createContext<StepContextType | undefined>(undefined);
@@ -26,61 +22,32 @@ type StepProviderProps = {
 };
 
 export const GameStepperProvider = ({ children }: StepProviderProps) => {
-  const { address, isConnected, chain } = useAccount();
-  const { data: balance, isLoading } = useBalance({ address });
-  const { switchChain } = useSwitchChain();
-
-  const [started, setStarted] = useState(false);
   const [step, setStep] = useState(0);
-  const [hasEnoughEth, setHasEnoughEth] = useState(false);
-
-  // Check if the user has enough ETH (>= 2 USD equivalent)
-  const checkEthBalance = useCallback(() => {
-    if (balance?.value && balance.value > 1e14 * 2) {
-      setHasEnoughEth(true);
-    } else {
-      setHasEnoughEth(false);
-    }
-  }, [balance?.value]);
-
-  // Request to switch the chain to Sepolia if not already connected
-  const requestSwitchChain = useCallback(() => {
-    switchChain({ chainId: sepolia.id });
-  }, [switchChain]);
-
-  // Side effect to handle chain switching and balance check
-  useEffect(() => {
-    if (isConnected && address && !isLoading) {
-      if (chain?.id !== sepolia.id) {
-        requestSwitchChain();
-      }
-      checkEthBalance();
-    }
-  }, [isConnected, address, balance, isLoading, chain, requestSwitchChain, checkEthBalance]);
+  const { setIsGameStarted } = useGameContext();
 
   // Wrap the steps definition in useMemo to avoid unnecessary recalculations
   const steps = useMemo(
     () => [
-      { id: 1, content: <Step0 /> },
-      { id: 2, content: 'Step 2: Get Sepolia ETH' },
-      { id: 3, content: 'Step 3: Buy Lottery Ticket' },
-      { id: 4, content: 'Step 4: Submit Your Combination' },
+      { id: 1, content: <BuyTicketStep /> },
+      { id: 2, content: <SubmitCombinationStep /> },
+      { id: 3, content: <CountdownStep /> },
+      { id: 4, content: <CheckResultsStep /> },
     ],
     [],
   );
 
   // Wrap the goToOriginalStep function in useCallback
-  const goToOriginalStep = useCallback(() => {
+  const goToFirstStep = useCallback(() => {
     setStep(0);
     localStorage.setItem('currentStep', String(0));
-    localStorage.setItem('started', 'false');
+    localStorage.setItem('isGameStarted', 'false');
   }, []);
 
-  // Wrap the handleNext function in useCallback to prevent re-creation on each render
-  const handleNext = useCallback(() => {
+  // Wrap the nextStep function in useCallback to prevent re-creation on each render
+  const nextStep = useCallback(() => {
     if (step === 0) {
-      setStarted(true);
-      localStorage.setItem('started', 'true');
+      setIsGameStarted(true);
+      localStorage.setItem('isGameStarted', 'true');
     }
 
     if (step < steps.length - 1) {
@@ -88,41 +55,37 @@ export const GameStepperProvider = ({ children }: StepProviderProps) => {
       setStep(next);
       localStorage.setItem('currentStep', String(next));
     }
-  }, [step, steps.length]);
+  }, [setIsGameStarted, step, steps.length]);
 
   // Retrieve saved state from localStorage on load
   useEffect(() => {
-    const savedStarted = localStorage.getItem('started') === 'true';
+    const savedStarted = localStorage.getItem('isGameStarted') === 'true';
     const savedStep = localStorage.getItem('currentStep');
 
     if (savedStep !== null) {
       setStep(Number(savedStep));
     }
-    setStarted(savedStarted);
-  }, []);
+    setIsGameStarted(savedStarted);
+  }, [setIsGameStarted]);
 
   // Wrap the context value in useMemo to avoid unnecessary re-renders
   const contextValue = useMemo(
     () => ({
-      address,
-      started,
       step,
       steps,
-      hasEnoughEth,
-      isConnected,
-      handleNext,
-      goToOriginalStep,
+      nextStep,
+      goToFirstStep,
     }),
-    [address, started, step, steps, hasEnoughEth, isConnected, handleNext, goToOriginalStep],
+    [step, steps, nextStep, goToFirstStep],
   );
 
   return <StepContext.Provider value={contextValue}>{children}</StepContext.Provider>;
 };
 
-export const useStep = (): StepContextType => {
+export const useStepper = (): StepContextType => {
   const context = useContext(StepContext);
   if (!context) {
-    throw new Error('useStep must be used within a StepProvider');
+    throw new Error('useStepper must be used within a StepProvider');
   }
   return context;
 };

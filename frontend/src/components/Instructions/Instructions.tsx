@@ -39,12 +39,12 @@ export const Instructions = () => {
               Connect MetaMask
             </button>
           </div>
-          <hr />
+          <hr className='bg-neutral' />
         </li>
 
         {/* Step 2 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-end'>
             <StepHeader title='Get some Sepolia ETH' />
@@ -64,12 +64,12 @@ export const Instructions = () => {
               </button>
             </div>
           </div>
-          <hr />
+          <hr className='bg-neutral' />
         </li>
 
         {/* Step 3 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
             <StepHeader title='Buy a ticket' />
@@ -85,12 +85,12 @@ export const Instructions = () => {
               </ul>
             </InstructionModal>
           </div>
-          <hr />
+          <hr className='bg-neutral' />
         </li>
 
-        {/* Step 3 */}
+        {/* Step 4 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-end mb-4 md:mb-0'>
             <StepHeader title='Time to play!' />
@@ -110,23 +110,23 @@ export const Instructions = () => {
               </ul>
             </InstructionModal>
           </div>
-          <hr />
+          <hr className='bg-neutral' />
         </li>
 
-        {/* Step 4 */}
+        {/* Step 5 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
             <StepHeader title='Wait for the Winning Combination' />
             <p className='text-sm'>Blockchain will generate a random the winning combination using Chainlink VRF.</p>
           </div>
-          <hr />
+          <hr className='bg-neutral' />
         </li>
 
-        {/* Step 5 */}
+        {/* Step 6 */}
         <li>
-          <hr />
+          <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-end mb-4 md:mb-0'>
             <StepHeader title='Check results and Claim prize' />
@@ -146,16 +146,20 @@ export const Instructions = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <th>0–1</th>
+                    <th>0</th>
                     <td>None</td>
                   </tr>
                   <tr>
-                    <th>2</th>
+                    <th>1</th>
                     <td>Refund of the ticket price</td>
                   </tr>
                   <tr>
-                    <th>3</th>
+                    <th>2</th>
                     <td>5% of the Jackpot</td>
+                  </tr>
+                  <tr>
+                    <th>3</th>
+                    <td>10% of the Jackpot</td>
                   </tr>
                   <tr>
                     <th>4</th>
