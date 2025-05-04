@@ -54,19 +54,15 @@ describe('Lottery contract', () => {
     it('Should allow a user to buy a ticket, update mappings and emit event', async () => {
       const tx = await lottery.connect(player).buyTicket({ value: TICKET_PRICE_WEI });
 
-      const ticketId = await lottery.getActiveTicketNumber(player);
+      const ticket = await lottery.connect(player).getPlayerTickets();
+      const ticketId = ticket[0].id;
       expect(ticketId).to.equal(1);
 
-      const ticket = await lottery.tickets(ticketId);
-      expect(ticket.id).to.equal(1);
-      expect(ticket.randomWord).to.exist;
-      expect(ticket.isRewardClaimed).to.be.false;
-      expect(ticket.playerCombinationSubmitted).to.be.false;
-      expect(ticket.winningCombinationGenerated).to.be.false;
-      expect(ticket.owner).to.equal(player);
-
-      const activeTicketId = await lottery.addressToActiveTicketNumber(player);
-      expect(activeTicketId).to.equal(1);
+      expect(ticket[0].id).to.equal(1);
+      expect(ticket[0].isRewardClaimed).to.be.false;
+      expect(ticket[0].playerCombinationSubmitted).to.be.false;
+      expect(ticket[0].winningCombinationGenerated).to.be.false;
+      expect(ticket[0].owner).to.equal(player);
 
       await expect(tx).to.emit(lottery, 'TicketPurchased').withArgs(player, 1);
       await expect(tx).to.emit(lottery, 'Distribute').withArgs(player, TICKET_PRICE_WEI);
@@ -84,27 +80,62 @@ describe('Lottery contract', () => {
       await lottery.connect(player).assignTestTicket();
     });
 
-    it('Should allow submitting a combination', async () => {
-      const ticketId = await lottery.getActiveTicketNumber(player);
-      const combination = [1n, 2n, 3n, 4n, 5n] as [bigint, bigint, bigint, bigint, bigint];
+    it('Should allow submitting a valid combination', async () => {
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
 
-      await lottery.connect(player).submitCombination(ticketId, combination);
-      const ticket = await lottery.getPlayerTicket(player);
+      const combo: [bigint, bigint, bigint, bigint, bigint] = [1n, 2n, 3n, 4n, 5n];
 
-      expect(ticket.playerCombinationSubmitted).to.be.true;
+      await expect(lottery.connect(player).submitCombination(ticketId, combo))
+        .to.emit(lottery, 'PlayerCombinationSubmitted')
+        .withArgs(player, combo);
+
+      const ticketAfter = await lottery.tickets(ticketId);
+      expect(ticketAfter.playerCombinationSubmitted).to.be.true;
     });
 
-    it('Should revert if not the ticket owner', async () => {
-      const ticketId = await lottery.getActiveTicketNumber(player);
-      const combination = [1n, 2n, 3n, 4n, 5n] as [bigint, bigint, bigint, bigint, bigint];
+    it('Should revert if you submit twice', async () => {
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
+      const combo = [1n, 2n, 3n, 4n, 5n] as [bigint, bigint, bigint, bigint, bigint];
 
-      await expect(lottery.connect(stranger).submitCombination(ticketId, combination)).to.be.revertedWith(
+      await lottery.connect(player).submitCombination(ticketId, combo);
+      await expect(lottery.connect(player).submitCombination(ticketId, combo)).to.be.revertedWith('Already submitted');
+    });
+
+    it('Should revert on duplicate numbers', async () => {
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
+      const badCombo = [1n, 2n, 3n, 4n, 1n] as [bigint, bigint, bigint, bigint, bigint];
+
+      await expect(lottery.connect(player).submitCombination(ticketId, badCombo)).to.be.revertedWith(
+        'Duplicate numbers not allowed',
+      );
+    });
+
+    it('Should revert on number out of range', async () => {
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
+      const badCombo = [0n, 10n, 20n, 36n, 37n] as [bigint, bigint, bigint, bigint, bigint];
+
+      await expect(lottery.connect(player).submitCombination(ticketId, badCombo)).to.be.revertedWith(
+        'Number out of range (0-36)',
+      );
+    });
+
+    it('Should revert if non-owner tries to submit', async () => {
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
+      const combo = [1n, 2n, 3n, 4n, 5n] as [bigint, bigint, bigint, bigint, bigint];
+
+      await expect(lottery.connect(stranger).submitCombination(ticketId, combo)).to.be.revertedWith(
         'You are not the owner',
       );
     });
 
     it('Should revert if combination is already submitted', async () => {
-      const ticketId = await lottery.getActiveTicketNumber(player);
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
       const combination = [1n, 2n, 3n, 4n, 5n] as [bigint, bigint, bigint, bigint, bigint];
 
       await lottery.connect(player).submitCombination(ticketId, combination);
@@ -115,59 +146,90 @@ describe('Lottery contract', () => {
     });
   });
 
-  describe('Get Results', () => {
+  describe('Preview Results', () => {
     beforeEach(async () => {
       await lottery.connect(player).assignTestTicket();
-      const ticketId = await lottery.getActiveTicketNumber(player);
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
       await lottery.connect(player).submitCombination(ticketId, [1, 2, 3, 4, 5]);
     });
 
-    it('Should generate winning combination and calculate rewards', async () => {
-      const ticketId = await lottery.getActiveTicketNumber(player);
-      const tx = await lottery.test_fulfillRandomWords(1, [1n]);
+    it('should revert if combination is not submitted', async () => {
+      await lottery.connect(player).assignTestTicket();
+      const newTickets = await lottery.connect(player).getPlayerTickets();
+      const newTicketId = newTickets[1].id;
+
+      await expect(lottery.connect(player).previewResults(newTicketId)).to.be.revertedWith('Combination not submitted');
+    });
+
+    it('should revert if winning combination is not generated', async () => {
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
+      await expect(lottery.connect(player).previewResults(ticketId)).to.be.revertedWith(
+        'Winning combination is not generated',
+      );
+    });
+
+    it('should return correct matching numbers and reward', async () => {
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
+
+      await lottery.connect(owner).test_setWinningCombination(ticketId, [1, 2, 3, 10, 20]);
+
+      const [matching, reward, playerCombo, winningCombo] = await lottery.connect(player).previewResults(ticketId);
+
+      expect(matching).to.exist;
+      expect(reward).to.exist;
+      expect(playerCombo.map(Number)).to.exist;
+      expect(winningCombo.map(Number)).to.exist;
+    });
+  });
+
+  describe('Claim reward', () => {
+    beforeEach(async () => {
+      const tx = await lottery.connect(player).buyTicket({ value: TICKET_PRICE_WEI });
+      await tx.wait();
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
+
+      await lottery.connect(player).submitCombination(ticketId, [1, 2, 3, 4, 5]);
+    });
+
+    it('should allow the ticket owner to claim reward', async () => {
+      const ticket = await lottery.getTicketById(1n);
+
+      await lottery.connect(player).test_setWinningCombination(ticket.id, [1, 2, 3, 10, 11]);
+
+      const updatedTicket = await lottery.getTicketById(1n);
+
+      const tx = await lottery.connect(player).claimReward(updatedTicket.id);
       await tx.wait();
 
-      await expect(lottery.connect(player).getResults(ticketId))
-        .to.emit(lottery, 'WinningCombinationGenerated')
-        .and.to.emit(lottery, 'LotteryResults')
-        .and.to.emit(lottery, 'RewardClaimed');
-
-      const ticket = await lottery.getPlayerTicket(player);
-      expect(ticket.winningCombinationGenerated).to.be.true;
-      expect(ticket.winningCombination).to.be.instanceOf(Array);
+      const updatedTicket2 = await lottery.getTicketById(1n);
+      expect(updatedTicket2.isRewardClaimed).to.be.true;
     });
 
-    it('Should not provide results if ticket owner is not a sender', async () => {
-      const ticketId = await lottery.getActiveTicketNumber(player);
+    it('should revert if reward already claimed', async () => {
+      const ticket = await lottery.getTicketById(1n);
 
-      await expect(lottery.connect(stranger).getResults(ticketId)).to.be.revertedWith(
-        'Only ticket owner can use the ticket',
-      );
+      await lottery.connect(player).test_setWinningCombination(ticket.id, [1, 2, 3, 10, 11]);
+
+      await lottery.connect(player).claimReward(ticket.id);
+      await expect(lottery.connect(player).claimReward(ticket.id)).to.be.revertedWith('Reward already claimed');
     });
 
-    it('Should not provide results if combination is not generated yet', async () => {
-      const ticketId = await lottery.getActiveTicketNumber(player);
+    it('should revert if non-owner tries to claim', async () => {
+      const ticket = await lottery.getTicketById(1n);
 
-      await expect(lottery.connect(player).getResults(ticketId)).to.be.revertedWith('Combination is not generated yet');
-
-      const ticket = await lottery.getPlayerTicket(player);
-      expect(ticket.winningCombinationGenerated).to.be.false;
+      await expect(lottery.connect(stranger).claimReward(ticket.id)).to.be.revertedWith('Only ticket owner can claim');
     });
 
-    it('Should not re-generate winning combination', async () => {
-      const ticketId = await lottery.getActiveTicketNumber(player);
-      await lottery.test_fulfillRandomWords(1, [1n]);
+    it('should revert if no reward is available', async () => {
+      const ticket = await lottery.getTicketById(1n);
 
-      await expect(lottery.connect(player).getResults(ticketId))
-        .to.emit(lottery, 'WinningCombinationGenerated')
-        .and.to.emit(lottery, 'LotteryResults');
+      await lottery.connect(owner).test_setWinningCombination(ticket.id, [10, 11, 12, 13, 14]);
 
-      const ticket = await lottery.getPlayerTicket(player);
-      expect(ticket.winningCombinationGenerated).to.be.true;
-
-      await expect(lottery.connect(player).getResults(ticketId)).to.be.revertedWith(
-        'Winning combination already generated',
-      );
+      await expect(lottery.connect(player).claimReward(ticket.id)).to.be.revertedWith('No reward to claim');
     });
   });
 
@@ -366,8 +428,7 @@ describe('Lottery contract', () => {
     });
 
     it(`Should generate unique array of 5 numbers in range 0 to 37 properly`, async () => {
-      await lottery.test_generateWinningCombination();
-      const combination = await lottery.getWinningCombination();
+      const combination = await lottery.test_generateWinningCombination(1);
 
       expect(combination.length).to.equal(5);
       combination.forEach(num => {
@@ -377,16 +438,6 @@ describe('Lottery contract', () => {
 
       const uniqueNumbers = new Set(combination);
       expect(uniqueNumbers.size).to.equal(5);
-    });
-
-    it(`Should set a random word properly`, async () => {
-      let randomWord = await lottery.getRandomWord();
-      expect(randomWord).to.eq(0n);
-
-      await expect(lottery.test_fulfillRandomWords(0, [1n])).to.emit(lottery, 'RandomNumberGenerated');
-
-      randomWord = await lottery.getRandomWord();
-      expect(randomWord).to.eq(1n);
     });
 
     it('Should request random number and map requestId to ticketId', async () => {
@@ -401,6 +452,25 @@ describe('Lottery contract', () => {
 
       const mappedTicketId = await lottery.requestIdToTicketId(requestId);
       expect(mappedTicketId).to.equal(ticketId);
+    });
+
+    it('Should fulfill winning combination with random words', async () => {
+      const randomWord = 1;
+      await lottery.connect(player).buyTicket({ value: TICKET_PRICE_WEI });
+
+      const tickets = await lottery.connect(player).getPlayerTickets();
+      const ticketId = tickets[0].id;
+
+      const tx = await lottery.test_requestRandomNumber(ticketId);
+      const receipt = await tx.wait();
+
+      const requestId = receipt?.logs
+        .map(log => lottery.interface.parseLog(log))
+        .find(parsedLog => parsedLog?.name === 'RandomWordsRequested')?.args.requestId;
+
+      await expect(lottery.connect(owner).test_fulfillRandomWords(requestId, [randomWord]))
+        .to.emit(lottery, 'RandomNumberGenerated')
+        .withArgs(requestId, ticketId, randomWord);
     });
   });
 });

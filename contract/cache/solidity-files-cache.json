@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\practice\\solidity\\Lottery\\contract\\contracts\\Lottery.sol": {
-      "lastModificationDate": 1746148939743,
-      "contentHash": "e196dff7f086ba8f0a8436a4c2247ca0",
+      "lastModificationDate": 1746384963395,
+      "contentHash": "269c22f912f0f91792864560e1419c35",
       "sourceName": "contracts/Lottery.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -26,6 +26,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -66,6 +69,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -102,6 +108,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -142,6 +151,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -178,6 +190,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -217,6 +232,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -255,6 +273,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -291,6 +312,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -327,6 +351,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -365,6 +392,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -401,6 +431,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -417,42 +450,6 @@
       ],
       "artifacts": [
         "SubscriptionAPI"
-      ]
-    },
-    "D:\\practice\\solidity\\Lottery\\contract\\node_modules\\@chainlink\\contracts\\src\\v0.8\\shared\\interfaces\\AggregatorV3Interface.sol": {
-      "lastModificationDate": 1745689784466,
-      "contentHash": "64a3f906dc7696aa3c9fa8454b673be7",
-      "sourceName": "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
-      "solcConfig": {
-        "version": "0.8.28",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "AggregatorV3Interface"
       ]
     },
     "D:\\practice\\solidity\\Lottery\\contract\\node_modules\\@chainlink\\contracts\\src\\v0.8\\shared\\interfaces\\LinkTokenInterface.sol": {
@@ -480,6 +477,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -516,6 +516,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -525,6 +528,45 @@
       ],
       "artifacts": [
         "IERC677Receiver"
+      ]
+    },
+    "D:\\practice\\solidity\\Lottery\\contract\\node_modules\\@chainlink\\contracts\\src\\v0.8\\shared\\interfaces\\AggregatorV3Interface.sol": {
+      "lastModificationDate": 1745689784466,
+      "contentHash": "64a3f906dc7696aa3c9fa8454b673be7",
+      "sourceName": "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": false
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "AggregatorV3Interface"
       ]
     },
     "D:\\practice\\solidity\\Lottery\\contract\\node_modules\\@chainlink\\contracts\\src\\v0.8\\vendor\\openzeppelin-solidity\\v4.7.3\\contracts\\utils\\structs\\EnumerableSet.sol": {
@@ -552,6 +594,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -564,7 +609,7 @@
       ]
     },
     "D:\\practice\\solidity\\Lottery\\contract\\contracts\\VRFCoordinatorV2_5Mock.sol": {
-      "lastModificationDate": 1745892787681,
+      "lastModificationDate": 1746256603594,
       "contentHash": "6699f663c778d0b7726867bfdb960c14",
       "sourceName": "contracts/VRFCoordinatorV2_5Mock.sol",
       "solcConfig": {
@@ -588,6 +633,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },
@@ -605,8 +653,8 @@
       ]
     },
     "D:\\practice\\solidity\\Lottery\\contract\\contracts\\LotteryTest.sol": {
-      "lastModificationDate": 1746133363018,
-      "contentHash": "c58a6f184774e557d61e0226481139db",
+      "lastModificationDate": 1746384941498,
+      "contentHash": "47f37dc9463a2bfe9970c2199514b137",
       "sourceName": "contracts/LotteryTest.sol",
       "solcConfig": {
         "version": "0.8.28",
@@ -629,6 +677,9 @@
                 "ast"
               ]
             }
+          },
+          "metadata": {
+            "useLiteralContent": false
           }
         }
       },

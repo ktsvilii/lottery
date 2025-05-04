@@ -16,7 +16,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
     uint8 public constant NUMBER_RANGE = 37;
 
     uint16 public constant REQUEST_CONFIRMATIONS = 3;
-    uint32 public constant CALLBACK_GAS_LIMIT = 200_000;
+    uint32 public constant CALLBACK_GAS_LIMIT = 2500000;
     uint8 public constant NUMBER_OF_WORDS = 1;
 
     uint256 public jackpot;
@@ -26,36 +26,39 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
 
     uint256[5] private DEFAULT_COMBINATION;
 
+    // LotteryTicket struct
     struct LotteryTicket {
         uint256 id;
         address owner;
         uint256 purchaseTimestamp;
         uint256[5] playerCombination;
         uint256[5] winningCombination;
-        uint256 randomWord;
         bool isRewardClaimed;
         bool playerCombinationSubmitted;
         bool winningCombinationGenerated;
     }
 
-    mapping(address => uint256) public addressToActiveTicketNumber;
+    // Mappings
+    mapping(address => LotteryTicket[]) public playerTickets;
+
     mapping(uint256 => LotteryTicket) public tickets;
+
     mapping(uint256 => uint256) public requestIdToTicketId;
 
+    // Events
     event TicketPurchased(address indexed player, uint256 indexed ticketNumber);
+
     event PlayerCombinationSubmitted(
         address indexed player,
         uint256[5] combination
     );
+
     event RandomNumberGenerated(
         uint256 indexed requestId,
         uint256 indexed ticketNumber,
         uint256 number
     );
-    event WinningCombinationGenerated(
-        uint256 indexed ticketNumber,
-        uint256[5] combination
-    );
+
     event LotteryResults(
         address indexed owner,
         uint256 indexed ticketNumber,
@@ -64,18 +67,23 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         uint8 matchingNumbers,
         uint256 indexed rewardAmount
     );
+
     event RewardClaimed(
         address indexed player,
         uint256 indexed ticketId,
         uint256 indexed amount
     );
+
     event Distribute(address indexed owner, uint256 indexed amount);
+
     event OwnerBalanceWithdraw(address indexed owner, uint256 indexed amount);
+
     event OperationsBalanceWithdraw(
         address indexed owner,
         uint256 indexed amount
     );
 
+    // Modifiers
     modifier _onlyOwner() {
         require(msg.sender == contractOwner, "Only for owner");
         _;
@@ -88,20 +96,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         subscriptionId = _subscriptionId;
     }
 
-    function getContractOwner() public view returns (address) {
-        return contractOwner;
-    }
-
-    function getJackpot() public view returns (uint256) {
-        return jackpot;
-    }
-
-    function getActiveTicketNumber(
-        address walletAddress
-    ) public view returns (uint256) {
-        return addressToActiveTicketNumber[walletAddress];
-    }
-
+    // Main logic
     function buyTicket() public payable {
         require(tx.origin == msg.sender, "Only real players!");
         require(msg.value == TICKET_PRICE_WEI, "Transaction value is too low!");
@@ -112,14 +107,13 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             purchaseTimestamp: block.timestamp,
             playerCombination: DEFAULT_COMBINATION,
             winningCombination: DEFAULT_COMBINATION,
-            randomWord: 0,
             isRewardClaimed: false,
             playerCombinationSubmitted: false,
             winningCombinationGenerated: false
         });
 
         tickets[newTicket.id] = newTicket;
-        addressToActiveTicketNumber[msg.sender] = newTicket.id;
+        playerTickets[msg.sender].push(newTicket);
 
         distribute(msg.value);
 
@@ -138,6 +132,19 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             "Already submitted"
         );
 
+        for (uint256 i = 0; i < playerCombination.length; i++) {
+            require(
+                playerCombination[i] >= 0 && playerCombination[i] <= 36,
+                "Number out of range (0-36)"
+            );
+            for (uint256 j = i + 1; j < playerCombination.length; j++) {
+                require(
+                    playerCombination[i] != playerCombination[j],
+                    "Duplicate numbers not allowed"
+                );
+            }
+        }
+
         searchedTicket.playerCombination = playerCombination;
         searchedTicket.playerCombinationSubmitted = true;
 
@@ -146,24 +153,46 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         _requestRandomNumber(ticketId);
     }
 
-    function getResults(uint256 ticketId) external nonReentrant {
+    function previewResults(
+        uint256 ticketId
+    )
+        external
+        view
+        returns (
+            uint8 matchingNumbers,
+            uint256 rewardAmount,
+            uint256[5] memory playerCombination,
+            uint256[5] memory winningCombination
+        )
+    {
         LotteryTicket storage ticket = tickets[ticketId];
 
-        require(
-            ticket.owner == msg.sender,
-            "Only ticket owner can use the ticket"
-        );
+        require(ticket.owner == msg.sender, "Only ticket owner can view");
         require(ticket.owner != address(0), "Ticket does not exist");
-        require(ticket.randomWord != 0, "Combination is not generated yet");
+        require(ticket.playerCombinationSubmitted, "Combination not submitted");
         require(
-            !ticket.winningCombinationGenerated,
-            "Winning combination already generated"
+            ticket.winningCombinationGenerated,
+            "Winning combination is not generated"
         );
 
-        _generateWinningCombination(ticket);
-        ticket.winningCombinationGenerated = true;
+        matchingNumbers = _checkWinningCombination(
+            ticket.playerCombination,
+            ticket.winningCombination
+        );
 
-        emit WinningCombinationGenerated(ticketId, ticket.winningCombination);
+        rewardAmount = _calculateReward(matchingNumbers);
+        playerCombination = ticket.playerCombination;
+        winningCombination = ticket.winningCombination;
+    }
+
+    function claimReward(uint256 ticketId) external nonReentrant {
+        LotteryTicket storage ticket = tickets[ticketId];
+
+        require(ticket.owner == msg.sender, "Only ticket owner can claim");
+        require(ticket.owner != address(0), "Ticket does not exist");
+        require(ticket.playerCombinationSubmitted, "Combination not submitted");
+        require(ticket.winningCombinationGenerated, "Winning not generated");
+        require(!ticket.isRewardClaimed, "Reward already claimed");
 
         uint8 matchingNumbers = _checkWinningCombination(
             ticket.playerCombination,
@@ -171,33 +200,24 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         );
 
         uint256 rewardAmount = _calculateReward(matchingNumbers);
-
-        emit LotteryResults(
-            ticket.owner,
-            ticket.id,
-            ticket.playerCombination,
-            ticket.winningCombination,
-            matchingNumbers,
-            rewardAmount
-        );
+        require(rewardAmount > 0, "No reward to claim");
 
         uint256 payout = rewardAmount;
-        if (rewardAmount > 0) {
-            if (jackpot >= rewardAmount) {
-                jackpot -= rewardAmount;
-            } else {
-                payout = jackpot;
-                jackpot = 0;
-            }
-
-            ticket.isRewardClaimed = true;
-            delete addressToActiveTicketNumber[ticket.owner];
-
-            _sendReward(ticket.owner, payout);
+        if (jackpot >= rewardAmount) {
+            jackpot -= rewardAmount;
+        } else {
+            payout = jackpot;
+            jackpot = 0;
         }
+
+        ticket.isRewardClaimed = true;
+
+        _sendReward(ticket.owner, payout);
+
         emit RewardClaimed(ticket.owner, ticketId, payout);
     }
 
+    // Internal utils
     function _requestRandomNumber(uint256 ticketId) private returns (uint256) {
         uint256 requestId = s_vrfCoordinator.requestRandomWords(
             VRFV2PlusClient.RandomWordsRequest({
@@ -221,33 +241,41 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         uint256[] calldata randomWords
     ) internal override {
         uint256 ticketId = requestIdToTicketId[requestId];
-        tickets[ticketId].randomWord = randomWords[0];
+        uint256 randomWord = randomWords[0];
 
-        emit RandomNumberGenerated(requestId, ticketId, randomWords[0]);
+        tickets[ticketId].winningCombination = _generateWinningCombination(
+            randomWord
+        );
+        tickets[ticketId].winningCombinationGenerated = true;
+
+        emit RandomNumberGenerated(requestId, ticketId, randomWord);
     }
 
     function _generateWinningCombination(
-        LotteryTicket storage ticket
-    ) internal {
+        uint256 randomWord
+    ) internal pure returns (uint256[5] memory) {
         uint8[37] memory used;
+        uint256[5] memory combination;
         uint256 count = 0;
-        bytes32 randomBytes = keccak256(abi.encode(ticket.randomWord));
-        uint24 randomIndex = 0;
+        bytes32 randomBytes = keccak256(abi.encode(randomWord));
+        uint8 randomIndex = 0;
 
         while (count < 5) {
             if (randomIndex >= 32) {
-                randomBytes = keccak256(abi.encode(randomBytes));
+                randomBytes = keccak256(abi.encode(randomBytes, randomIndex));
                 randomIndex = 0;
             }
-            uint8 number = uint8(randomBytes[randomIndex]) % NUMBER_RANGE;
+            uint8 number = uint8(randomBytes[randomIndex]) % 37;
             randomIndex++;
 
             if (used[number] == 0) {
                 used[number] = 1;
-                ticket.winningCombination[count] = number;
+                combination[count] = number;
                 count++;
             }
         }
+
+        return combination;
     }
 
     function _checkWinningCombination(
@@ -275,6 +303,8 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
     function _calculateReward(
         uint8 matchingNumbers
     ) internal view returns (uint256) {
+        require(matchingNumbers <= 5, "Unexpected matching number count");
+
         if (matchingNumbers == 0) {
             return 0;
         } else if (matchingNumbers == 1) {
@@ -285,10 +315,8 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             return (jackpot * 10) / 100;
         } else if (matchingNumbers == 4) {
             return (jackpot * 30) / 100;
-        } else if (matchingNumbers == 5) {
-            return jackpot;
         } else {
-            revert("Unexpected matching number count");
+            return jackpot;
         }
     }
 
@@ -303,6 +331,19 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         operationsBalance += (amount * 5) / 100;
         ownerBalance += (amount * 5) / 100;
         emit Distribute(msg.sender, amount);
+    }
+
+    // Util functions
+    function getContractOwner() public view returns (address) {
+        return contractOwner;
+    }
+
+    function getJackpot() public view returns (uint256) {
+        return jackpot;
+    }
+
+    function getPlayerTickets() external view returns (LotteryTicket[] memory) {
+        return playerTickets[msg.sender];
     }
 
     function withdrawOwnerBalance() public payable _onlyOwner {
