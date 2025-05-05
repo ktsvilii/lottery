@@ -292,25 +292,6 @@ export const Lottery_ABI = [
     type: 'event',
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'ticketNumber',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256[5]',
-        name: 'combination',
-        type: 'uint256[5]',
-      },
-    ],
-    name: 'WinningCombinationGenerated',
-    type: 'event',
-  },
-  {
     stateMutability: 'payable',
     type: 'fallback',
   },
@@ -389,12 +370,12 @@ export const Lottery_ABI = [
   {
     inputs: [
       {
-        internalType: 'address',
+        internalType: 'uint256',
         name: '',
-        type: 'address',
+        type: 'uint256',
       },
     ],
-    name: 'addressToActiveTicketNumber',
+    name: 'allTicketIds',
     outputs: [
       {
         internalType: 'uint256',
@@ -408,24 +389,141 @@ export const Lottery_ABI = [
   {
     inputs: [],
     name: 'buyTicket',
-    outputs: [],
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'purchaseTimestamp',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256[5]',
+            name: 'playerCombination',
+            type: 'uint256[5]',
+          },
+          {
+            internalType: 'uint256[5]',
+            name: 'winningCombination',
+            type: 'uint256[5]',
+          },
+          {
+            internalType: 'uint8',
+            name: 'matchingNumbers',
+            type: 'uint8',
+          },
+          {
+            internalType: 'uint256',
+            name: 'reward',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'isRewardClaimed',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'playerCombinationSubmitted',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'winningCombinationGenerated',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct Lottery.LotteryTicket',
+        name: '',
+        type: 'tuple',
+      },
+    ],
     stateMutability: 'payable',
     type: 'function',
   },
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'walletAddress',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'ticketId',
+        type: 'uint256',
       },
     ],
-    name: 'getActiveTicketNumber',
+    name: 'claimReward',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getAllTickets',
     outputs: [
       {
-        internalType: 'uint256',
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'purchaseTimestamp',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256[5]',
+            name: 'playerCombination',
+            type: 'uint256[5]',
+          },
+          {
+            internalType: 'uint256[5]',
+            name: 'winningCombination',
+            type: 'uint256[5]',
+          },
+          {
+            internalType: 'uint8',
+            name: 'matchingNumbers',
+            type: 'uint8',
+          },
+          {
+            internalType: 'uint256',
+            name: 'reward',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'isRewardClaimed',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'playerCombinationSubmitted',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'winningCombinationGenerated',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct Lottery.LotteryTicket[]',
         name: '',
-        type: 'uint256',
+        type: 'tuple[]',
       },
     ],
     stateMutability: 'view',
@@ -458,16 +556,68 @@ export const Lottery_ABI = [
     type: 'function',
   },
   {
-    inputs: [
+    inputs: [],
+    name: 'getPlayerTickets',
+    outputs: [
       {
-        internalType: 'uint256',
-        name: 'ticketId',
-        type: 'uint256',
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'owner',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'purchaseTimestamp',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256[5]',
+            name: 'playerCombination',
+            type: 'uint256[5]',
+          },
+          {
+            internalType: 'uint256[5]',
+            name: 'winningCombination',
+            type: 'uint256[5]',
+          },
+          {
+            internalType: 'uint8',
+            name: 'matchingNumbers',
+            type: 'uint8',
+          },
+          {
+            internalType: 'uint256',
+            name: 'reward',
+            type: 'uint256',
+          },
+          {
+            internalType: 'bool',
+            name: 'isRewardClaimed',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'playerCombinationSubmitted',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'winningCombinationGenerated',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct Lottery.LotteryTicket[]',
+        name: '',
+        type: 'tuple[]',
       },
     ],
-    name: 'getResults',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -504,6 +654,64 @@ export const Lottery_ABI = [
         internalType: 'address',
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'playerTicketIds',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'ticketId',
+        type: 'uint256',
+      },
+    ],
+    name: 'previewResults',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: 'matchingNumbers',
+        type: 'uint8',
+      },
+      {
+        internalType: 'uint256',
+        name: 'rewardAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256[5]',
+        name: 'playerCombination',
+        type: 'uint256[5]',
+      },
+      {
+        internalType: 'uint256[5]',
+        name: 'winningCombination',
+        type: 'uint256[5]',
       },
     ],
     stateMutability: 'view',
@@ -616,8 +824,13 @@ export const Lottery_ABI = [
         type: 'uint256',
       },
       {
+        internalType: 'uint8',
+        name: 'matchingNumbers',
+        type: 'uint8',
+      },
+      {
         internalType: 'uint256',
-        name: 'randomWord',
+        name: 'reward',
         type: 'uint256',
       },
       {

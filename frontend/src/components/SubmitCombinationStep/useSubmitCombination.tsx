@@ -1,6 +1,9 @@
 import { useId, useState, Dispatch, SetStateAction } from 'react';
+
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
+
 import { useAccount } from 'wagmi';
+
 import { config } from '../../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../constants';
 import { useGameContext, useStepper } from '../../providers';
@@ -21,13 +24,11 @@ interface UseSubmitCombinationReturn {
 export const useSubmitCombination = (): UseSubmitCombinationReturn => {
   const baseId = useId();
   const { address } = useAccount();
-  const { ticketNumber } = useGameContext();
+  const { ticket } = useGameContext();
   const { nextStep } = useStepper();
 
-  console.log(ticketNumber);
-
   const [isSubmittingCombination, setIsSubmittingCombination] = useState(false);
-  const [playerCombination, setPlayerCombination] = useState<(number | null)[]>(Array(5).fill(null));
+  const [playerCombination, setPlayerCombination] = useState<(number | null)[]>(Array(5).fill(''));
   const [hasDuplicates, setHasDuplicates] = useState(false);
 
   const preventNonNumericInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -37,10 +38,9 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
 
   const handleChange = (index: number, value: string) => {
     const updatedCombination = [...playerCombination];
-    updatedCombination[index] = value === '' ? null : Number(value); // Update to null if empty or number
+    updatedCombination[index] = value === '' ? 0 : Number(value);
     setPlayerCombination(updatedCombination);
 
-    // Check for duplicates after updating
     const nonEmpty = updatedCombination.filter(v => v !== null);
     const unique = new Set(nonEmpty);
     setHasDuplicates(nonEmpty.length !== unique.size);
@@ -64,7 +64,7 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
         abi: LOTTERY_ABI,
         address: LOTTERY_CONTRACT_ADDRESS,
         functionName: 'submitCombination',
-        args: [BigInt(ticketNumber), playerCombination],
+        args: [BigInt(ticket?.id as number), playerCombination],
         account: address,
       });
 

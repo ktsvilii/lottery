@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
+import { readContract } from '@wagmi/core';
 import { useAccount } from 'wagmi';
 
 import { config } from '../../wagmi';
@@ -8,10 +8,15 @@ import { config } from '../../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../constants';
 import { useGameContext, useStepper } from '../../providers';
 
-import { getResultsLog } from './getResultsLog';
-
 const COUNTDOWN_DURATION = 120;
-export const COUNTDOWN_STORAGE_KEY = 'countdown_end_time';
+const COUNTDOWN_STORAGE_KEY = 'countdown_end_time';
+
+type PreviewResultsReturn = [
+  number,
+  bigint,
+  [number, number, number, number, number],
+  [number, number, number, number, number],
+];
 
 interface UseCountdownReturn {
   isCheckingResults: boolean;
@@ -22,8 +27,7 @@ interface UseCountdownReturn {
 
 export const useCountdown = (): UseCountdownReturn => {
   const { address } = useAccount();
-  const { ticketNumber, setPlayerCombination, setWinningCombination, setRewardAmount, setMatchingNumbers } =
-    useGameContext();
+  const { ticket, setTicketState } = useGameContext();
   const { nextStep } = useStepper();
 
   const [isCheckingResults, setIsCheckingResults] = useState(false);
@@ -33,11 +37,11 @@ export const useCountdown = (): UseCountdownReturn => {
   const seconds = timeLeft % 60;
 
   useEffect(() => {
-    let endTime = Number(localStorage.getItem(COUNTDOWN_STORAGE_KEY));
+    let endTime = Number(localStorage.getItem(`${COUNTDOWN_STORAGE_KEY}_${ticket?.id}`));
 
     if (!endTime || isNaN(endTime)) {
       endTime = Date.now() + COUNTDOWN_DURATION * 1000;
-      localStorage.setItem(COUNTDOWN_STORAGE_KEY, String(endTime));
+      localStorage.setItem(`${COUNTDOWN_STORAGE_KEY}_${ticket?.id}`, String(endTime));
     }
 
     const updateCountdown = () => {
@@ -50,30 +54,22 @@ export const useCountdown = (): UseCountdownReturn => {
     const interval = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [ticket?.id]);
 
   const seeResults = async () => {
     setIsCheckingResults(true);
     try {
-      const { request } = await simulateContract(config, {
+      const result = await readContract(config, {
         abi: LOTTERY_ABI,
         address: LOTTERY_CONTRACT_ADDRESS,
-        functionName: 'getResults',
-        args: [BigInt(ticketNumber)],
+        functionName: 'previewResults',
+        args: [BigInt(ticket?.id as number)],
         account: address,
       });
 
-      const txHash = await writeContract(config, request);
-      const receipt = await waitForTransactionReceipt(config, { hash: txHash });
+      const [matchingNumbers, reward, playerCombination, winningCombination] = result as PreviewResultsReturn;
 
-      const { playerCombination, winningCombination, rewardAmount, matchingNumbers } = getResultsLog(receipt.logs);
-
-      setPlayerCombination(playerCombination);
-      setWinningCombination(winningCombination);
-      setRewardAmount(rewardAmount);
-      setMatchingNumbers(matchingNumbers);
-
-      return txHash;
+      setTicketState({ matchingNumbers, reward, playerCombination, winningCombination });
     } catch (err) {
       console.error('Submitting combination failed:', err);
       throw err;

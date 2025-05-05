@@ -23,6 +23,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
     uint256 private operationsBalance;
     uint256 private ownerBalance;
     uint256 public nextTicketId;
+    uint256[] public allTicketIds;
 
     uint256[5] private DEFAULT_COMBINATION;
 
@@ -33,13 +34,15 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         uint256 purchaseTimestamp;
         uint256[5] playerCombination;
         uint256[5] winningCombination;
+        uint8 matchingNumbers;
+        uint256 reward;
         bool isRewardClaimed;
         bool playerCombinationSubmitted;
         bool winningCombinationGenerated;
     }
 
     // Mappings
-    mapping(address => LotteryTicket[]) public playerTickets;
+    mapping(address => uint256[]) public playerTicketIds;
 
     mapping(uint256 => LotteryTicket) public tickets;
 
@@ -97,27 +100,33 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
     }
 
     // Main logic
-    function buyTicket() public payable {
+    function buyTicket() public payable returns (LotteryTicket memory) {
         require(tx.origin == msg.sender, "Only real players!");
         require(msg.value == TICKET_PRICE_WEI, "Transaction value is too low!");
 
         LotteryTicket memory newTicket = LotteryTicket({
-            id: nextTicketId++,
+            id: nextTicketId,
             owner: msg.sender,
             purchaseTimestamp: block.timestamp,
             playerCombination: DEFAULT_COMBINATION,
             winningCombination: DEFAULT_COMBINATION,
+            matchingNumbers: 0,
+            reward: 0,
             isRewardClaimed: false,
             playerCombinationSubmitted: false,
             winningCombinationGenerated: false
         });
 
         tickets[newTicket.id] = newTicket;
-        playerTickets[msg.sender].push(newTicket);
+        playerTicketIds[msg.sender].push(nextTicketId);
+        allTicketIds.push(nextTicketId);
+
+        nextTicketId++;
 
         distribute(msg.value);
 
         emit TicketPurchased(msg.sender, newTicket.id);
+        return newTicket;
     }
 
     function submitCombination(
@@ -179,7 +188,6 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             ticket.playerCombination,
             ticket.winningCombination
         );
-
         rewardAmount = _calculateReward(matchingNumbers);
         playerCombination = ticket.playerCombination;
         winningCombination = ticket.winningCombination;
@@ -209,7 +217,8 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             payout = jackpot;
             jackpot = 0;
         }
-
+        ticket.matchingNumbers = matchingNumbers;
+        ticket.reward = rewardAmount;
         ticket.isRewardClaimed = true;
 
         _sendReward(ticket.owner, payout);
@@ -342,8 +351,27 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         return jackpot;
     }
 
+    function getAllTickets()
+        external
+        view
+        _onlyOwner
+        returns (LotteryTicket[] memory)
+    {
+        uint256 len = allTicketIds.length;
+        LotteryTicket[] memory result = new LotteryTicket[](len);
+        for (uint256 i = 0; i < len; i++) {
+            result[i] = tickets[allTicketIds[i]];
+        }
+        return result;
+    }
+
     function getPlayerTickets() external view returns (LotteryTicket[] memory) {
-        return playerTickets[msg.sender];
+        uint256[] memory ids = playerTicketIds[msg.sender];
+        LotteryTicket[] memory result = new LotteryTicket[](ids.length);
+        for (uint i = 0; i < ids.length; i++) {
+            result[i] = tickets[ids[i]];
+        }
+        return result;
     }
 
     function withdrawOwnerBalance() public payable _onlyOwner {

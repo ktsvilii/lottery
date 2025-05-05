@@ -1,3 +1,3 @@
 export * from './ThemeProvider';
 export * from './GameStepperProvider';
-export * from './GameContext';
+export * from './GameProvider';

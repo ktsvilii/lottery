@@ -18,16 +18,8 @@ const faucetLinks = [
 export const StartGame: FC = () => {
   const navigate = useNavigate();
 
-  const {
-    isGameStarted,
-    address,
-    hasEnoughEth,
-    faucetVisited,
-    isRescanning,
-    handleFaucetVisited,
-    handleRescan,
-    handleConnectWallet,
-  } = useStartGame();
+  const { address, hasEnoughEth, faucetVisited, isRescanning, handleFaucetVisited, handleRescan, handleConnectWallet } =
+    useStartGame();
 
   const handleStartGame = useCallback(() => {
     if (hasEnoughEth) {
@@ -39,7 +31,7 @@ export const StartGame: FC = () => {
 
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const heading = address ? (isGameStarted ? 'Return to your game' : 'Ready to play?') : 'Connect your wallet';
+  const heading = address ? 'Ready to play?' : 'Connect your wallet';
   const buttonLabel = address ? "Let's start!" : 'Connect MetaMask';
   const buttonHandler = address ? handleStartGame : handleConnectWallet;
 

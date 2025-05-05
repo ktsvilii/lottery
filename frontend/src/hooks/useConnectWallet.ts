@@ -29,7 +29,6 @@ export const useConnectWallet = (): ConnectWalletReturns => {
 
   const [hasEnoughEth, setHasEnoughEth] = useState(false);
 
-  // Check if the user has enough ETH (>= 2 USD equivalent)
   const checkEthBalance = useCallback(() => {
     if (balance?.value && balance.value > 1e14 * 3) {
       setHasEnoughEth(true);
@@ -38,12 +37,10 @@ export const useConnectWallet = (): ConnectWalletReturns => {
     }
   }, [balance?.value]);
 
-  // Request to switch the chain to Sepolia if not already connected
   const requestSwitchChain = useCallback(() => {
     switchChain({ chainId: sepolia.id });
   }, [switchChain]);
 
-  // Side effect to handle chain switching and balance check
   useEffect(() => {
     if (isConnected && address && !isLoading) {
       if (chain?.id !== sepolia.id) {

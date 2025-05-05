@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
-import { useAccount, useReadContract, useWatchContractEvent } from 'wagmi';
+import { useAccount } from 'wagmi';
 
 import { config } from '../../wagmi';
 
@@ -13,17 +13,14 @@ import { useGameContext, useStepper } from '../../providers';
 const TICKET_PRICE_WEI = BigInt(1e14);
 
 interface UseBuyTicketReturn {
-  activeTicket: bigint | undefined;
   isPurchasingTicket: boolean;
-  isLoadingActiveTicket: boolean;
-  refetchTicketHandler: () => Promise<void>;
   buyTicketHandler: () => Promise<void>;
 }
 
 export const useBuyTicket = (): UseBuyTicketReturn => {
   const { address } = useAccount();
   const { nextStep } = useStepper();
-  const { setTicketNumber } = useGameContext();
+  const { setTicketState } = useGameContext();
 
   const [isPurchasingTicket, setIsPurchasingTicket] = useState(false);
 
@@ -34,7 +31,6 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
         abi: LOTTERY_ABI,
         address: LOTTERY_CONTRACT_ADDRESS,
         functionName: 'buyTicket',
-        args: [],
         value: TICKET_PRICE_WEI,
         account: address,
       });
@@ -43,8 +39,7 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
       const receipt = await waitForTransactionReceipt(config, { hash: txHash });
 
       const ticketId = getTicketPurchasedLog(receipt.logs);
-      console.log('Purchased ticket ID:', ticketId);
-      setTicketNumber(ticketId);
+      setTicketState({ id: ticketId });
 
       return txHash;
     } catch (err) {
@@ -55,29 +50,6 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
     }
   };
 
-  const {
-    data: activeTicketData,
-    refetch: refetchActiveTicket,
-    isLoading: isLoadingActiveTicket,
-  } = useReadContract({
-    address: LOTTERY_CONTRACT_ADDRESS,
-    abi: LOTTERY_ABI,
-    functionName: 'getActiveTicketNumber',
-    account: address,
-    args: [address],
-  });
-
-  const activeTicket = activeTicketData ? BigInt(activeTicketData.toString()) : undefined;
-
-  useWatchContractEvent({
-    address: LOTTERY_CONTRACT_ADDRESS,
-    abi: LOTTERY_ABI,
-    eventName: 'TicketPurchased',
-    onLogs() {
-      refetchActiveTicket();
-    },
-  });
-
   const buyTicketHandler = async () => {
     try {
       await buyTicket();
@@ -87,16 +59,8 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
     }
   };
 
-  const refetchTicketHandler = async () => {
-    await refetchActiveTicket();
-    nextStep();
-  };
-
   return {
-    activeTicket,
     isPurchasingTicket,
-    isLoadingActiveTicket,
-    refetchTicketHandler,
     buyTicketHandler,
   };
 };

@@ -29,7 +29,7 @@ export const SubmitCombinationStep: FC = () => {
             </label>
             <input
               id={`${baseId}-${i}`}
-              type='number'
+              type='text'
               className='input validator max-w-14 input-xl'
               onKeyDown={preventNonNumericInput}
               value={playerCombination[i] as unknown as string}
@@ -47,7 +47,7 @@ export const SubmitCombinationStep: FC = () => {
 
       <button
         className='btn btn-sm btn-outline min-w-72 text-xl h-16'
-        disabled={!isValid()}
+        disabled={!isValid() || isSubmittingCombination}
         onClick={submitPlayerCombinationHandler}
       >
         {isSubmittingCombination ? <Loader size='xl' /> : 'Submit combination'}

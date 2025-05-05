@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect, ReactNode, useCallback, useMemo } from 'react';
+import { createContext, useContext, useState, ReactNode, useCallback, useMemo } from 'react';
 
 import { BuyTicketStep, CheckResultsStep, CountdownStep, SubmitCombinationStep } from '../components';
-import { useGameContext } from './GameContext';
+import { TicketStatus } from '../types';
 
 type Step = {
   id: number;
@@ -12,7 +12,8 @@ type StepContextType = {
   step: number;
   steps: Step[];
   nextStep: () => void;
-  goToFirstStep: () => void;
+  setStepByTicketStatus: (ticketStatus: TicketStatus) => void;
+  setCurrentStep: (newStep: number) => void;
 };
 
 const StepContext = createContext<StepContextType | undefined>(undefined);
@@ -23,9 +24,7 @@ type StepProviderProps = {
 
 export const GameStepperProvider = ({ children }: StepProviderProps) => {
   const [step, setStep] = useState(0);
-  const { setIsGameStarted } = useGameContext();
 
-  // Wrap the steps definition in useMemo to avoid unnecessary recalculations
   const steps = useMemo(
     () => [
       { id: 1, content: <BuyTicketStep /> },
@@ -36,47 +35,57 @@ export const GameStepperProvider = ({ children }: StepProviderProps) => {
     [],
   );
 
-  // Wrap the goToOriginalStep function in useCallback
-  const goToFirstStep = useCallback(() => {
-    setStep(0);
-    localStorage.setItem('currentStep', String(0));
-    localStorage.setItem('isGameStarted', 'false');
-  }, []);
-
-  // Wrap the nextStep function in useCallback to prevent re-creation on each render
   const nextStep = useCallback(() => {
-    if (step === 0) {
-      setIsGameStarted(true);
-      localStorage.setItem('isGameStarted', 'true');
-    }
-
     if (step < steps.length - 1) {
       const next = step + 1;
       setStep(next);
-      localStorage.setItem('currentStep', String(next));
     }
-  }, [setIsGameStarted, step, steps.length]);
+  }, [step, steps.length]);
 
-  // Retrieve saved state from localStorage on load
-  useEffect(() => {
-    const savedStarted = localStorage.getItem('isGameStarted') === 'true';
-    const savedStep = localStorage.getItem('currentStep');
+  const setCurrentStep = useCallback(
+    (newStep: number) => {
+      if (newStep >= 0 && newStep < steps.length) {
+        if (newStep === 0) {
+          setStep(0);
+          localStorage.setItem('currentStep', String(0));
+        } else {
+          setStep(newStep);
+          localStorage.setItem('currentStep', String(newStep));
+        }
+      }
+    },
+    [steps.length],
+  );
 
-    if (savedStep !== null) {
-      setStep(Number(savedStep));
-    }
-    setIsGameStarted(savedStarted);
-  }, [setIsGameStarted]);
+  const setStepByTicketStatus = useCallback(
+    (ticketStatus: TicketStatus) => {
+      switch (ticketStatus) {
+        case TicketStatus.REWARD_CLAIMED:
+          setCurrentStep(3);
+          break;
+        case TicketStatus.READY_TO_CHECK_RESULTS:
+        case TicketStatus.COMBINATION_SUBMITTED:
+          setCurrentStep(2);
+          break;
+        case TicketStatus.PURCHASED:
+          setCurrentStep(1);
+          break;
+        default:
+          return;
+      }
+    },
+    [setCurrentStep],
+  );
 
-  // Wrap the context value in useMemo to avoid unnecessary re-renders
   const contextValue = useMemo(
     () => ({
       step,
       steps,
       nextStep,
-      goToFirstStep,
+      setStepByTicketStatus,
+      setCurrentStep,
     }),
-    [step, steps, nextStep, goToFirstStep],
+    [step, steps, nextStep, setStepByTicketStatus, setCurrentStep],
   );
 
   return <StepContext.Provider value={contextValue}>{children}</StepContext.Provider>;

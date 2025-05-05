@@ -9,3 +9,5 @@ export * from './BuyTicketStep';
 export * from './SubmitCombinationStep';
 export * from './CountdownStep';
 export * from './CheckResultsStep';
+export * from './TicketCard';
+export * from './FallbackUI';

@@ -2,10 +2,8 @@ import { useCallback, useState } from 'react';
 
 import { useConnectWallet } from '../../hooks';
 import { useConnect } from 'wagmi';
-import { useGameContext } from '../../providers';
 
 interface UseStartGameReturn {
-  isGameStarted: boolean;
   address?: string;
   hasEnoughEth: boolean;
   faucetVisited: boolean;
@@ -18,7 +16,6 @@ interface UseStartGameReturn {
 export const useStartGame = (): UseStartGameReturn => {
   const { connectors, connect } = useConnect();
 
-  const { isGameStarted } = useGameContext();
   const { address, hasEnoughEth, refetch } = useConnectWallet();
 
   const [faucetVisited, setFaucetVisited] = useState(false);
@@ -52,7 +49,6 @@ export const useStartGame = (): UseStartGameReturn => {
   }, [connectors, connect]);
 
   return {
-    isGameStarted,
     address,
     hasEnoughEth,
     faucetVisited,
