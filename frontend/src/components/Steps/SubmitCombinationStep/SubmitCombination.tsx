@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useSubmitCombination } from './useSubmitCombination';
-import { Loader } from '../Loader';
+import { Loader } from '../../Loader';
 
 export const SubmitCombinationStep: FC = () => {
   const {

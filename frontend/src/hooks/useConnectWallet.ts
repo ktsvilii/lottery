@@ -7,7 +7,7 @@ import { GetBalanceErrorType } from 'viem';
 
 interface ConnectWalletReturns {
   address: string | undefined;
-  hasEnoughEth: boolean;
+  isEnoughETH: boolean;
   isConnected: boolean;
   refetch: () => Promise<
     QueryObserverResult<
@@ -27,13 +27,13 @@ export const useConnectWallet = (): ConnectWalletReturns => {
   const { data: balance, isLoading, refetch } = useBalance({ address });
   const { switchChain } = useSwitchChain();
 
-  const [hasEnoughEth, setHasEnoughEth] = useState(false);
+  const [isEnoughETH, setIsEnoughETH] = useState(false);
 
   const checkEthBalance = useCallback(() => {
     if (balance?.value && balance.value > 1e14 * 3) {
-      setHasEnoughEth(true);
+      setIsEnoughETH(true);
     } else {
-      setHasEnoughEth(false);
+      setIsEnoughETH(false);
     }
   }, [balance?.value]);
 
@@ -52,7 +52,7 @@ export const useConnectWallet = (): ConnectWalletReturns => {
 
   return {
     address,
-    hasEnoughEth,
+    isEnoughETH,
     isConnected,
     refetch,
   };

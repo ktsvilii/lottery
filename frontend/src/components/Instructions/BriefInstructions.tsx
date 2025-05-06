@@ -73,7 +73,7 @@ export const BriefInstructions: FC = () => {
       <p className='md:mt-5 xlg:mt-12 place-self-center'>
         <small>
           More details of the ETHery game can be found{' '}
-          <Link className='link link-info' to='/faq'>
+          <Link className='link' to='/faq'>
             on the FAQ page
           </Link>
         </small>

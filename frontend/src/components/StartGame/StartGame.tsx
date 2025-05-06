@@ -18,16 +18,23 @@ const faucetLinks = [
 export const StartGame: FC = () => {
   const navigate = useNavigate();
 
-  const { address, hasEnoughEth, faucetVisited, isRescanning, handleFaucetVisited, handleRescan, handleConnectWallet } =
-    useStartGame();
+  const {
+    address,
+    isEnoughETH,
+    isFaucetVisited,
+    isRescanning,
+    handleisFaucetVisited,
+    handleRescan,
+    handleConnectWallet,
+  } = useStartGame();
 
   const handleStartGame = useCallback(() => {
-    if (hasEnoughEth) {
+    if (isEnoughETH) {
       navigate('/game');
     } else {
       (modalRef as React.RefObject<HTMLDialogElement>).current?.showModal();
     }
-  }, [hasEnoughEth, navigate]);
+  }, [isEnoughETH, navigate]);
 
   const modalRef = useRef<HTMLDialogElement>(null);
 
@@ -54,7 +61,7 @@ export const StartGame: FC = () => {
               target='_blank'
               rel='noopener noreferrer'
               className='btn btn-sm btn-neutral h-10 w-full sm:w-[48%]'
-              onClick={handleFaucetVisited}
+              onClick={handleisFaucetVisited}
             >
               {label}
             </a>
@@ -62,7 +69,7 @@ export const StartGame: FC = () => {
 
           <button
             className='btn btn-md btn-neutral h-12 w-full'
-            disabled={!faucetVisited || isRescanning}
+            disabled={!isFaucetVisited || isRescanning}
             onClick={handleRescan}
           >
             {isRescanning ? 'Rescanning...' : 'Rescan Sepolia ETH balance'}

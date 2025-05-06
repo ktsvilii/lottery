@@ -3,17 +3,18 @@ import { useId, useState, Dispatch, SetStateAction } from 'react';
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 
 import { useAccount } from 'wagmi';
+import { useGameContext, useStepper } from '../../../providers';
+import { config } from '../../../wagmi';
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 
-import { config } from '../../wagmi';
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../constants';
-import { useGameContext, useStepper } from '../../providers';
+type UserCombination = number | string | null;
 
 interface UseSubmitCombinationReturn {
-  playerCombination: (number | null)[];
+  playerCombination: UserCombination[];
   baseId: string;
   hasDuplicates: boolean;
   isSubmittingCombination: boolean;
-  setPlayerCombination: Dispatch<SetStateAction<(number | null)[]>>;
+  setPlayerCombination: Dispatch<SetStateAction<UserCombination[]>>;
   submitCombination: () => Promise<string>;
   preventNonNumericInput: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleChange: (index: number, value: string) => void;
@@ -28,7 +29,7 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
   const { nextStep } = useStepper();
 
   const [isSubmittingCombination, setIsSubmittingCombination] = useState(false);
-  const [playerCombination, setPlayerCombination] = useState<(number | null)[]>(Array(5).fill(''));
+  const [playerCombination, setPlayerCombination] = useState<(number | string | null)[]>(Array(5).fill(null));
   const [hasDuplicates, setHasDuplicates] = useState(false);
 
   const preventNonNumericInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -38,7 +39,7 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
 
   const handleChange = (index: number, value: string) => {
     const updatedCombination = [...playerCombination];
-    updatedCombination[index] = value === '' ? 0 : Number(value);
+    updatedCombination[index] = value === null ? '' : Number(value);
     setPlayerCombination(updatedCombination);
 
     const nonEmpty = updatedCombination.filter(v => v !== null);

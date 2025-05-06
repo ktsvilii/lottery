@@ -77,6 +77,8 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         uint256 indexed amount
     );
 
+    event FundJackpot(address indexed sender, uint256 indexed amount);
+
     event Distribute(address indexed owner, uint256 indexed amount);
 
     event OwnerBalanceWithdraw(address indexed owner, uint256 indexed amount);
@@ -218,7 +220,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             jackpot = 0;
         }
         ticket.matchingNumbers = matchingNumbers;
-        ticket.reward = rewardAmount;
+        ticket.reward = payout;
         ticket.isRewardClaimed = true;
 
         _sendReward(ticket.owner, payout);
@@ -317,15 +319,15 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         if (matchingNumbers == 0) {
             return 0;
         } else if (matchingNumbers == 1) {
-            return TICKET_PRICE_WEI;
+            return (TICKET_PRICE_WEI * 80) / 100;
         } else if (matchingNumbers == 2) {
             return (jackpot * 5) / 100;
         } else if (matchingNumbers == 3) {
-            return (jackpot * 10) / 100;
+            return (jackpot * 15) / 100;
         } else if (matchingNumbers == 4) {
-            return (jackpot * 30) / 100;
+            return (jackpot * 35) / 100;
         } else {
-            return jackpot;
+            return (jackpot * 75) / 100;
         }
     }
 
@@ -372,6 +374,11 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             result[i] = tickets[ids[i]];
         }
         return result;
+    }
+
+    function fundJackpot(uint256 amount) external {
+        jackpot += amount;
+        emit FundJackpot(msg.sender, amount);
     }
 
     function withdrawOwnerBalance() public payable _onlyOwner {

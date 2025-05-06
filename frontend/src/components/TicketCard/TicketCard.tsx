@@ -8,6 +8,17 @@ interface TicketCardProps {
   ticket: Ticket;
 }
 
+const getTicketStatus = (
+  isRewardClaimed: boolean,
+  winningCombinationGenerated: boolean,
+  playerCombinationSubmitted: boolean,
+): TicketStatus => {
+  if (isRewardClaimed) return TicketStatus.REWARD_CLAIMED;
+  if (winningCombinationGenerated) return TicketStatus.READY_TO_CHECK_RESULTS;
+  if (playerCombinationSubmitted) return TicketStatus.COMBINATION_SUBMITTED;
+  return TicketStatus.PURCHASED;
+};
+
 export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
   const navigate = useNavigate();
 
@@ -16,18 +27,9 @@ export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
   const { setStepByTicketStatus } = useStepper();
   const { setTicketState } = useGameContext();
 
-  const getTicketStatus = (ticket: Ticket): TicketStatus => {
-    const { isRewardClaimed, winningCombinationGenerated, playerCombinationSubmitted } = ticket;
-
-    if (isRewardClaimed) return TicketStatus.REWARD_CLAIMED;
-    if (winningCombinationGenerated) return TicketStatus.READY_TO_CHECK_RESULTS;
-    if (playerCombinationSubmitted) return TicketStatus.COMBINATION_SUBMITTED;
-    return TicketStatus.PURCHASED;
-  };
-
   const displayedCombination = playerCombinationSubmitted ? playerCombination.join(', ') : '—';
 
-  const ticketStatus = getTicketStatus(ticket);
+  const ticketStatus = getTicketStatus(isRewardClaimed, winningCombinationGenerated, playerCombinationSubmitted);
 
   const handleTicketClick = (ticketStatus: TicketStatus) => {
     setStepByTicketStatus(ticketStatus);

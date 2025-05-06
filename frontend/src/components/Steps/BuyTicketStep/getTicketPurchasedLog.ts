@@ -1,7 +1,7 @@
 import { Log, parseAbiItem, decodeEventLog } from 'viem';
-import { LOTTERY_CONTRACT_ADDRESS } from '../../constants';
+import { LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 
-export function getTicketPurchasedLog(logs: Log[]) {
+export const getTicketPurchasedLog = (logs: Log[]) => {
   const ticketPurchasedEvent = parseAbiItem(
     'event TicketPurchased(address indexed player, uint256 indexed ticketNumber)',
   );
@@ -21,8 +21,7 @@ export function getTicketPurchasedLog(logs: Log[]) {
       });
 
       if (parsed.eventName === 'TicketPurchased') {
-        const ticketNumber = parsed.args.ticketNumber ?? parsed.args[1];
-        console.log('Extracted ticketNumber:', ticketNumber);
+        const ticketNumber = parsed.args.ticketNumber;
         return Number(ticketNumber);
       }
     } catch (err) {
@@ -32,4 +31,4 @@ export function getTicketPurchasedLog(logs: Log[]) {
   }
 
   throw new Error('TicketPurchased event not found in logs');
-}
+};

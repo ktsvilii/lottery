@@ -5,10 +5,10 @@ import { useConnect } from 'wagmi';
 
 interface UseStartGameReturn {
   address?: string;
-  hasEnoughEth: boolean;
-  faucetVisited: boolean;
+  isEnoughETH: boolean;
+  isFaucetVisited: boolean;
   isRescanning: boolean;
-  handleFaucetVisited: () => void;
+  handleisFaucetVisited: () => void;
   handleRescan: () => void;
   handleConnectWallet: () => void;
 }
@@ -16,9 +16,9 @@ interface UseStartGameReturn {
 export const useStartGame = (): UseStartGameReturn => {
   const { connectors, connect } = useConnect();
 
-  const { address, hasEnoughEth, refetch } = useConnectWallet();
+  const { address, isEnoughETH, refetch } = useConnectWallet();
 
-  const [faucetVisited, setFaucetVisited] = useState(false);
+  const [isFaucetVisited, setIsFaucetVisited] = useState(false);
   const [isRescanning, setIsRescanning] = useState(false);
 
   const handleRescan = () => {
@@ -31,8 +31,8 @@ export const useStartGame = (): UseStartGameReturn => {
     setIsRescanning(false);
   };
 
-  const handleFaucetVisited = () => {
-    setFaucetVisited(true);
+  const handleisFaucetVisited = () => {
+    setIsFaucetVisited(true);
   };
 
   const handleConnectWallet = useCallback(() => {
@@ -50,10 +50,10 @@ export const useStartGame = (): UseStartGameReturn => {
 
   return {
     address,
-    hasEnoughEth,
-    faucetVisited,
+    isEnoughETH,
+    isFaucetVisited,
     isRescanning,
-    handleFaucetVisited,
+    handleisFaucetVisited,
     handleRescan,
     handleConnectWallet,
   };

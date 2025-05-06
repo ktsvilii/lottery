@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { readContract } from '@wagmi/core';
 import { useAccount } from 'wagmi';
-
-import { config } from '../../wagmi';
-
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../constants';
-import { useGameContext, useStepper } from '../../providers';
+import { useGameContext, useStepper } from '../../../providers';
+import { config } from '../../../wagmi';
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 
 const COUNTDOWN_DURATION = 120;
 const COUNTDOWN_STORAGE_KEY = 'countdown_end_time';

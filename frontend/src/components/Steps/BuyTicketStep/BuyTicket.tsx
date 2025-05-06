@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
 import { useBuyTicket } from './useBuyTicket';
-import { useFetchTickets } from '../../hooks';
+import { useFetchTickets } from '../../../hooks';
 
-import { Loader } from '../Loader';
+import { Loader } from '../../Loader';
 
 export const BuyTicketStep: FC = () => {
   const { isPurchasingTicket, buyTicketHandler } = useBuyTicket();

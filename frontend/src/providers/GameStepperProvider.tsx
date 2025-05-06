@@ -45,13 +45,8 @@ export const GameStepperProvider = ({ children }: StepProviderProps) => {
   const setCurrentStep = useCallback(
     (newStep: number) => {
       if (newStep >= 0 && newStep < steps.length) {
-        if (newStep === 0) {
-          setStep(0);
-          localStorage.setItem('currentStep', String(0));
-        } else {
-          setStep(newStep);
-          localStorage.setItem('currentStep', String(newStep));
-        }
+        setStep(newStep);
+        localStorage.setItem('currentStep', String(newStep));
       }
     },
     [steps.length],

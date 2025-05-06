@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 import { useAccount } from 'wagmi';
 
-import { config } from '../../wagmi';
+import { config } from '../../../wagmi';
 
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../constants';
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 
 import { getTicketPurchasedLog } from './getTicketPurchasedLog';
-import { useGameContext, useStepper } from '../../providers';
+import { useGameContext, useStepper } from '../../../providers';
 
 const TICKET_PRICE_WEI = BigInt(1e14);
 
