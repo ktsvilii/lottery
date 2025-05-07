@@ -44,12 +44,12 @@ export const useCountdown = (): UseCountdownReturn => {
 
     const updateCountdown = () => {
       const now = Date.now();
-      const diff = Math.max(0, Math.floor((endTime - now) / 1000));
+      const diff = Math.max(0, Math.round((endTime - now) / 1000));
       setTimeLeft(diff);
     };
 
     updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
+    const interval = setInterval(updateCountdown, 200);
 
     return () => clearInterval(interval);
   }, [ticket?.id]);

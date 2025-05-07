@@ -6,7 +6,7 @@ import { useAccount } from 'wagmi';
 
 import { config } from '../../../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
-import { useGameContext, useStepper } from '../../../providers';
+import { useGameContext, useNotifications, useStepper } from '../../../providers';
 import { useNavigate } from 'react-router-dom';
 import { Ticket } from '../../../types';
 
@@ -21,6 +21,7 @@ interface UseCheckResultsReturn {
 export const useCheckResults = (): UseCheckResultsReturn => {
   const navigate = useNavigate();
   const { address } = useAccount();
+  const { toggleNotification } = useNotifications();
 
   const { setCurrentStep } = useStepper();
   const { ticket, setTicketState } = useGameContext();
@@ -41,9 +42,17 @@ export const useCheckResults = (): UseCheckResultsReturn => {
 
       await waitForTransactionReceipt(config, { hash: txHash });
       setTicketState({ isRewardClaimed: true });
+      toggleNotification({
+        content: 'Reward claimed successfuly',
+        type: 'success',
+      });
 
       return txHash;
     } catch (err) {
+      toggleNotification({
+        content: 'Error during reward claiming',
+        type: 'error',
+      });
       console.error('Submitting combination failed:', err);
       setTicketState({ isRewardClaimed: true });
       throw err;
