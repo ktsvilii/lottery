@@ -316,19 +316,71 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
     ) internal view returns (uint256) {
         require(matchingNumbers <= 5, "Unexpected matching number count");
 
-        if (matchingNumbers == 0) {
-            return 0;
-        } else if (matchingNumbers == 1) {
-            return (TICKET_PRICE_WEI * 80) / 100;
-        } else if (matchingNumbers == 2) {
-            return (jackpot * 5) / 100;
-        } else if (matchingNumbers == 3) {
-            return (jackpot * 15) / 100;
-        } else if (matchingNumbers == 4) {
-            return (jackpot * 35) / 100;
+        if (matchingNumbers == 0) return 0;
+
+        if (jackpot < 1 ether) {
+            if (matchingNumbers == 1) return (jackpot * 75) / 1000000; // 0.000075 ETH
+            if (matchingNumbers == 2) return (jackpot * 13) / 100000; // 0.00013 ETH
+            if (matchingNumbers == 3) return (jackpot * 1) / 2500; // 0.0004 ETH
+            if (matchingNumbers == 4) return (jackpot * 1) / 10; // 0.1 ETH
+            if (matchingNumbers == 5) return (jackpot * 1) / 4; // 0.25 ETH
+        } else if (jackpot < 1.5 ether) {
+            if (matchingNumbers == 1) return (jackpot * 1) / 18750; // 0.00008 ETH
+            if (matchingNumbers == 2) return (jackpot * 1) / 11111; // 0.000135 ETH
+            if (matchingNumbers == 3) return (jackpot * 1) / 3000; // 0.0005 ETH
+            if (matchingNumbers == 4) return (jackpot * 1) / 15; // 0.1 ETH
+            if (matchingNumbers == 5) return (jackpot * 1) / 5; // 0.3 ETH
+        } else if (jackpot < 2 ether) {
+            if (matchingNumbers == 1) return (jackpot * 95) / 2500000; // 0.000076 ETH
+            if (matchingNumbers == 2) return (jackpot * 33) / 500000; // 0.000132 ETH
+            if (matchingNumbers == 3) return (jackpot * 9) / 40000; // 0.00045 ETH
+            if (matchingNumbers == 4) return (jackpot * 11) / 200; // 0.11 ETH
+            if (matchingNumbers == 5) return (jackpot * 33) / 200; // 0.33 ETH
+        } else if (jackpot < 3 ether) {
+            if (matchingNumbers == 1) return (jackpot * 95) / 3_750_000; // 0.000076 ETH
+            if (matchingNumbers == 2) return (jackpot * 9) / 200_000; // 0.000135 ETH
+            if (matchingNumbers == 3) return (jackpot * 1) / 6000; // 0.0005 ETH
+            if (matchingNumbers == 4) return (jackpot * 13) / 300; // 0.13 ETH
+            if (matchingNumbers == 5) return (jackpot * 7) / 60; // 0.35 ETH
+        } else if (jackpot < 5 ether) {
+            if (matchingNumbers == 1) return (jackpot * 39) / 25_000_000; // 0.000078 ETH
+            if (matchingNumbers == 2) return (jackpot * 137) / 5_000_000; // 0.000137 ETH
+            if (matchingNumbers == 3) return (jackpot * 11) / 100_000; // 0.00055 ETH
+            if (matchingNumbers == 4) return (jackpot * 27) / 1000; // 0.135 ETH
+            if (matchingNumbers == 5) return (jackpot * 37) / 500; // 0.37 ETH
+        } else if (jackpot < 7 ether) {
+            if (matchingNumbers == 1) return (jackpot * 79) / 7_000_000; // 0.000079 ETH
+            if (matchingNumbers == 2) return (jackpot * 139) / 7_000_000; // 0.000139 ETH
+            if (matchingNumbers == 3) return (jackpot * 29) / 3_5000; // 0.00058 ETH
+            if (matchingNumbers == 4) return (jackpot * 1) / 50; // 0.14 ETH
+            if (matchingNumbers == 5) return (jackpot * 4) / 70; // 0.4 ETH
+        } else if (jackpot < 10 ether) {
+            if (matchingNumbers == 1) return (jackpot * 1) / 125000; // 0.00008 ETH
+            if (matchingNumbers == 2) return (jackpot * 141) / 10_000_000; // 0.000141 ETH
+            if (matchingNumbers == 3) return (jackpot * 3) / 5000; // 0.0006 ETH
+            if (matchingNumbers == 4) return (jackpot * 9) / 500; // 0.18 ETH
+            if (matchingNumbers == 5) return (jackpot * 21) / 500; // 0.42 ETH
+        } else if (jackpot < 15 ether) {
+            if (matchingNumbers == 1) return (jackpot * 81) / 1000000; // 0.000081 ETH
+            if (matchingNumbers == 2) return (jackpot * 143) / 1000000; // 0.000143 ETH
+            if (matchingNumbers == 3) return (jackpot * 63) / 100000; // 0.00063 ETH
+            if (matchingNumbers == 4) return (jackpot * 2) / 75; // 0.2 ETH
+            if (matchingNumbers == 5) return (jackpot * 45) / 100; // 0.45 ETH
+        } else if (jackpot < 22 ether) {
+            if (matchingNumbers == 1) return (jackpot * 83) / 1000000; // 0.000083 ETH
+            if (matchingNumbers == 2) return (jackpot * 145) / 1000000; // 0.000145 ETH
+            if (matchingNumbers == 3) return (jackpot * 67) / 100000; // 0.00067 ETH
+            if (matchingNumbers == 4) return (jackpot * 25) / 100; // 0.25 ETH
+            if (matchingNumbers == 5) return (jackpot * 5) / 10; // 0.5 ETH
         } else {
-            return (jackpot * 75) / 100;
+            if (matchingNumbers == 1) return (jackpot * 85) / 1000000; // 0.000085 ETH
+            if (matchingNumbers == 2) return (jackpot * 148) / 1000000; // 0.000148 ETH
+            if (matchingNumbers == 3) return (jackpot * 69) / 100000; // 0.00069 ETH
+            if (matchingNumbers == 4) return (jackpot * 27) / 100; // 0.27 ETH
+            if (matchingNumbers == 5) return (jackpot * 55) / 100; // 0.55 ETH
         }
+
+        return 0;
     }
 
     function _sendReward(address recipient, uint256 amount) internal {

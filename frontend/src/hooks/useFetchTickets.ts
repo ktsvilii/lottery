@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import { readContract } from '@wagmi/core';
 import { useAccount } from 'wagmi';
 
@@ -8,7 +10,6 @@ import { config } from '../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../constants';
 
 import { Ticket } from '../types';
-import { useNavigate } from 'react-router-dom';
 
 interface UseFetchTicketsReturn {
   tickets: Ticket[] | null;

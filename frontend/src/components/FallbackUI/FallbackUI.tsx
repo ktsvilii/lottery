@@ -15,7 +15,7 @@ export const FallbackUI: FC = () => {
   return (
     <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20 pt-8'>
       <h1 className='text-3xl text-center'>
-        <strong>Something went wrong.</strong> Please try again later
+        <strong>Something went wrong.</strong>
       </h1>
 
       <button className='btn btn-sm btn-outline min-w-60 text-xl h-12' onClick={goHome}>
