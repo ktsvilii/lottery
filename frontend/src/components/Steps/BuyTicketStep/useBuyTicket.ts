@@ -8,7 +8,7 @@ import { config } from '../../../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 
 import { getTicketPurchasedLog } from './getTicketPurchasedLog';
-import { useGameContext, useStepper } from '../../../providers';
+import { useGameContext, useNotifications, useStepper } from '../../../providers';
 
 const TICKET_PRICE_WEI = BigInt(1e14);
 
@@ -21,6 +21,7 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
   const { address } = useAccount();
   const { nextStep } = useStepper();
   const { setTicketState } = useGameContext();
+  const { toggleNotification } = useNotifications();
 
   const [isPurchasingTicket, setIsPurchasingTicket] = useState(false);
 
@@ -53,8 +54,11 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
   const buyTicketHandler = async () => {
     try {
       await buyTicket();
+      toggleNotification({ content: 'Ticket purchased successfully', type: 'success' });
+
       nextStep();
     } catch (error) {
+      toggleNotification({ content: 'Error during ticket purchase', type: 'error' });
       console.error('Error during ticket purchase:', error);
     }
   };
