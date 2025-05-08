@@ -5,16 +5,10 @@ import { useAccount } from 'wagmi';
 import { useGameContext, useStepper } from '../../../providers';
 import { config } from '../../../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
+import { Ticket } from '../../../types';
 
 const COUNTDOWN_DURATION = 120;
 const COUNTDOWN_STORAGE_KEY = 'countdown_end_time';
-
-type PreviewResultsReturn = [
-  number,
-  bigint,
-  [number, number, number, number, number],
-  [number, number, number, number, number],
-];
 
 interface UseCountdownReturn {
   isCheckingResults: boolean;
@@ -44,12 +38,12 @@ export const useCountdown = (): UseCountdownReturn => {
 
     const updateCountdown = () => {
       const now = Date.now();
-      const diff = Math.max(0, Math.floor((endTime - now) / 1000));
+      const diff = Math.max(0, Math.round((endTime - now) / 1000));
       setTimeLeft(diff);
     };
 
     updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
+    const interval = setInterval(updateCountdown, 200);
 
     return () => clearInterval(interval);
   }, [ticket?.id]);
@@ -57,17 +51,15 @@ export const useCountdown = (): UseCountdownReturn => {
   const seeResults = async () => {
     setIsCheckingResults(true);
     try {
-      const result = await readContract(config, {
+      const requestedTicket = await readContract(config, {
         abi: LOTTERY_ABI,
         address: LOTTERY_CONTRACT_ADDRESS,
-        functionName: 'previewResults',
+        functionName: 'getTicketById',
         args: [BigInt(ticket?.id as number)],
         account: address,
       });
 
-      const [matchingNumbers, reward, playerCombination, winningCombination] = result as PreviewResultsReturn;
-
-      setTicketState({ matchingNumbers, reward, playerCombination, winningCombination });
+      setTicketState(requestedTicket as Ticket);
     } catch (err) {
       console.error('Submitting combination failed:', err);
       throw err;

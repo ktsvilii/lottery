@@ -5,7 +5,7 @@ import { formatEther } from 'viem';
 import { ButtonContent } from './ButtonContent';
 
 interface ResultsContentProps {
-  reward: bigint | null;
+  potentialReward: bigint | null;
   matchingNumbers: number;
   isRewardClaimed: boolean;
   isClaimingRewards: boolean;
@@ -13,7 +13,7 @@ interface ResultsContentProps {
 }
 
 export const ResultsContent: FC<ResultsContentProps> = ({
-  reward,
+  potentialReward,
   matchingNumbers,
   isRewardClaimed,
   isClaimingRewards,
@@ -21,11 +21,11 @@ export const ResultsContent: FC<ResultsContentProps> = ({
 }) => {
   return (
     <>
-      {reward ? (
+      {potentialReward ? (
         <div className='container flex flex-col gap-3'>
           <p>
-            You matched {matchingNumbers} number{matchingNumbers !== 1 && 's'}. Your reward is {formatEther(reward)}{' '}
-            ETH.
+            You matched {matchingNumbers} number{matchingNumbers !== 1 && 's'}. Your reward is{' '}
+            {formatEther(potentialReward)} ETH.
           </p>
           <ButtonContent
             isRewardClaimed={isRewardClaimed}

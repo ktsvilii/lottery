@@ -1,7 +1,7 @@
 import React, { RefObject } from 'react';
 
 type Props = {
-  refObj: RefObject<HTMLDialogElement>;
+  refObj: RefObject<HTMLDialogElement | null>;
   children: React.ReactNode;
 };
 

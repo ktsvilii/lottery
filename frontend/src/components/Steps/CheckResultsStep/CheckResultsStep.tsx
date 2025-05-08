@@ -12,7 +12,7 @@ export const CheckResultsStep: FC = () => {
     return <FallbackUI />;
   }
 
-  const { id, playerCombination, winningCombination, reward, matchingNumbers, isRewardClaimed } = ticket;
+  const { id, playerCombination, winningCombination, potentialReward, matchingNumbers, isRewardClaimed } = ticket;
 
   const playerCombinationResult = playerCombination?.join(', ');
   const winningCombinationResult = winningCombination?.join(', ');
@@ -38,7 +38,7 @@ export const CheckResultsStep: FC = () => {
           isClaimingRewards={isClaimingRewards}
           isRewardClaimed={isRewardClaimed}
           matchingNumbers={matchingNumbers}
-          reward={reward}
+          potentialReward={potentialReward}
           claimRewardHandler={claimRewardHandler}
         />
       </h2>

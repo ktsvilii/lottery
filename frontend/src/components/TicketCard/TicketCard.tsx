@@ -32,8 +32,8 @@ export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
   const ticketStatus = getTicketStatus(isRewardClaimed, winningCombinationGenerated, playerCombinationSubmitted);
 
   const handleTicketClick = (ticketStatus: TicketStatus) => {
-    setStepByTicketStatus(ticketStatus);
     setTicketState(ticket);
+    setStepByTicketStatus(ticketStatus);
     navigate('/game');
   };
 

@@ -56,9 +56,9 @@ export const GameStepperProvider = ({ children }: StepProviderProps) => {
     (ticketStatus: TicketStatus) => {
       switch (ticketStatus) {
         case TicketStatus.REWARD_CLAIMED:
+        case TicketStatus.READY_TO_CHECK_RESULTS:
           setCurrentStep(3);
           break;
-        case TicketStatus.READY_TO_CHECK_RESULTS:
         case TicketStatus.COMBINATION_SUBMITTED:
           setCurrentStep(2);
           break;

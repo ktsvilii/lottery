@@ -3,11 +3,11 @@ import { useId, useState, Dispatch, SetStateAction } from 'react';
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 
 import { useAccount } from 'wagmi';
-import { useGameContext, useStepper } from '../../../providers';
+import { useGameContext, useNotifications, useStepper } from '../../../providers';
 import { config } from '../../../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 
-type UserCombination = number | string | null;
+type UserCombination = number | null;
 
 interface UseSubmitCombinationReturn {
   playerCombination: UserCombination[];
@@ -27,9 +27,10 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
   const { address } = useAccount();
   const { ticket } = useGameContext();
   const { nextStep } = useStepper();
+  const { toggleNotification } = useNotifications();
 
   const [isSubmittingCombination, setIsSubmittingCombination] = useState(false);
-  const [playerCombination, setPlayerCombination] = useState<(number | string | null)[]>(Array(5).fill(null));
+  const [playerCombination, setPlayerCombination] = useState<(number | null)[]>(Array(5).fill(null));
   const [hasDuplicates, setHasDuplicates] = useState(false);
 
   const preventNonNumericInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -39,7 +40,7 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
 
   const handleChange = (index: number, value: string) => {
     const updatedCombination = [...playerCombination];
-    updatedCombination[index] = value === null ? '' : Number(value);
+    updatedCombination[index] = value === '' ? null : Number(value);
     setPlayerCombination(updatedCombination);
 
     const nonEmpty = updatedCombination.filter(v => v !== null);
@@ -48,7 +49,7 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
   };
 
   const isValid = () => {
-    const nonEmpty = playerCombination.filter(v => v !== null);
+    const nonEmpty = playerCombination.filter(v => v !== null && v <= 36);
     const unique = new Set(nonEmpty);
     return nonEmpty.length === 5 && unique.size === 5;
   };
@@ -85,8 +86,11 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
   const submitPlayerCombinationHandler = async () => {
     try {
       await submitCombination();
+      toggleNotification({ content: 'Combination submited', type: 'success' });
+
       nextStep();
     } catch (error) {
+      toggleNotification({ content: 'Error during combination confirmation ', type: 'error' });
       console.error('Error during ticket purchase:', error);
     }
   };

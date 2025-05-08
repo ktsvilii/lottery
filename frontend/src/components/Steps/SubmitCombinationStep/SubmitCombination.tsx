@@ -29,10 +29,10 @@ export const SubmitCombinationStep: FC = () => {
             </label>
             <input
               id={`${baseId}-${i}`}
-              type='text'
+              type='number'
               className='input validator max-w-14 input-xl'
               onKeyDown={preventNonNumericInput}
-              value={playerCombination[i] as unknown as string}
+              value={playerCombination[i] as unknown as string ?? ''}
               onChange={e => handleChange(i, e.target.value)}
               required
               min='0'

@@ -43,10 +43,12 @@ export declare namespace Lottery {
       BigNumberish
     ];
     matchingNumbers: BigNumberish;
-    reward: BigNumberish;
+    potentialReward: BigNumberish;
+    actualReward: BigNumberish;
     isRewardClaimed: boolean;
     playerCombinationSubmitted: boolean;
     winningCombinationGenerated: boolean;
+    randomNumberRequested: boolean;
   };
 
   export type LotteryTicketStructOutput = [
@@ -56,10 +58,12 @@ export declare namespace Lottery {
     playerCombination: [bigint, bigint, bigint, bigint, bigint],
     winningCombination: [bigint, bigint, bigint, bigint, bigint],
     matchingNumbers: bigint,
-    reward: bigint,
+    potentialReward: bigint,
+    actualReward: bigint,
     isRewardClaimed: boolean,
     playerCombinationSubmitted: boolean,
-    winningCombinationGenerated: boolean
+    winningCombinationGenerated: boolean,
+    randomNumberRequested: boolean
   ] & {
     id: bigint;
     owner: string;
@@ -67,10 +71,12 @@ export declare namespace Lottery {
     playerCombination: [bigint, bigint, bigint, bigint, bigint];
     winningCombination: [bigint, bigint, bigint, bigint, bigint];
     matchingNumbers: bigint;
-    reward: bigint;
+    potentialReward: bigint;
+    actualReward: bigint;
     isRewardClaimed: boolean;
     playerCombinationSubmitted: boolean;
     winningCombinationGenerated: boolean;
+    randomNumberRequested: boolean;
   };
 }
 
@@ -86,15 +92,16 @@ export interface LotteryInterface extends Interface {
       | "allTicketIds"
       | "buyTicket"
       | "claimReward"
+      | "fundJackpot"
       | "getAllTickets"
       | "getContractOwner"
       | "getJackpot"
       | "getPlayerTickets"
+      | "getTicketById"
       | "jackpot"
       | "nextTicketId"
       | "owner"
       | "playerTicketIds"
-      | "previewResults"
       | "rawFulfillRandomWords"
       | "requestIdToTicketId"
       | "s_vrfCoordinator"
@@ -102,6 +109,7 @@ export interface LotteryInterface extends Interface {
       | "submitCombination"
       | "tickets"
       | "transferOwnership"
+      | "withdrawJackpot"
       | "withdrawOperationsBalance"
       | "withdrawOwnerBalance"
   ): FunctionFragment;
@@ -110,6 +118,8 @@ export interface LotteryInterface extends Interface {
     nameOrSignatureOrTopic:
       | "CoordinatorSet"
       | "Distribute"
+      | "FundJackpot"
+      | "JackpotWithdraw"
       | "LotteryResults"
       | "OperationsBalanceWithdraw"
       | "OwnerBalanceWithdraw"
@@ -155,6 +165,10 @@ export interface LotteryInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "fundJackpot",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getAllTickets",
     values?: undefined
   ): string;
@@ -170,6 +184,10 @@ export interface LotteryInterface extends Interface {
     functionFragment: "getPlayerTickets",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "getTicketById",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "jackpot", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "nextTicketId",
@@ -179,10 +197,6 @@ export interface LotteryInterface extends Interface {
   encodeFunctionData(
     functionFragment: "playerTicketIds",
     values: [AddressLike, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "previewResults",
-    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "rawFulfillRandomWords",
@@ -214,6 +228,10 @@ export interface LotteryInterface extends Interface {
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawJackpot",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawOperationsBalance",
@@ -258,6 +276,10 @@ export interface LotteryInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "fundJackpot",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getAllTickets",
     data: BytesLike
   ): Result;
@@ -270,6 +292,10 @@ export interface LotteryInterface extends Interface {
     functionFragment: "getPlayerTickets",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTicketById",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "jackpot", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "nextTicketId",
@@ -278,10 +304,6 @@ export interface LotteryInterface extends Interface {
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "playerTicketIds",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "previewResults",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -310,6 +332,10 @@ export interface LotteryInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "withdrawJackpot",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "withdrawOperationsBalance",
     data: BytesLike
   ): Result;
@@ -332,6 +358,32 @@ export namespace CoordinatorSetEvent {
 }
 
 export namespace DistributeEvent {
+  export type InputTuple = [owner: AddressLike, amount: BigNumberish];
+  export type OutputTuple = [owner: string, amount: bigint];
+  export interface OutputObject {
+    owner: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace FundJackpotEvent {
+  export type InputTuple = [sender: AddressLike, amount: BigNumberish];
+  export type OutputTuple = [sender: string, amount: bigint];
+  export interface OutputObject {
+    sender: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace JackpotWithdrawEvent {
   export type InputTuple = [owner: AddressLike, amount: BigNumberish];
   export type OutputTuple = [owner: string, amount: bigint];
   export interface OutputObject {
@@ -586,6 +638,12 @@ export interface Lottery extends BaseContract {
     "nonpayable"
   >;
 
+  fundJackpot: TypedContractMethod<
+    [amount: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   getAllTickets: TypedContractMethod<
     [],
     [Lottery.LotteryTicketStructOutput[]],
@@ -602,6 +660,12 @@ export interface Lottery extends BaseContract {
     "view"
   >;
 
+  getTicketById: TypedContractMethod<
+    [ticketId: BigNumberish],
+    [Lottery.LotteryTicketStructOutput],
+    "view"
+  >;
+
   jackpot: TypedContractMethod<[], [bigint], "view">;
 
   nextTicketId: TypedContractMethod<[], [bigint], "view">;
@@ -611,24 +675,6 @@ export interface Lottery extends BaseContract {
   playerTicketIds: TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
     [bigint],
-    "view"
-  >;
-
-  previewResults: TypedContractMethod<
-    [ticketId: BigNumberish],
-    [
-      [
-        bigint,
-        bigint,
-        [bigint, bigint, bigint, bigint, bigint],
-        [bigint, bigint, bigint, bigint, bigint]
-      ] & {
-        matchingNumbers: bigint;
-        rewardAmount: bigint;
-        playerCombination: [bigint, bigint, bigint, bigint, bigint];
-        winningCombination: [bigint, bigint, bigint, bigint, bigint];
-      }
-    ],
     "view"
   >;
 
@@ -670,15 +716,28 @@ export interface Lottery extends BaseContract {
   tickets: TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [bigint, string, bigint, bigint, bigint, boolean, boolean, boolean] & {
+      [
+        bigint,
+        string,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        boolean,
+        boolean,
+        boolean,
+        boolean
+      ] & {
         id: bigint;
         owner: string;
         purchaseTimestamp: bigint;
         matchingNumbers: bigint;
-        reward: bigint;
+        potentialReward: bigint;
+        actualReward: bigint;
         isRewardClaimed: boolean;
         playerCombinationSubmitted: boolean;
         winningCombinationGenerated: boolean;
+        randomNumberRequested: boolean;
       }
     ],
     "view"
@@ -690,9 +749,11 @@ export interface Lottery extends BaseContract {
     "nonpayable"
   >;
 
-  withdrawOperationsBalance: TypedContractMethod<[], [void], "payable">;
+  withdrawJackpot: TypedContractMethod<[], [void], "nonpayable">;
 
-  withdrawOwnerBalance: TypedContractMethod<[], [void], "payable">;
+  withdrawOperationsBalance: TypedContractMethod<[], [void], "nonpayable">;
+
+  withdrawOwnerBalance: TypedContractMethod<[], [void], "nonpayable">;
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
@@ -726,6 +787,9 @@ export interface Lottery extends BaseContract {
     nameOrSignature: "claimReward"
   ): TypedContractMethod<[ticketId: BigNumberish], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "fundJackpot"
+  ): TypedContractMethod<[amount: BigNumberish], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "getAllTickets"
   ): TypedContractMethod<[], [Lottery.LotteryTicketStructOutput[]], "view">;
   getFunction(
@@ -737,6 +801,13 @@ export interface Lottery extends BaseContract {
   getFunction(
     nameOrSignature: "getPlayerTickets"
   ): TypedContractMethod<[], [Lottery.LotteryTicketStructOutput[]], "view">;
+  getFunction(
+    nameOrSignature: "getTicketById"
+  ): TypedContractMethod<
+    [ticketId: BigNumberish],
+    [Lottery.LotteryTicketStructOutput],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "jackpot"
   ): TypedContractMethod<[], [bigint], "view">;
@@ -751,25 +822,6 @@ export interface Lottery extends BaseContract {
   ): TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
     [bigint],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "previewResults"
-  ): TypedContractMethod<
-    [ticketId: BigNumberish],
-    [
-      [
-        bigint,
-        bigint,
-        [bigint, bigint, bigint, bigint, bigint],
-        [bigint, bigint, bigint, bigint, bigint]
-      ] & {
-        matchingNumbers: bigint;
-        rewardAmount: bigint;
-        playerCombination: [bigint, bigint, bigint, bigint, bigint];
-        winningCombination: [bigint, bigint, bigint, bigint, bigint];
-      }
-    ],
     "view"
   >;
   getFunction(
@@ -809,15 +861,28 @@ export interface Lottery extends BaseContract {
   ): TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [bigint, string, bigint, bigint, bigint, boolean, boolean, boolean] & {
+      [
+        bigint,
+        string,
+        bigint,
+        bigint,
+        bigint,
+        bigint,
+        boolean,
+        boolean,
+        boolean,
+        boolean
+      ] & {
         id: bigint;
         owner: string;
         purchaseTimestamp: bigint;
         matchingNumbers: bigint;
-        reward: bigint;
+        potentialReward: bigint;
+        actualReward: bigint;
         isRewardClaimed: boolean;
         playerCombinationSubmitted: boolean;
         winningCombinationGenerated: boolean;
+        randomNumberRequested: boolean;
       }
     ],
     "view"
@@ -826,11 +891,14 @@ export interface Lottery extends BaseContract {
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[to: AddressLike], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "withdrawJackpot"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "withdrawOperationsBalance"
-  ): TypedContractMethod<[], [void], "payable">;
+  ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "withdrawOwnerBalance"
-  ): TypedContractMethod<[], [void], "payable">;
+  ): TypedContractMethod<[], [void], "nonpayable">;
 
   getEvent(
     key: "CoordinatorSet"
@@ -845,6 +913,20 @@ export interface Lottery extends BaseContract {
     DistributeEvent.InputTuple,
     DistributeEvent.OutputTuple,
     DistributeEvent.OutputObject
+  >;
+  getEvent(
+    key: "FundJackpot"
+  ): TypedContractEvent<
+    FundJackpotEvent.InputTuple,
+    FundJackpotEvent.OutputTuple,
+    FundJackpotEvent.OutputObject
+  >;
+  getEvent(
+    key: "JackpotWithdraw"
+  ): TypedContractEvent<
+    JackpotWithdrawEvent.InputTuple,
+    JackpotWithdrawEvent.OutputTuple,
+    JackpotWithdrawEvent.OutputObject
   >;
   getEvent(
     key: "LotteryResults"
@@ -931,6 +1013,28 @@ export interface Lottery extends BaseContract {
       DistributeEvent.InputTuple,
       DistributeEvent.OutputTuple,
       DistributeEvent.OutputObject
+    >;
+
+    "FundJackpot(address,uint256)": TypedContractEvent<
+      FundJackpotEvent.InputTuple,
+      FundJackpotEvent.OutputTuple,
+      FundJackpotEvent.OutputObject
+    >;
+    FundJackpot: TypedContractEvent<
+      FundJackpotEvent.InputTuple,
+      FundJackpotEvent.OutputTuple,
+      FundJackpotEvent.OutputObject
+    >;
+
+    "JackpotWithdraw(address,uint256)": TypedContractEvent<
+      JackpotWithdrawEvent.InputTuple,
+      JackpotWithdrawEvent.OutputTuple,
+      JackpotWithdrawEvent.OutputObject
+    >;
+    JackpotWithdraw: TypedContractEvent<
+      JackpotWithdrawEvent.InputTuple,
+      JackpotWithdrawEvent.OutputTuple,
+      JackpotWithdrawEvent.OutputObject
     >;
 
     "LotteryResults(address,uint256,uint256[5],uint256[5],uint8,uint256)": TypedContractEvent<

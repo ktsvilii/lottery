@@ -22,9 +22,6 @@ export const NavbarStart: FC = () => {
             <Link to='/'>Home</Link>
           </li>
           <li>
-            <Link to='/instructions'>Instructions</Link>
-          </li>
-          <li>
             <Link to='/FAQ'>FAQ</Link>
           </li>
         </ul>

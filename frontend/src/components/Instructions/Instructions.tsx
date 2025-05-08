@@ -1,41 +1,44 @@
-import React, { RefObject, useRef } from 'react';
+import React, { useRef } from 'react';
+
 import { Link } from 'react-router-dom';
-
 import { InstructionModal } from '../InstructionModal';
+import { useConnectWallet, useMobile } from '../../hooks';
+import { TimelineIcon, StepHeader } from './components';
 
-const StepHeader = ({ title }: { title: string }) => <h3 className='text-lg font-black'>{title}</h3>;
-
-const TimelineIcon = () => (
-  <div className='timeline-middle'>
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' className='h-5 w-5'>
-      <path
-        fillRule='evenodd'
-        d='M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z'
-        clipRule='evenodd'
-      />
-    </svg>
-  </div>
-);
+const faucetLinks = [
+  {
+    label: 'Google Faucet',
+    href: 'https://cloud.google.com/application/web3/faucet/ethereum/sepolia',
+  },
+  {
+    label: 'POW Faucet',
+    href: 'https://sepolia-faucet.pk910.de/',
+  },
+];
 
 export const Instructions = () => {
+  const { handleConnectWallet } = useConnectWallet();
+
   const buyRef = useRef<HTMLDialogElement>(null);
   const chooseRef = useRef<HTMLDialogElement>(null);
   const gridRef = useRef<HTMLDialogElement>(null);
 
-  const openModal = (ref: React.RefObject<HTMLDialogElement>) => {
+  const mobile = useMobile();
+
+  const openModal = (ref: React.RefObject<HTMLDialogElement | null>) => {
     ref.current?.showModal();
   };
 
   return (
-    <>
-      <h1 className='text-3xl text-center mb-3'>How to play?</h1>
-      <ul className='timeline timeline-snap-icon max-md:timeline-compact max-w-8xl timeline-vertical place-self-center'>
-        {/* Timeline Step 1 */}
+    <div className='max-w-2xl md:col-span-3'>
+      <h1 className='text-3xl text-center mb-2'>How to play?</h1>
+      <ul className='timeline timeline-snap-icon max-md:timeline-compact timeline-vertical place-self-center'>
+        {/* Step 1 */}
         <li>
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
             <StepHeader title='Connect MetaMask wallet' />
-            <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(buyRef as RefObject<HTMLDialogElement>)}>
+            <button className='btn btn-sm mt-1 w-48' onClick={handleConnectWallet}>
               Connect MetaMask
             </button>
           </div>
@@ -48,20 +51,13 @@ export const Instructions = () => {
           <TimelineIcon />
           <div className='timeline-end'>
             <StepHeader title='Get some Sepolia ETH' />
-            <p className='text-sm'>Don't worry, it's free!</p>
-            <div className='container space-x-4 space-y-2 flex flex-wrap'>
-              <button
-                className='btn btn-sm mt-1 w-48'
-                onClick={() => openModal(buyRef as RefObject<HTMLDialogElement>)}
-              >
-                Use Google Cloud Faucet
-              </button>
-              <button
-                className='btn btn-sm mt-1 w-48'
-                onClick={() => openModal(buyRef as RefObject<HTMLDialogElement>)}
-              >
-                Use POW Faucet
-              </button>
+            {!mobile && <p className='text-sm'>Don't worry, it's free!</p>}
+            <div className='container space-x-2 space-y-2 flex flex-wrap'>
+              {faucetLinks.map(({ label, href }) => (
+                <a key={href} href={href} target='_blank' rel='noopener noreferrer' className='btn btn-sm mt-1 w-32'>
+                  {label}
+                </a>
+              ))}
             </div>
           </div>
           <hr className='bg-neutral' />
@@ -73,12 +69,12 @@ export const Instructions = () => {
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
             <StepHeader title='Buy a ticket' />
-            <p className='text-sm'>To participate you will need an ETHery ticket</p>
-            <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(buyRef as RefObject<HTMLDialogElement>)}>
+            {!mobile && <p className='text-sm'>To participate you will need an ETHery ticket</p>}
+            <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(buyRef)}>
               See details
             </button>
-            <InstructionModal refObj={buyRef as RefObject<HTMLDialogElement>}>
-              <ul className='steps md:steps-horizontal steps-vertical'>
+            <InstructionModal refObj={buyRef}>
+              <ul className='steps steps-vertical flex flex-col'>
                 <li className='step step-neutral'>Click the "Buy Ticket" button.</li>
                 <li className='step step-neutral'>Complete transaction in Metamask wallet</li>
                 <li className='step step-neutral'>We assign a new ticket number to your wallet</li>
@@ -94,18 +90,14 @@ export const Instructions = () => {
           <TimelineIcon />
           <div className='timeline-end mb-4 md:mb-0'>
             <StepHeader title='Time to play!' />
-            <p className='text-sm'>Enter and submit your unique 5 Numbers</p>
-            <button
-              className='btn btn-sm mt-1 w-48'
-              onClick={() => openModal(chooseRef as RefObject<HTMLDialogElement>)}
-            >
+            {!mobile && <p className='text-sm'>Submit your unique 5 Numbers in range 0 and 36</p>}
+            <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(chooseRef)}>
               See details
             </button>
-            <InstructionModal refObj={chooseRef as RefObject<HTMLDialogElement>}>
-              <ul className='steps steps-vertical md:steps-horizontal'>
+            <InstructionModal refObj={chooseRef}>
+              <ul className='steps steps-vertical flex flex-col'>
                 <li className='step step-neutral'>Submit 5 unique numbers in range 0 and 36.</li>
                 <li className='step step-neutral'>Order doesn't matter</li>
-                <li className='step step-neutral'>Avoid duplicates</li>
                 <li className='step step-neutral'>Once submitted, your combination is locked and cannot be changed.</li>
               </ul>
             </InstructionModal>
@@ -119,7 +111,9 @@ export const Instructions = () => {
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
             <StepHeader title='Wait for the Winning Combination' />
-            <p className='text-sm'>Blockchain will generate a random the winning combination using Chainlink VRF.</p>
+            {!mobile && (
+              <p className='text-sm'>Blockchain will generate a random the winning combination using Chainlink VRF.</p>
+            )}
           </div>
           <hr className='bg-neutral' />
         </li>
@@ -128,15 +122,17 @@ export const Instructions = () => {
         <li>
           <hr className='bg-neutral' />
           <TimelineIcon />
-          <div className='timeline-end mb-4 md:mb-0'>
+          <div className='timeline-end md:mb-0'>
             <StepHeader title='Check results and Claim prize' />
-            <p className='text-sm'>
-              You’ll see how many numbers you matched. If you win, your reward will be sent directly to your wallet!
-            </p>
-            <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(gridRef as RefObject<HTMLDialogElement>)}>
+            {!mobile && (
+              <p className='text-sm'>
+                You’ll see how many numbers you matched. If you win, your reward will be sent directly to your wallet!
+              </p>
+            )}
+            <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(gridRef)}>
               See prizes grid
             </button>
-            <InstructionModal refObj={gridRef as RefObject<HTMLDialogElement>}>
+            <InstructionModal refObj={gridRef}>
               <table className='table table-zebra'>
                 <thead>
                   <tr className='bg-base-200'>
@@ -147,11 +143,11 @@ export const Instructions = () => {
                 <tbody>
                   <tr>
                     <th>0</th>
-                    <td>None</td>
+                    <td>Better luck next time</td>
                   </tr>
                   <tr>
                     <th>1</th>
-                    <td>Refund of the ticket price</td>
+                    <td>Refund 80% of the ticket price</td>
                   </tr>
                   <tr>
                     <th>2</th>
@@ -176,14 +172,14 @@ export const Instructions = () => {
         </li>
       </ul>
 
-      <p className='mt-4 md:mt-5 xlg:mt-12 place-self-center'>
+      <p className='mt-1 md:mt-5 xlg:mt-12 place-self-center'>
         <small>
           More details of the ETHery game can be found{' '}
-          <Link className='link link-info' to='/faq'>
+          <Link className='link' to='/faq'>
             on the FAQ page
           </Link>
         </small>
       </p>
-    </>
+    </div>
   );
 };

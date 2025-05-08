@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { InstructionModal } from '../InstructionModal';
 import { useStartGame } from './useStartGame';
+import { useConnectWallet } from '../../hooks';
 
 const faucetLinks = [
   {
@@ -18,15 +19,8 @@ const faucetLinks = [
 export const StartGame: FC = () => {
   const navigate = useNavigate();
 
-  const {
-    address,
-    isEnoughETH,
-    isFaucetVisited,
-    isRescanning,
-    handleisFaucetVisited,
-    handleRescan,
-    handleConnectWallet,
-  } = useStartGame();
+  const { address, isEnoughETH, isFaucetVisited, isRescanning, handleRescan, handleIsFaucetVisited } = useStartGame();
+  const { handleConnectWallet } = useConnectWallet();
 
   const handleStartGame = useCallback(() => {
     if (isEnoughETH) {
@@ -43,8 +37,8 @@ export const StartGame: FC = () => {
   const buttonHandler = address ? handleStartGame : handleConnectWallet;
 
   return (
-    <div className='max-w-8xl md:col-span-2 space-y-5 place-items-center mb-5'>
-      <h1 className='text-3xl text-center place-self-center'>{heading}</h1>
+    <div className='max-w-8xl md:col-span-2 space-y-5 place-items-center'>
+      <h1 className='text-3xl text-center place-self-center mb-2'>{heading}</h1>
       <button className='btn btn-sm btn-neutral min-w-72 w-full text-xl h-16' type='submit' onClick={buttonHandler}>
         {buttonLabel}
       </button>
@@ -61,7 +55,7 @@ export const StartGame: FC = () => {
               target='_blank'
               rel='noopener noreferrer'
               className='btn btn-sm btn-neutral h-10 w-full sm:w-[48%]'
-              onClick={handleisFaucetVisited}
+              onClick={handleIsFaucetVisited}
             >
               {label}
             </a>

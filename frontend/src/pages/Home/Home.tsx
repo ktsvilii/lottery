@@ -1,6 +1,8 @@
 import { FC, useEffect } from 'react';
 
-import { BriefInstructions, StartGame } from '../../components';
+import { isMobile } from 'react-device-detect';
+
+import { BriefInstructions, Instructions, StartGame } from '../../components';
 import { useGameContext, useStepper } from '../../providers';
 
 export const Home: FC = () => {
@@ -19,7 +21,7 @@ export const Home: FC = () => {
     <div className='max-w-12xl mx-auto grid grid-cols-1 md:grid-cols-5'>
       <StartGame />
 
-      <BriefInstructions />
+      {isMobile ? <BriefInstructions /> : <Instructions />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import { useAccount, useBalance, useSwitchChain } from 'wagmi';
+import { useAccount, useBalance, useConnect, useSwitchChain } from 'wagmi';
 import { sepolia } from 'viem/chains';
 import { QueryObserverResult } from '@tanstack/react-query';
 import { GetBalanceErrorType } from 'viem';
@@ -20,11 +20,13 @@ interface ConnectWalletReturns {
       GetBalanceErrorType
     >
   >;
+  handleConnectWallet: () => void;
 }
 
 export const useConnectWallet = (): ConnectWalletReturns => {
   const { address, isConnected, chain } = useAccount();
   const { data: balance, isLoading, refetch } = useBalance({ address });
+  const { connectors, connect } = useConnect();
   const { switchChain } = useSwitchChain();
 
   const [isEnoughETH, setIsEnoughETH] = useState(false);
@@ -50,10 +52,24 @@ export const useConnectWallet = (): ConnectWalletReturns => {
     }
   }, [isConnected, address, balance, isLoading, chain, requestSwitchChain, checkEthBalance]);
 
+  const handleConnectWallet = useCallback(() => {
+    const metaMaskConnector = connectors.find(connector => connector.name === 'MetaMask');
+    if (metaMaskConnector) {
+      try {
+        connect({ connector: metaMaskConnector });
+      } catch (error) {
+        console.error('Error connecting to MetaMask:', error);
+      }
+    } else {
+      console.error('MetaMask connector not found');
+    }
+  }, [connectors, connect]);
+
   return {
     address,
     isEnoughETH,
     isConnected,
     refetch,
+    handleConnectWallet,
   };
 };

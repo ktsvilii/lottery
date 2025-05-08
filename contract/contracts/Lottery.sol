@@ -12,7 +12,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
     bytes32 internal constant KEY_HASH =
         0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae;
 
-    uint256 public constant TICKET_PRICE_WEI = 1e14; // 100000000000000 ~ 0.0001 ETH ~ 1$
+    uint256 public constant TICKET_PRICE_WEI = 1e15; // 100000000000000 ~ 0.001 ETH ~ 10$
     uint8 public constant NUMBER_RANGE = 37;
 
     uint16 public constant REQUEST_CONFIRMATIONS = 3;
@@ -35,10 +35,12 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         uint256[5] playerCombination;
         uint256[5] winningCombination;
         uint8 matchingNumbers;
-        uint256 reward;
+        uint256 potentialReward;
+        uint256 actualReward;
         bool isRewardClaimed;
         bool playerCombinationSubmitted;
         bool winningCombinationGenerated;
+        bool randomNumberRequested;
     }
 
     // Mappings
@@ -88,6 +90,8 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         uint256 indexed amount
     );
 
+    event JackpotWithdraw(address indexed owner, uint256 indexed amount);
+
     // Modifiers
     modifier _onlyOwner() {
         require(msg.sender == contractOwner, "Only for owner");
@@ -113,10 +117,12 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             playerCombination: DEFAULT_COMBINATION,
             winningCombination: DEFAULT_COMBINATION,
             matchingNumbers: 0,
-            reward: 0,
+            potentialReward: 0,
+            actualReward: 0,
             isRewardClaimed: false,
             playerCombinationSubmitted: false,
-            winningCombinationGenerated: false
+            winningCombinationGenerated: false,
+            randomNumberRequested: false
         });
 
         tickets[newTicket.id] = newTicket;
@@ -161,38 +167,10 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
 
         emit PlayerCombinationSubmitted(msg.sender, playerCombination);
 
+        require(!searchedTicket.randomNumberRequested, "Already requested");
+        searchedTicket.randomNumberRequested = true;
+
         _requestRandomNumber(ticketId);
-    }
-
-    function previewResults(
-        uint256 ticketId
-    )
-        external
-        view
-        returns (
-            uint8 matchingNumbers,
-            uint256 rewardAmount,
-            uint256[5] memory playerCombination,
-            uint256[5] memory winningCombination
-        )
-    {
-        LotteryTicket storage ticket = tickets[ticketId];
-
-        require(ticket.owner == msg.sender, "Only ticket owner can view");
-        require(ticket.owner != address(0), "Ticket does not exist");
-        require(ticket.playerCombinationSubmitted, "Combination not submitted");
-        require(
-            ticket.winningCombinationGenerated,
-            "Winning combination is not generated"
-        );
-
-        matchingNumbers = _checkWinningCombination(
-            ticket.playerCombination,
-            ticket.winningCombination
-        );
-        rewardAmount = _calculateReward(matchingNumbers);
-        playerCombination = ticket.playerCombination;
-        winningCombination = ticket.winningCombination;
     }
 
     function claimReward(uint256 ticketId) external nonReentrant {
@@ -209,18 +187,20 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
             ticket.winningCombination
         );
 
-        uint256 rewardAmount = _calculateReward(matchingNumbers);
-        require(rewardAmount > 0, "No reward to claim");
+        require(
+            matchingNumbers == ticket.matchingNumbers,
+            "Tampering detected"
+        );
 
-        uint256 payout = rewardAmount;
-        if (jackpot >= rewardAmount) {
-            jackpot -= rewardAmount;
-        } else {
-            payout = jackpot;
-            jackpot = 0;
-        }
-        ticket.matchingNumbers = matchingNumbers;
-        ticket.reward = payout;
+        uint256 actualRewardAmount = _calculateReward(matchingNumbers);
+        require(actualRewardAmount > 0, "No reward to claim");
+
+        uint256 payout = actualRewardAmount <= jackpot
+            ? actualRewardAmount
+            : jackpot;
+        jackpot = jackpot >= payout ? jackpot - payout : 0;
+
+        ticket.actualReward = payout;
         ticket.isRewardClaimed = true;
 
         _sendReward(ticket.owner, payout);
@@ -252,12 +232,20 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         uint256[] calldata randomWords
     ) internal override {
         uint256 ticketId = requestIdToTicketId[requestId];
+        LotteryTicket storage ticket = tickets[ticketId];
+
+        require(!ticket.winningCombinationGenerated, "Already generated");
+
         uint256 randomWord = randomWords[0];
 
-        tickets[ticketId].winningCombination = _generateWinningCombination(
-            randomWord
+        ticket.winningCombinationGenerated = true;
+
+        ticket.winningCombination = _generateWinningCombination(randomWord);
+        ticket.matchingNumbers = _checkWinningCombination(
+            ticket.playerCombination,
+            ticket.winningCombination
         );
-        tickets[ticketId].winningCombinationGenerated = true;
+        ticket.potentialReward = _calculateReward(ticket.matchingNumbers);
 
         emit RandomNumberGenerated(requestId, ticketId, randomWord);
     }
@@ -316,19 +304,16 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
     ) internal view returns (uint256) {
         require(matchingNumbers <= 5, "Unexpected matching number count");
 
-        if (matchingNumbers == 0) {
-            return 0;
-        } else if (matchingNumbers == 1) {
-            return (TICKET_PRICE_WEI * 80) / 100;
-        } else if (matchingNumbers == 2) {
-            return (jackpot * 5) / 100;
-        } else if (matchingNumbers == 3) {
-            return (jackpot * 15) / 100;
-        } else if (matchingNumbers == 4) {
-            return (jackpot * 35) / 100;
-        } else {
-            return (jackpot * 75) / 100;
-        }
+        uint256[6] memory rewards = [
+            0,
+            0.0007 ether,
+            0.0012 ether,
+            0.01 ether,
+            0.1 ether,
+            jackpot
+        ];
+
+        return rewards[matchingNumbers];
     }
 
     function _sendReward(address recipient, uint256 amount) internal {
@@ -367,6 +352,14 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         return result;
     }
 
+    function getTicketById(
+        uint256 ticketId
+    ) external view returns (LotteryTicket memory) {
+        LotteryTicket memory ticket = tickets[ticketId];
+        require(ticket.owner == msg.sender, "You are not the ticket owner");
+        return ticket;
+    }
+
     function getPlayerTickets() external view returns (LotteryTicket[] memory) {
         uint256[] memory ids = playerTicketIds[msg.sender];
         LotteryTicket[] memory result = new LotteryTicket[](ids.length);
@@ -381,7 +374,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         emit FundJackpot(msg.sender, amount);
     }
 
-    function withdrawOwnerBalance() public payable _onlyOwner {
+    function withdrawOwnerBalance() public _onlyOwner {
         require(ownerBalance > 0, "Nothing to withdraw");
         uint256 amount = ownerBalance;
         ownerBalance = 0;
@@ -390,13 +383,22 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         emit OwnerBalanceWithdraw(contractOwner, amount);
     }
 
-    function withdrawOperationsBalance() public payable _onlyOwner {
+    function withdrawOperationsBalance() public _onlyOwner {
         require(operationsBalance > 0, "Nothing to withdraw");
         uint256 amount = operationsBalance;
         operationsBalance = 0;
         (bool success, ) = payable(contractOwner).call{value: amount}("");
         require(success, "OperationsBalance withdrawal failed");
         emit OperationsBalanceWithdraw(contractOwner, amount);
+    }
+
+    function withdrawJackpot() external _onlyOwner {
+        require(jackpot > 0, "Nothing to withdraw");
+        uint256 amount = jackpot;
+        jackpot = 0;
+        (bool success, ) = payable(contractOwner).call{value: amount}("");
+        require(success, "Jackpot withdrawal failed");
+        emit JackpotWithdraw(contractOwner, amount);
     }
 
     receive() external payable {

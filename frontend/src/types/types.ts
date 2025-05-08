@@ -5,8 +5,10 @@ export interface Ticket {
   playerCombination: number[];
   winningCombination: number[];
   matchingNumbers: number;
-  reward: bigint | null;
+  potentialReward: bigint;
+  actualReward: bigint | null;
   isRewardClaimed: boolean;
   playerCombinationSubmitted: boolean;
   winningCombinationGenerated: boolean;
+  randomNumberRequested: boolean;
 }
