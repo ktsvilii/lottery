@@ -54,7 +54,7 @@ export const useCheckResults = (): UseCheckResultsReturn => {
         type: 'error',
       });
       console.error('Submitting combination failed:', err);
-      setTicketState({ isRewardClaimed: true });
+      setTicketState({ isRewardClaimed: false });
       throw err;
     } finally {
       setIsClaimingRewards(false);
