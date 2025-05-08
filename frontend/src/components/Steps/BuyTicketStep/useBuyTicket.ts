@@ -5,10 +5,10 @@ import { useAccount } from 'wagmi';
 
 import { config } from '../../../wagmi';
 
+import { useGameContext, useNotifications, useStepper } from '../../../providers';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 
-import { getTicketPurchasedLog } from './getTicketPurchasedLog';
-import { useGameContext, useNotifications, useStepper } from '../../../providers';
+import { getTicketPurchasedLog } from '../../../logReaders';
 
 const TICKET_PRICE_WEI = BigInt(1e15);
 

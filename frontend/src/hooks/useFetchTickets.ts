@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { readContract } from '@wagmi/core';
-import { useAccount } from 'wagmi';
+import { useAccount, useWatchContractEvent } from 'wagmi';
 
 import { config } from '../wagmi';
 
@@ -45,6 +45,15 @@ export const useFetchTickets = (): UseFetchTicketsReturn => {
       setIsFetchingTickets(false);
     }
   };
+
+  useWatchContractEvent({
+    address: LOTTERY_CONTRACT_ADDRESS,
+    abi: LOTTERY_ABI,
+    eventName: 'TicketPurchased',
+    onLogs() {
+      fetchUserTicketsHandler();
+    },
+  });
 
   const goToTicketsPage = () => {
     navigate('/tickets');

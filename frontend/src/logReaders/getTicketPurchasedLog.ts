@@ -1,5 +1,6 @@
 import { Log, parseAbiItem, decodeEventLog } from 'viem';
-import { LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
+
+import { LOTTERY_CONTRACT_ADDRESS } from '../constants';
 
 export const getTicketPurchasedLog = (logs: Log[]) => {
   const ticketPurchasedEvent = parseAbiItem(
