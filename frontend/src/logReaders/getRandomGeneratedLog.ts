@@ -1,18 +1,15 @@
 import { Log, parseAbiItem, decodeEventLog } from 'viem';
 import { LOTTERY_CONTRACT_ADDRESS } from '../constants';
 
-const randomNumberGeneratedEvent = parseAbiItem(
-  'event RandomNumberGenerated(uint256 indexed requestId, uint256 indexed ticketNumber, uint256 number)',
-);
+const randomNumberGeneratedEvent = parseAbiItem('event RandomNumberGenerated(uint256 indexed ticketId)');
 
 export interface RandomNumberGeneratedData {
-  ticketNumber: number;
+  ticketId: bigint;
 }
 
 export const getRandomNumberGeneratedLog = (logs: Log[]): RandomNumberGeneratedData => {
   for (const log of logs) {
     if (log.address.toLowerCase() !== LOTTERY_CONTRACT_ADDRESS.toLowerCase()) continue;
-
     try {
       const parsed = decodeEventLog({
         abi: [randomNumberGeneratedEvent],
@@ -22,7 +19,7 @@ export const getRandomNumberGeneratedLog = (logs: Log[]): RandomNumberGeneratedD
 
       if (parsed.eventName === 'RandomNumberGenerated') {
         return {
-          ticketNumber: Number(parsed.args.ticketNumber),
+          ticketId: parsed.args.ticketId,
         };
       }
     } catch (err) {

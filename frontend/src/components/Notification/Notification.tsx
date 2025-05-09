@@ -3,10 +3,9 @@ import { NotificationProps, useNotifications } from '../../providers';
 
 const NOTIFICATION_TIMEOUT = 5000;
 
-const Notification: FC<NotificationProps> = ({ content, type, button }) => {
+export const Notification: FC<NotificationProps> = ({ content, type, button }) => {
   const { toggleNotification } = useNotifications();
 
-  console.log(content, type, button);
   useEffect(() => {
     setTimeout(() => {
       toggleNotification();
@@ -14,7 +13,7 @@ const Notification: FC<NotificationProps> = ({ content, type, button }) => {
   }, []);
 
   return (
-    <div role='alert' className={`alert alert-${type} absolute bottom-4 right-4 min-w-48 w-auto h-12 flex`}>
+    <div role='alert' className={`alert alert-${type} fixed bottom-4 right-4 min-w-48 w-auto h-12 flex`}>
       {type === 'error' ? (
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -55,5 +54,3 @@ const Notification: FC<NotificationProps> = ({ content, type, button }) => {
     </div>
   );
 };
-
-export default Notification;

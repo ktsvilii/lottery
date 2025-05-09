@@ -34,7 +34,7 @@ export const useCheckResults = (): UseCheckResultsReturn => {
         abi: LOTTERY_ABI,
         address: LOTTERY_CONTRACT_ADDRESS,
         functionName: 'claimReward',
-        args: [BigInt(ticket?.id as number)],
+        args: [BigInt(ticket?.id as bigint)],
         account: address,
       });
 

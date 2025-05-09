@@ -23,7 +23,7 @@ export const getTicketPurchasedLog = (logs: Log[]) => {
 
       if (parsed.eventName === 'TicketPurchased') {
         const ticketNumber = parsed.args.ticketNumber;
-        return Number(ticketNumber);
+        return BigInt(ticketNumber);
       }
     } catch (err) {
       console.warn('Failed to decode log:', log, err);

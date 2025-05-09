@@ -90,7 +90,9 @@ export interface LotteryInterface extends Interface {
       | "TICKET_PRICE_WEI"
       | "acceptOwnership"
       | "allTicketIds"
+      | "buyBatchTickets"
       | "buyTicket"
+      | "buyTickets"
       | "claimReward"
       | "fundJackpot"
       | "getAllTickets"
@@ -120,7 +122,6 @@ export interface LotteryInterface extends Interface {
       | "Distribute"
       | "FundJackpot"
       | "JackpotWithdraw"
-      | "LotteryResults"
       | "OperationsBalanceWithdraw"
       | "OwnerBalanceWithdraw"
       | "OwnershipTransferRequested"
@@ -159,7 +160,15 @@ export interface LotteryInterface extends Interface {
     functionFragment: "allTicketIds",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "buyBatchTickets",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "buyTicket", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "buyTickets",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "claimReward",
     values: [BigNumberish]
@@ -270,7 +279,12 @@ export interface LotteryInterface extends Interface {
     functionFragment: "allTicketIds",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "buyBatchTickets",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "buyTicket", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "buyTickets", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "claimReward",
     data: BytesLike
@@ -396,49 +410,6 @@ export namespace JackpotWithdrawEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace LotteryResultsEvent {
-  export type InputTuple = [
-    owner: AddressLike,
-    ticketNumber: BigNumberish,
-    playerCombination: [
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
-    ],
-    winningCombination: [
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
-    ],
-    matchingNumbers: BigNumberish,
-    rewardAmount: BigNumberish
-  ];
-  export type OutputTuple = [
-    owner: string,
-    ticketNumber: bigint,
-    playerCombination: [bigint, bigint, bigint, bigint, bigint],
-    winningCombination: [bigint, bigint, bigint, bigint, bigint],
-    matchingNumbers: bigint,
-    rewardAmount: bigint
-  ];
-  export interface OutputObject {
-    owner: string;
-    ticketNumber: bigint;
-    playerCombination: [bigint, bigint, bigint, bigint, bigint];
-    winningCombination: [bigint, bigint, bigint, bigint, bigint];
-    matchingNumbers: bigint;
-    rewardAmount: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
 export namespace OperationsBalanceWithdrawEvent {
   export type InputTuple = [owner: AddressLike, amount: BigNumberish];
   export type OutputTuple = [owner: string, amount: bigint];
@@ -517,20 +488,10 @@ export namespace PlayerCombinationSubmittedEvent {
 }
 
 export namespace RandomNumberGeneratedEvent {
-  export type InputTuple = [
-    requestId: BigNumberish,
-    ticketNumber: BigNumberish,
-    number: BigNumberish
-  ];
-  export type OutputTuple = [
-    requestId: bigint,
-    ticketNumber: bigint,
-    number: bigint
-  ];
+  export type InputTuple = [ticketId: BigNumberish];
+  export type OutputTuple = [ticketId: bigint];
   export interface OutputObject {
-    requestId: bigint;
-    ticketNumber: bigint;
-    number: bigint;
+    ticketId: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -626,9 +587,21 @@ export interface Lottery extends BaseContract {
 
   allTicketIds: TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
 
+  buyBatchTickets: TypedContractMethod<
+    [],
+    [Lottery.LotteryTicketStructOutput[]],
+    "payable"
+  >;
+
   buyTicket: TypedContractMethod<
     [],
-    [Lottery.LotteryTicketStructOutput],
+    [Lottery.LotteryTicketStructOutput[]],
+    "payable"
+  >;
+
+  buyTickets: TypedContractMethod<
+    [count: BigNumberish],
+    [Lottery.LotteryTicketStructOutput[]],
     "payable"
   >;
 
@@ -781,8 +754,18 @@ export interface Lottery extends BaseContract {
     nameOrSignature: "allTicketIds"
   ): TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
   getFunction(
+    nameOrSignature: "buyBatchTickets"
+  ): TypedContractMethod<[], [Lottery.LotteryTicketStructOutput[]], "payable">;
+  getFunction(
     nameOrSignature: "buyTicket"
-  ): TypedContractMethod<[], [Lottery.LotteryTicketStructOutput], "payable">;
+  ): TypedContractMethod<[], [Lottery.LotteryTicketStructOutput[]], "payable">;
+  getFunction(
+    nameOrSignature: "buyTickets"
+  ): TypedContractMethod<
+    [count: BigNumberish],
+    [Lottery.LotteryTicketStructOutput[]],
+    "payable"
+  >;
   getFunction(
     nameOrSignature: "claimReward"
   ): TypedContractMethod<[ticketId: BigNumberish], [void], "nonpayable">;
@@ -929,13 +912,6 @@ export interface Lottery extends BaseContract {
     JackpotWithdrawEvent.OutputObject
   >;
   getEvent(
-    key: "LotteryResults"
-  ): TypedContractEvent<
-    LotteryResultsEvent.InputTuple,
-    LotteryResultsEvent.OutputTuple,
-    LotteryResultsEvent.OutputObject
-  >;
-  getEvent(
     key: "OperationsBalanceWithdraw"
   ): TypedContractEvent<
     OperationsBalanceWithdrawEvent.InputTuple,
@@ -1037,17 +1013,6 @@ export interface Lottery extends BaseContract {
       JackpotWithdrawEvent.OutputObject
     >;
 
-    "LotteryResults(address,uint256,uint256[5],uint256[5],uint8,uint256)": TypedContractEvent<
-      LotteryResultsEvent.InputTuple,
-      LotteryResultsEvent.OutputTuple,
-      LotteryResultsEvent.OutputObject
-    >;
-    LotteryResults: TypedContractEvent<
-      LotteryResultsEvent.InputTuple,
-      LotteryResultsEvent.OutputTuple,
-      LotteryResultsEvent.OutputObject
-    >;
-
     "OperationsBalanceWithdraw(address,uint256)": TypedContractEvent<
       OperationsBalanceWithdrawEvent.InputTuple,
       OperationsBalanceWithdrawEvent.OutputTuple,
@@ -1103,7 +1068,7 @@ export interface Lottery extends BaseContract {
       PlayerCombinationSubmittedEvent.OutputObject
     >;
 
-    "RandomNumberGenerated(uint256,uint256,uint256)": TypedContractEvent<
+    "RandomNumberGenerated(uint256)": TypedContractEvent<
       RandomNumberGeneratedEvent.InputTuple,
       RandomNumberGeneratedEvent.OutputTuple,
       RandomNumberGeneratedEvent.OutputObject

@@ -92,7 +92,7 @@ export const useCountdown = (): UseCountdownReturn => {
         abi: LOTTERY_ABI,
         address: LOTTERY_CONTRACT_ADDRESS,
         functionName: 'getTicketById',
-        args: [BigInt(ticket?.id as number)],
+        args: [ticket?.id as bigint],
         account: address,
       });
 

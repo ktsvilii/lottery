@@ -1,20 +1,24 @@
-import { FC, useEffect } from 'react';
-
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useFetchTickets } from '../../hooks';
 import { Loader } from '../../components';
-import { TicketCard } from '../../components/TicketCard';
+import { useFetchTickets } from '../../hooks';
+import { useTickets } from './useTickets';
+import { TicketList, TicketTabs } from './components';
+import { TicketTabStatus } from '../../types';
 
 export const Tickets: FC = () => {
   const navigate = useNavigate();
   const { tickets, isFetchingTickets, fetchUserTicketsHandler } = useFetchTickets();
+  const categorized = useTickets(tickets ?? []);
+
+  const [activeTab, setActiveTab] = useState(TicketTabStatus.ACTIVE);
 
   useEffect(() => {
     fetchUserTicketsHandler();
   }, []);
 
-  const goBack = () => navigate(-1);
+  const renderTickets = categorized[activeTab] || [];
 
   return (
     <div className='flex flex-col h-full'>
@@ -24,22 +28,16 @@ export const Tickets: FC = () => {
             <Loader size='xl' />
           </div>
         ) : (
-          <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20 pt-8'>
-            <h1 className='text-3xl text-center mb-5'>
+          <div className='flex flex-col items-center justify-start h-full w-full gap-5 pt-5'>
+            <h1 className='text-3xl text-center'>
               <strong>Your tickets</strong>
             </h1>
 
-            {tickets?.length ? (
-              <div className='grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-5 text-center'>
-                {tickets?.map(ticket => (
-                  <TicketCard key={ticket.id} ticket={ticket} />
-                ))}
-              </div>
-            ) : (
-              <div>You have no tickets</div>
-            )}
+            <TicketTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
-            <button className='btn btn-sm btn-outline min-w-72 text-xl h-16' onClick={goBack}>
+            <TicketList tickets={renderTickets} />
+
+            <button className='btn btn-sm btn-outline min-w-72 text-xl h-16' onClick={() => navigate(-1)}>
               Go back
             </button>
           </div>

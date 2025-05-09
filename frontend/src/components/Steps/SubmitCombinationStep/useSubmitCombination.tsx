@@ -66,7 +66,7 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
         abi: LOTTERY_ABI,
         address: LOTTERY_CONTRACT_ADDRESS,
         functionName: 'submitCombination',
-        args: [BigInt(ticket?.id as number), playerCombination],
+        args: [ticket?.id as bigint, playerCombination],
         account: address,
       });
 

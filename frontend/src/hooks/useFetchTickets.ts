@@ -55,6 +55,33 @@ export const useFetchTickets = (): UseFetchTicketsReturn => {
     },
   });
 
+  useWatchContractEvent({
+    address: LOTTERY_CONTRACT_ADDRESS,
+    abi: LOTTERY_ABI,
+    eventName: 'RewardClaimed',
+    onLogs() {
+      fetchUserTicketsHandler();
+    },
+  });
+
+  useWatchContractEvent({
+    address: LOTTERY_CONTRACT_ADDRESS,
+    abi: LOTTERY_ABI,
+    eventName: 'PlayerCombinationSubmitted',
+    onLogs() {
+      fetchUserTicketsHandler();
+    },
+  });
+
+  useWatchContractEvent({
+    address: LOTTERY_CONTRACT_ADDRESS,
+    abi: LOTTERY_ABI,
+    eventName: 'RandomNumberGenerated',
+    onLogs() {
+      fetchUserTicketsHandler();
+    },
+  });
+
   const goToTicketsPage = () => {
     navigate('/tickets');
   };
