@@ -4,17 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { InstructionModal } from '../InstructionModal';
 import { useStartGame } from './useStartGame';
 import { useConnectWallet } from '../../hooks';
-
-const faucetLinks = [
-  {
-    label: 'Google Cloud Faucet',
-    href: 'https://cloud.google.com/application/web3/faucet/ethereum/sepolia',
-  },
-  {
-    label: 'POW Faucet',
-    href: 'https://sepolia-faucet.pk910.de/',
-  },
-];
+import { FAUCET_LINKS } from '../../constants/constants';
 
 export const StartGame: FC = () => {
   const navigate = useNavigate();
@@ -48,7 +38,7 @@ export const StartGame: FC = () => {
         <p className='text-lg mt-5 text-center'>You can get Sepolia ETH at faucets for free!</p>
 
         <div className='container mt-5 flex flex-wrap justify-center gap-4'>
-          {faucetLinks.map(({ label, href }) => (
+          {FAUCET_LINKS.map(({ label, href }) => (
             <a
               key={href}
               href={href}

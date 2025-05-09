@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
 import { readContract } from '@wagmi/core';
 import { useAccount, useWatchContractEvent } from 'wagmi';
 
@@ -14,12 +12,10 @@ import { Ticket } from '../types';
 interface UseFetchTicketsReturn {
   tickets: Ticket[] | null;
   isFetchingTickets: boolean;
-  goToTicketsPage: () => void;
   fetchUserTicketsHandler: () => Promise<void>;
 }
 
 export const useFetchTickets = (): UseFetchTicketsReturn => {
-  const navigate = useNavigate();
   const { address } = useAccount();
 
   const [isFetchingTickets, setIsFetchingTickets] = useState(false);
@@ -82,10 +78,6 @@ export const useFetchTickets = (): UseFetchTicketsReturn => {
     },
   });
 
-  const goToTicketsPage = () => {
-    navigate('/tickets');
-  };
-
   const fetchUserTicketsHandler = async () => {
     try {
       const tickets = await fetchUserTickets();
@@ -98,7 +90,6 @@ export const useFetchTickets = (): UseFetchTicketsReturn => {
   return {
     tickets,
     isFetchingTickets,
-    goToTicketsPage,
     fetchUserTicketsHandler,
   };
 };

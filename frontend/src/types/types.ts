@@ -19,3 +19,5 @@ export enum TicketTabStatus {
   REWARDS_AVAILABLE = 'Rewards available',
   NO_REWARD = 'No rewards',
 }
+
+export type Theme = 'light' | 'black';

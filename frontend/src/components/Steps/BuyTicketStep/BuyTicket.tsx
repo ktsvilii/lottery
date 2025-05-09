@@ -1,13 +1,17 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useBuyTicket } from './useBuyTicket';
-import { useFetchTickets } from '../../../hooks';
 
 import { Loader } from '../../Loader';
 
 export const BuyTicketStep: FC = () => {
+  const navigate = useNavigate()
   const { isPurchasingTicket, buyTicketHandler, buyBatchTicketsHandler } = useBuyTicket();
-  const { goToTicketsPage } = useFetchTickets();
+
+  const goToTicketsPage = () => {
+    navigate('/tickets');
+  };
 
   return (
     <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20 pt-8'>

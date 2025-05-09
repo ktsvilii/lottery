@@ -6,9 +6,7 @@ import { useGameContext, useStepper } from '../../../providers';
 import { config } from '../../../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 import { Ticket } from '../../../types';
-
-const COUNTDOWN_DURATION = 120;
-const COUNTDOWN_STORAGE_KEY = 'countdown_end_time';
+import { COUNTDOWN_DURATION, COUNTDOWN_STORAGE_KEY } from '../../../constants/constants';
 
 interface UseCountdownReturn {
   isCheckingResults: boolean;
@@ -30,11 +28,11 @@ export const useCountdown = (): UseCountdownReturn => {
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
+  const storageKey = `${COUNTDOWN_STORAGE_KEY}_${ticket?.id}`;
 
   useEffect(() => {
     if (!ticket?.id) return;
 
-    const storageKey = `${COUNTDOWN_STORAGE_KEY}_${ticket.id}`;
     let endTime = Number(localStorage.getItem(storageKey));
 
     if (!endTime || isNaN(endTime)) {
@@ -78,7 +76,7 @@ export const useCountdown = (): UseCountdownReturn => {
 
   const onResultsReady = () => {
     if (ticket?.id) {
-      localStorage.removeItem(`${COUNTDOWN_STORAGE_KEY}_${ticket.id}`);
+      localStorage.removeItem(storageKey);
     }
     clearIntervalIfNeeded();
     setTimeLeft(0);
@@ -109,7 +107,7 @@ export const useCountdown = (): UseCountdownReturn => {
     if (minutes === 0 && seconds === 0) {
       await seeResults();
       if (ticket?.id) {
-        localStorage.removeItem(`${COUNTDOWN_STORAGE_KEY}_${ticket.id}`);
+        localStorage.removeItem(storageKey);
       }
       nextStep();
     }

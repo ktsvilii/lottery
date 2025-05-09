@@ -1,46 +1,25 @@
-import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
+import { create } from 'zustand';
+
 import { Ticket } from '../types';
 
-type GameContextType = {
-  ticket: Ticket | undefined;
+interface GameContextType {
+  ticket: Ticket | null;
   setTicketState: (newValues: Partial<Ticket> | undefined) => void;
-};
+}
 
-const GameContext = createContext<GameContextType | undefined>(undefined);
-
-type GameProviderProps = {
-  children: ReactNode;
-};
-
-export const GameProvider = ({ children }: GameProviderProps) => {
-  const [ticket, setTicket] = useState<Ticket | undefined>();
-
-  const setTicketState = useCallback((newValues: Partial<Ticket> | undefined) => {
-    if (newValues === undefined) {
-      setTicket(undefined);
-    } else {
-      setTicket(prev => {
-        if (!prev) return newValues as Ticket;
-        return { ...prev, ...newValues };
-      });
-    }
-  }, []);
-
-  const contextValue = useMemo(
-    () => ({
-      ticket,
-      setTicketState,
+export const useGameContext = create<GameContextType>(set => ({
+  ticket: null,
+  setTicketState: (newValues: Partial<Ticket> | undefined) =>
+    set(state => {
+      if (!newValues) {
+        return { ticket: null };
+      } else {
+        if (!state.ticket) {
+          return { ticket: newValues as Ticket };
+        }
+        return {
+          ticket: { ...state.ticket, ...newValues },
+        };
+      }
     }),
-    [ticket, setTicketState],
-  );
-
-  return <GameContext.Provider value={contextValue}>{children}</GameContext.Provider>;
-};
-
-export const useGameContext = (): GameContextType => {
-  const context = useContext(GameContext);
-  if (!context) {
-    throw new Error('useGameContext must be used within a GameProvider');
-  }
-  return context;
-};
+}));
