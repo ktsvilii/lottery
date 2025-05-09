@@ -15,7 +15,7 @@ export const SubmitCombinationStep: FC = () => {
   } = useSubmitCombination();
 
   return (
-    <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20 pt-8'>
+    <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20'>
       <h1 className='text-3xl text-center mb-5'>
         <strong>Step 2.</strong> Enter and submit a combination of <strong className='underline'>5 unique</strong>{' '}
         numbers
@@ -32,7 +32,7 @@ export const SubmitCombinationStep: FC = () => {
               type='number'
               className='input validator max-w-14 input-xl'
               onKeyDown={preventNonNumericInput}
-              value={playerCombination[i] as unknown as string ?? ''}
+              value={(playerCombination[i] as unknown as string) ?? ''}
               onChange={e => handleChange(i, e.target.value)}
               required
               min='0'
