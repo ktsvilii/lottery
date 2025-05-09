@@ -6,27 +6,37 @@ import { useFetchTickets } from '../../../hooks';
 import { Loader } from '../../Loader';
 
 export const BuyTicketStep: FC = () => {
-  const { isPurchasingTicket, buyTicketHandler } = useBuyTicket();
+  const { isPurchasingTicket, buyTicketHandler, buyBatchTicketsHandler } = useBuyTicket();
   const { goToTicketsPage } = useFetchTickets();
 
   return (
     <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20 pt-8'>
       <h1 className='text-3xl text-center'>
-        <strong>Step 1.</strong> Purchase an ETHery ticket
+        <strong>Step 1.</strong> Purchase an ETHery ticket(s)
       </h1>
-      <button
-        className='btn btn-sm btn-outline min-w-72 text-xl h-16'
-        disabled={isPurchasingTicket}
-        onClick={buyTicketHandler}
-      >
-        {isPurchasingTicket ? <Loader size='xl' /> : 'Buy now'}
-      </button>
+      <div className='flex flex-col gap-2 md:flex-row'>
+        <button
+          className='btn btn-sm btn-outline min-w-72 text-xl h-16'
+          disabled={isPurchasingTicket}
+          onClick={buyTicketHandler}
+        >
+          {isPurchasingTicket ? <Loader size='xl' /> : 'Buy one'}
+        </button>
+
+        <button
+          className='btn btn-sm btn-outline min-w-72 text-xl h-16'
+          disabled={isPurchasingTicket}
+          onClick={buyBatchTicketsHandler}
+        >
+          {isPurchasingTicket ? <Loader size='xl' /> : 'Buy 9, get 1 free'}
+        </button>
+      </div>
 
       <div className='divider divider-neutral'>OR</div>
 
       <p>Check if you have any active tickets</p>
       <button className='btn btn-sm btn-outline min-w-60 text-xl h-12' onClick={goToTicketsPage}>
-        Check active tickets
+        Check tickets list
       </button>
     </div>
   );

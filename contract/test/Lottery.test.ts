@@ -71,10 +71,26 @@ describe('Lottery contract', () => {
       await expect(tx).to.emit(lottery, 'Distribute').withArgs(player, TICKET_PRICE_WEI);
     });
 
+    it('Should allow a user to buy a batch of rickets', async () => {
+      const tx = await lottery.connect(player).buyBatchTickets({ value: TICKET_PRICE_WEI * 9 });
+
+      const tickets = await lottery.connect(player).getPlayerTickets();
+
+      expect(tickets.length).to.eq(10);
+
+      await expect(tx).to.emit(lottery, 'TicketPurchased').withArgs(player, 1);
+      await expect(tx)
+        .to.emit(lottery, 'Distribute')
+        .withArgs(player, TICKET_PRICE_WEI * 9);
+    });
+
     it('Should revert if wrong value sent', async () => {
       await expect(lottery.connect(player).buyTicket({ value: ethers.parseEther('0.0000001') })).to.be.revertedWith(
-        'Transaction value is too low!',
+        'Incorrect transaction value!',
       );
+      await expect(
+        lottery.connect(player).buyBatchTickets({ value: ethers.parseEther('0.0000001') }),
+      ).to.be.revertedWith('Incorrect transaction value!');
     });
   });
 
@@ -456,7 +472,7 @@ describe('Lottery contract', () => {
 
       await expect(lottery.connect(owner).test_fulfillRandomWords(requestId, [randomWord]))
         .to.emit(lottery, 'RandomNumberGenerated')
-        .withArgs(requestId, ticketId, randomWord);
+        .withArgs(ticketId);
     });
 
     it(`Should return all tickets`, async () => {
