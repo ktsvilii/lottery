@@ -8,3 +8,4 @@ export * from './StepIndicator';
 export * from './Steps';
 export * from './TicketCard';
 export * from './FallbackUI';
+export * from './TicketsTable';
