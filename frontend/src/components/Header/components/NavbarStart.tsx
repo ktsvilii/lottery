@@ -1,8 +1,30 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
+import { formatEther } from 'viem';
+
+import { useGetJackpot } from '../../../hooks';
+
+import { Loader } from '../../Loader';
+
 export const NavbarStart: FC = () => {
+  const { jackpot, refetchJackpot } = useGetJackpot();
+  const [parsedJackpot, setParsedJackpot] = useState<string | null>(null);
+
+  useEffect(() => {
+    refetchJackpot();
+    if (jackpot) {
+      try {
+        const jackpotInEth = formatEther(BigInt(jackpot as bigint));
+        setParsedJackpot(jackpotInEth);
+      } catch (error) {
+        console.error('Error parsing jackpot:', error);
+        setParsedJackpot(null);
+      }
+    }
+  }, [jackpot, refetchJackpot]);
+
   return (
     <div className='navbar-start'>
       <div className='dropdown'>
@@ -25,6 +47,11 @@ export const NavbarStart: FC = () => {
             <Link to='/FAQ'>FAQ</Link>
           </li>
         </ul>
+      </div>
+
+      <div className='flex flex-col 2xl:ml-60 xl:ml-44 lg:ml-36 md:ml-28 sm:ml-20'>
+        <h2 className='text-center'>Jackpot</h2>
+        <strong>{parsedJackpot ? `${parsedJackpot} ETH` : <Loader size='md' />}</strong>
       </div>
     </div>
   );
