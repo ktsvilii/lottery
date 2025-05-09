@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { Ticket } from '../../../types';
 
 interface UseCheckResultsReturn {
-  ticket: Ticket | undefined;
+  ticket: Ticket | null;
   isClaimingRewards: boolean;
   claimRewardHandler: () => Promise<string>;
   goHomeHandler: () => void;

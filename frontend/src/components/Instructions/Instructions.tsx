@@ -4,17 +4,7 @@ import { Link } from 'react-router-dom';
 import { InstructionModal } from '../InstructionModal';
 import { useConnectWallet, useMobile } from '../../hooks';
 import { TimelineIcon, StepHeader } from './components';
-
-const faucetLinks = [
-  {
-    label: 'Google Faucet',
-    href: 'https://cloud.google.com/application/web3/faucet/ethereum/sepolia',
-  },
-  {
-    label: 'POW Faucet',
-    href: 'https://sepolia-faucet.pk910.de/',
-  },
-];
+import { FAUCET_LINKS } from '../../constants/constants';
 
 export const Instructions = () => {
   const { handleConnectWallet } = useConnectWallet();
@@ -53,7 +43,7 @@ export const Instructions = () => {
             <StepHeader title='Get some Sepolia ETH' />
             {!mobile && <p className='text-sm'>Don't worry, it's free!</p>}
             <div className='container space-x-2 space-y-2 flex flex-wrap'>
-              {faucetLinks.map(({ label, href }) => (
+              {FAUCET_LINKS.map(({ label, href }) => (
                 <a key={href} href={href} target='_blank' rel='noopener noreferrer' className='btn btn-sm mt-1 w-32'>
                   {label}
                 </a>

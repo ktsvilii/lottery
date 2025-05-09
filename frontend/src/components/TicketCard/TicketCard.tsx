@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Ticket, TicketStatus } from '../../types';
-import { useGameContext, useStepper } from '../../providers';
-import { getTicketStatus } from '../../utils';
+import { useGameContext } from '../../providers';
+import { getTicketStatus, setStepByTicketStatus } from '../../utils';
 
 interface TicketCardProps {
   ticket: Ticket;
@@ -14,7 +14,6 @@ export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
 
   const { id, playerCombination, playerCombinationSubmitted, isRewardClaimed, winningCombinationGenerated } = ticket;
 
-  const { setStepByTicketStatus } = useStepper();
   const { setTicketState } = useGameContext();
 
   const displayedCombination = playerCombinationSubmitted ? playerCombination.join(', ') : '—';

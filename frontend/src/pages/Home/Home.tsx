@@ -4,6 +4,7 @@ import { isMobile } from 'react-device-detect';
 
 import { BriefInstructions, Instructions, StartGame } from '../../components';
 import { useGameContext, useStepper } from '../../providers';
+import { CURRENT_STEP } from '../../constants/constants';
 
 export const Home: FC = () => {
   const { setCurrentStep } = useStepper();
@@ -13,7 +14,7 @@ export const Home: FC = () => {
     return () => {
       setCurrentStep(0);
       setTicketState(undefined);
-      localStorage.removeItem('currentStep');
+      localStorage.removeItem(CURRENT_STEP);
     };
   }, [setCurrentStep, setTicketState]);
 

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { create } from 'zustand';
 
 export interface NotificationProps {
   content: string;
@@ -14,22 +14,7 @@ interface NotificationContextType {
   toggleNotification: (notification?: NotificationProps) => void;
 }
 
-const NotificationsContext = createContext<NotificationContextType | undefined>(undefined);
-
-export const NotificationsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [notification, setNotification] = useState<NotificationProps | null>(null);
-
-  const toggleNotification = (notification?: NotificationProps) => setNotification(notification || null);
-
-  return (
-    <NotificationsContext.Provider value={{ notification, toggleNotification }}>
-      {children}
-    </NotificationsContext.Provider>
-  );
-};
-
-export const useNotifications = () => {
-  const ctx = useContext(NotificationsContext);
-  if (!ctx) throw new Error('useNotifications must be used inside NotificationsProvider');
-  return ctx;
-};
+export const useNotifications = create<NotificationContextType>(set => ({
+  notification: null,
+  toggleNotification: (notification: NotificationProps | null = null) => set(() => ({ notification })),
+}));

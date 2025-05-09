@@ -1,37 +1,19 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { create } from 'zustand';
 
-export type Theme = 'light' | 'black';
-const THEME_KEY = 'theme';
+import { THEME_KEY } from '../constants/constants';
+import { Theme } from '../types';
 
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>('light');
-
-  useEffect(() => {
-    const saved = localStorage.getItem(THEME_KEY) as Theme | null;
-    if (saved) {
-      setThemeState(saved);
-      document.documentElement.setAttribute('data-theme', saved);
-    }
-  }, []);
-
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-    localStorage.setItem(THEME_KEY, newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-  };
-
-  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
-};
-
-export const useTheme = () => {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error('useTheme must be used inside ThemeProvider');
-  return ctx;
-};
+export const useTheme = create<ThemeContextType>(set => ({
+  theme: 'light',
+  setTheme: (newTheme: Theme) =>
+    set(() => {
+      localStorage.setItem(THEME_KEY, newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
+      return { theme: newTheme };
+    }),
+}));

@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { useStepper } from '../../providers';
 import { StepIndicator } from '../../components';
+import { StepsSchema } from '../../components';
 import { useConnectWallet } from '../../hooks';
 
 export const Game: FC = () => {
   const navigate = useNavigate();
-  const { steps, step } = useStepper();
+  const { step } = useStepper();
   const { address, isConnected } = useConnectWallet();
 
   useEffect(() => {
@@ -18,9 +19,9 @@ export const Game: FC = () => {
 
   return (
     <div className='flex flex-col h-full'>
-      <div className='flex-grow'>{steps[step]?.content}</div>
+      <div className='flex-grow'>{StepsSchema[step]?.content}</div>
 
-      {step < steps.length - 1 && (
+      {step < StepsSchema.length - 1 && (
         <div className='flex-none sm:h-1/6 h-3/7'>
           <StepIndicator />
         </div>

@@ -1,14 +1,7 @@
 import { FC, useId } from 'react';
 import { Link } from 'react-router-dom';
 import { StepHeader, TimelineIcon } from './components';
-
-const steps = [
-  'Connect MetaMask wallet',
-  'Get some Sepolia ETH',
-  'Buy a ticket',
-  'Submit your 5 Lucky Numbers',
-  'Check results and Claim your prize',
-];
+import { BRIEF_INSTRUCTIONS_STEPS } from '../../constants/constants';
 
 export const BriefInstructions: FC = () => {
   const id = useId();
@@ -16,14 +9,14 @@ export const BriefInstructions: FC = () => {
     <div className='md:col-span-3'>
       <h1 className='text-4xl text-center mb-5'>How to play?</h1>
       <ul className='timeline timeline-snap-icon max-sm:timeline-compact max-w-8xl timeline-vertical place-self-center'>
-        {steps.map((title, index) => (
+        {BRIEF_INSTRUCTIONS_STEPS.map((title, index) => (
           <li key={id + index}>
             {index !== 0 && <hr className='bg-neutral' />}
             <TimelineIcon />
             <div className={`mb-7 ${index % 2 === 0 ? 'timeline-start sm:text-end' : 'timeline-end'}`}>
               <StepHeader title={title} />
             </div>
-            {index < steps.length - 1 && <hr className='bg-neutral' />}
+            {index < BRIEF_INSTRUCTIONS_STEPS.length - 1 && <hr className='bg-neutral' />}
           </li>
         ))}
       </ul>

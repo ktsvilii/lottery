@@ -2,14 +2,25 @@ import { useNavigate } from 'react-router-dom';
 
 import { useWatchContractEvent } from 'wagmi';
 
-import { useNotifications } from '../../providers';
+import { useNotifications, useTheme } from '../../providers';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../constants';
 import { getRandomNumberGeneratedLog } from '../../logReaders';
+import { useEffect } from 'react';
+import { THEME_KEY } from '../../constants/constants';
+import { Theme } from '../../types';
 
 export const useLayout = () => {
   const navigate = useNavigate();
 
-  const { toggleNotification } = useNotifications();
+  const { toggleNotification } = useNotifications.getState();
+  const { setTheme } = useTheme.getState();
+
+  useEffect(() => {
+    const saved = localStorage.getItem(THEME_KEY) as Theme | null;
+    if (saved) {
+      setTheme(saved);
+    }
+  }, []);
 
   useWatchContractEvent({
     address: LOTTERY_CONTRACT_ADDRESS,
