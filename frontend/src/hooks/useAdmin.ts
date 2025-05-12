@@ -11,7 +11,6 @@ interface AdminReturns {
 export const useAdmin = (): AdminReturns => {
   const { address } = useAccount();
   const [allTickets, setAllTickets] = useState<Ticket[]>([]);
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const { data: adminAddress } = useReadContract({
     address: LOTTERY_CONTRACT_ADDRESS,
@@ -27,19 +26,13 @@ export const useAdmin = (): AdminReturns => {
     account: address,
   });
 
+  const isAdmin = adminAddress === address;
+
   useEffect(() => {
     if (ticketsData) {
       setAllTickets(ticketsData as Ticket[]);
     }
   }, [ticketsData]);
-
-  console.log(adminAddress, address);
-
-  useEffect(() => {
-    if (adminAddress && address) {
-      setIsAdmin(adminAddress === address);
-    }
-  }, [adminAddress, address]);
 
   return {
     isAdmin,
