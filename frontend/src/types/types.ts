@@ -13,11 +13,4 @@ export interface Ticket {
   randomNumberRequested: boolean;
 }
 
-export enum TicketTabStatus {
-  ACTIVE = 'Active',
-  REWARDS_CLAIMED = 'Rewards claimed',
-  REWARDS_AVAILABLE = 'Rewards available',
-  NO_REWARD = 'No rewards',
-}
-
 export type Theme = 'light' | 'black';

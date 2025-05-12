@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useSubmitCombination } from './useSubmitCombination';
 import { Loader } from '../../Loader';
+import { preventNonNumericInput } from '../../../utils';
 
 export const SubmitCombinationStep: FC = () => {
   const {
@@ -8,7 +9,6 @@ export const SubmitCombinationStep: FC = () => {
     isSubmittingCombination,
     baseId,
     hasDuplicates,
-    preventNonNumericInput,
     handleChange,
     isValid,
     submitPlayerCombinationHandler,
@@ -32,7 +32,7 @@ export const SubmitCombinationStep: FC = () => {
               type='number'
               className='input validator max-w-14 input-xl'
               onKeyDown={preventNonNumericInput}
-              value={playerCombination[i] as unknown as string ?? ''}
+              value={(playerCombination[i] as unknown as string) ?? ''}
               onChange={e => handleChange(i, e.target.value)}
               required
               min='0'

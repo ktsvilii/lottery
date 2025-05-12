@@ -16,7 +16,6 @@ interface UseSubmitCombinationReturn {
   isSubmittingCombination: boolean;
   setPlayerCombination: Dispatch<SetStateAction<UserCombination[]>>;
   submitCombination: () => Promise<string>;
-  preventNonNumericInput: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleChange: (index: number, value: string) => void;
   isValid: () => boolean;
   submitPlayerCombinationHandler: () => Promise<void>;
@@ -32,11 +31,6 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
   const [isSubmittingCombination, setIsSubmittingCombination] = useState(false);
   const [playerCombination, setPlayerCombination] = useState<(number | null)[]>(Array(5).fill(null));
   const [hasDuplicates, setHasDuplicates] = useState(false);
-
-  const preventNonNumericInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) return;
-    if (!/^\d$/.test(e.key)) e.preventDefault();
-  };
 
   const handleChange = (index: number, value: string) => {
     const updatedCombination = [...playerCombination];
@@ -102,7 +96,6 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
     isSubmittingCombination,
     submitCombination,
     setPlayerCombination,
-    preventNonNumericInput,
     handleChange,
     isValid,
     submitPlayerCombinationHandler,
