@@ -12,13 +12,29 @@ interface TicketCardProps {
 export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
   const navigate = useNavigate();
 
-  const { id, playerCombination, playerCombinationSubmitted, isRewardClaimed, winningCombinationGenerated } = ticket;
+  const {
+    id,
+    playerCombination,
+    playerCombinationSubmitted,
+    isRewardClaimed,
+    winningCombinationGenerated,
+    potentialReward,
+  } = ticket;
 
   const { setTicketState } = useGameContext();
 
   const displayedCombination = playerCombinationSubmitted ? playerCombination.join(', ') : '—';
 
-  const ticketStatus = getTicketStatus(isRewardClaimed, winningCombinationGenerated, playerCombinationSubmitted);
+  const isRewardAvailable = !isRewardClaimed && potentialReward > 0n;
+  const hasNoReward = potentialReward === 0n && playerCombinationSubmitted;
+  const waitingForResult = playerCombinationSubmitted && !winningCombinationGenerated;
+
+  const ticketStatus = getTicketStatus(
+    potentialReward,
+    isRewardClaimed,
+    winningCombinationGenerated,
+    playerCombinationSubmitted,
+  );
 
   const handleTicketClick = (ticketStatus: TicketStatus) => {
     setTicketState(ticket);
@@ -27,8 +43,11 @@ export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
   };
 
   const getBgColor = () => {
-    if (isRewardClaimed) return 'bg-green-600';
-    if (winningCombinationGenerated) return 'bg-yellow-600';
+    if (isRewardClaimed) return 'bg-green-700';
+    if (waitingForResult) return 'bg-gray-400';
+    if (hasNoReward) return 'bg-gray-600';
+    if (isRewardAvailable) return 'bg-green-500';
+    if (winningCombinationGenerated) return 'bg-yellow-500';
     return 'bg-black';
   };
 

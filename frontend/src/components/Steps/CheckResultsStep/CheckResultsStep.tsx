@@ -18,7 +18,7 @@ export const CheckResultsStep: FC = () => {
   const winningCombinationResult = winningCombination?.join(', ');
 
   return (
-    <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20 pt-8'>
+    <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20'>
       <h1 className='text-3xl text-center'>
         <strong>Step 4.</strong> Check Results for ticket #{id}
       </h1>
