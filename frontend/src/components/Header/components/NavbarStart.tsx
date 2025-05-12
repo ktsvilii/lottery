@@ -51,7 +51,7 @@ export const NavbarStart: FC = () => {
 
       <div className='flex flex-col 2xl:ml-60 xl:ml-44 lg:ml-36 md:ml-28 sm:ml-20'>
         <h2 className='text-center'>Jackpot</h2>
-        <strong>{parsedJackpot ? `${parsedJackpot} ETH` : <Loader size='md' />}</strong>
+        <strong className='self-center'>{parsedJackpot ? `${parsedJackpot} ETH` : <Loader size='md' />}</strong>
       </div>
     </div>
   );
