@@ -8,6 +8,7 @@ export enum TicketStatus {
 }
 
 export enum TicketTabStatus {
+  ALL = 'All',
   ACTIVE = 'Active',
   REWARDS_CLAIMED = 'Rewards claimed',
   REWARDS_AVAILABLE = 'Rewards available',

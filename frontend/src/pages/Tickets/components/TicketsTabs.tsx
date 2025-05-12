@@ -7,6 +7,7 @@ interface TicketTabsProps {
 }
 
 const TABS: { label: string; status: TicketTabStatus }[] = [
+  { label: 'All', status: TicketTabStatus.ALL },
   { label: 'Active', status: TicketTabStatus.ACTIVE },
   { label: 'Rewards Available', status: TicketTabStatus.REWARDS_AVAILABLE },
   { label: 'Claimed', status: TicketTabStatus.REWARDS_CLAIMED },

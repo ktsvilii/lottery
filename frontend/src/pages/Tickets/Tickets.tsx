@@ -6,12 +6,13 @@ import { useFetchTickets } from '../../hooks';
 import { useTickets } from './useTickets';
 import { TicketList, TicketTabs } from './components';
 import { TicketTabStatus } from '../../types';
+
 export const Tickets: FC = () => {
   const navigate = useNavigate();
   const { tickets, isFetchingTickets, fetchUserTicketsHandler } = useFetchTickets();
   const categorized = useTickets(tickets ?? []);
 
-  const [activeTab, setActiveTab] = useState(TicketTabStatus.ACTIVE);
+  const [activeTab, setActiveTab] = useState(TicketTabStatus.ALL);
 
   useEffect(() => {
     fetchUserTicketsHandler();

@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { SortCols, SortOrder } from '../../types';
-import { ArrowUpIcon } from './ArrowUpIcon';
-import { ArrowDownIcon } from './ArrowDownIcon';
+import { ArrowDownIcon, ArrowUpIcon } from '../../assets';
 
 interface Props {
   sortKey: SortCols;
