@@ -11,6 +11,7 @@ export const NOTIFICATION_TIMEOUT = 5000;
 export const TICKET_PRICE_WEI = 1_000_000_000_000_000n;
 export const BATCH_TICKET_PRICE_WEI = TICKET_PRICE_WEI * 9n;
 
+export const TICKETS_PER_PAGE = 12;
 export const ROWS_PER_PAGE = 25;
 
 export const BRIEF_INSTRUCTIONS_STEPS = [
@@ -23,7 +24,7 @@ export const BRIEF_INSTRUCTIONS_STEPS = [
 
 export const FAUCET_LINKS = [
   {
-    label: 'Google Cloud Faucet',
+    label: 'Google Faucet',
     href: 'https://cloud.google.com/application/web3/faucet/ethereum/sepolia',
   },
   {

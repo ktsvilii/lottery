@@ -6,7 +6,6 @@ import { useFetchTickets } from '../../hooks';
 import { useTickets } from './useTickets';
 import { TicketList, TicketTabs } from './components';
 import { TicketTabStatus } from '../../types';
-
 export const Tickets: FC = () => {
   const navigate = useNavigate();
   const { tickets, isFetchingTickets, fetchUserTicketsHandler } = useFetchTickets();
@@ -28,7 +27,7 @@ export const Tickets: FC = () => {
             <Loader size='xl' />
           </div>
         ) : (
-          <div className='flex flex-col items-center justify-start h-full w-full gap-5 pt-5'>
+          <div className='flex flex-col items-center justify-start h-full w-full gap-5'>
             <h1 className='text-3xl text-center'>
               <strong>Your tickets</strong>
             </h1>
