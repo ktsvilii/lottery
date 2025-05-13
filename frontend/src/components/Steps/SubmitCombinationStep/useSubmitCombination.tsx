@@ -1,4 +1,5 @@
 import { useId, useState, Dispatch, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 
@@ -21,8 +22,11 @@ interface UseSubmitCombinationReturn {
   submitPlayerCombinationHandler: () => Promise<void>;
 }
 
+const tKey = 'notifications.submit_combi';
+
 export const useSubmitCombination = (): UseSubmitCombinationReturn => {
   const baseId = useId();
+  const { t } = useTranslation();
   const { address } = useAccount();
   const { ticket } = useGameContext();
   const { nextStep } = useStepper();
@@ -80,11 +84,11 @@ export const useSubmitCombination = (): UseSubmitCombinationReturn => {
   const submitPlayerCombinationHandler = async () => {
     try {
       await submitCombination();
-      toggleNotification({ content: 'Combination submited', type: 'success' });
+      toggleNotification({ content: t(`${tKey}.success_message`), type: 'success' });
 
       nextStep();
     } catch (error) {
-      toggleNotification({ content: 'Error during combination confirmation ', type: 'error' });
+      toggleNotification({ content: t(`${tKey}.error_message`), type: 'error' });
       console.error('Error during ticket purchase:', error);
     }
   };

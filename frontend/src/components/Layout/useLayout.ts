@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { useWatchContractEvent } from 'wagmi';
 
@@ -9,8 +10,11 @@ import { useEffect } from 'react';
 import { THEME_KEY } from '../../constants';
 import { Theme } from '../../types';
 
+const tKey = 'notifications.random_number_generated';
+
 export const useLayout = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { toggleNotification } = useNotifications.getState();
   const { setTheme } = useTheme.getState();
@@ -31,10 +35,10 @@ export const useLayout = () => {
         const { ticketId } = getRandomNumberGeneratedLog(logs);
 
         toggleNotification({
-          content: `Winning combination was generated for ticket #${ticketId}`,
+          content: t(`${tKey}.content`, { ticketId }),
           type: 'success',
           button: {
-            title: 'See tickets page',
+            title: t(`${tKey}.button`),
             action: () => navigate('/tickets'),
           },
         });

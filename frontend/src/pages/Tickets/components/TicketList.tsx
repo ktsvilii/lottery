@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Ticket } from '../../../types';
 import { ScrollableContainer, TicketCard } from '../../../components';
@@ -9,11 +10,12 @@ interface TicketListProps {
 }
 
 export const TicketList: FC<TicketListProps> = ({ tickets }) => {
+  const { t } = useTranslation();
   const [visibleCount, setVisibleCount] = useState(TICKETS_PER_PAGE);
 
   const visibleTickets = tickets.slice(0, visibleCount);
 
-  if (!tickets.length) return <div>No tickets to display</div>;
+  if (!tickets.length) return <div>{t('tickets.empty_list')}</div>;
 
   return (
     <ScrollableContainer className='max-h-[520px]' onScrollEnd={() => setVisibleCount(prev => prev + TICKETS_PER_PAGE)}>

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Ticket, TicketStatus } from '../../types';
 import { useGameContext } from '../../providers';
@@ -9,9 +10,11 @@ interface TicketCardProps {
   ticket: Ticket;
 }
 
+const tKey = 'tickets.ticket_card';
+
 export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const {
     id,
     playerCombination,
@@ -33,7 +36,7 @@ export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
     potentialReward,
     isRewardClaimed,
     winningCombinationGenerated,
-    playerCombinationSubmitted,
+    playerCombinationSubmitted
   );
 
   const handleTicketClick = (ticketStatus: TicketStatus) => {
@@ -59,17 +62,17 @@ export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
       onClick={() => handleTicketClick(ticketStatus)}
     >
       <div className='bg-black text-white p-4 border-r-1 border-white'>
-        <div className='md:text-lg text-sm font-medium'>Ticket number</div>
+        <div className='md:text-lg text-sm font-medium'>{t(`${tKey}.ticket_number`)}</div>
         <div className='text-2xl font-bold'>{id}</div>
       </div>
 
       <div className='text-black bg-white p-4'>
-        <div className='md:text-lg text-sm font-medium'>Your combination</div>
+        <div className='md:text-lg text-sm font-medium'>{t(`${tKey}.player_combi`)}</div>
         <div className='text-2xl font-bold'>{displayedCombination}</div>
       </div>
 
       <div className={`col-span-2 px-4 py-2 text-white text-md border-t-1 border-white ${getBgColor()}`}>
-        <strong>Status:</strong> <span>{ticketStatus}</span>
+        <strong>{t(`${tKey}.status_label`)}</strong> <span>{t(`${tKey}.statuses.${ticketStatus}`)}</span>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Link } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ import { BurgerMenuIcon } from '../../../assets';
 export const NavbarStart: FC = () => {
   const { jackpot, refetchJackpot } = useGetJackpot();
   const [parsedJackpot, setParsedJackpot] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     refetchJackpot();
@@ -37,16 +39,16 @@ export const NavbarStart: FC = () => {
         </div>
         <ul tabIndex={0} className='menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow'>
           <li>
-            <Link to='/'>Home</Link>
+            <Link to='/'>{t('header.nav.home')}</Link>
           </li>
           <li>
-            <Link to='/FAQ'>FAQ</Link>
+            <Link to='/FAQ'>{t('header.nav.FAQ')}</Link>
           </li>
         </ul>
       </div>
 
       <div className='flex flex-col 2xl:ml-60 xl:ml-44 lg:ml-36 md:ml-28 sm:ml-20'>
-        <h2 className='text-center'>Jackpot</h2>
+        <h2 className='text-center'>{t('header.jackpot')}</h2>
         <strong className='self-center'>
           {parsedJackpot ? `${Number(parsedJackpot).toFixed(3)} ETH` : <Loader size='md' />}
         </strong>

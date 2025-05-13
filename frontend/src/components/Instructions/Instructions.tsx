@@ -1,15 +1,25 @@
 import React, { useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
-import { Link } from 'react-router-dom';
 import { InstructionModal } from '../InstructionModal';
 import { useConnectWallet, useMobile } from '../../hooks';
-import { StepHeader } from './components';
+import { StepHeader, MoreDetailsNotice } from './components';
 import { FAUCET_LINKS } from '../../constants';
 import { TimelineIcon } from '../../assets';
+import PrizesGrid from './components/PrizesGrid';
+
+import { PrizesGridConfig } from './types';
+
+interface InstructionsStep {
+  step_title: string;
+  step_notice?: string;
+  button_title: string;
+  modal?: string;
+}
 
 export const Instructions = () => {
   const { handleConnectWallet } = useConnectWallet();
-
+  const { t } = useTranslation();
   const buyRef = useRef<HTMLDialogElement>(null);
   const chooseRef = useRef<HTMLDialogElement>(null);
   const gridRef = useRef<HTMLDialogElement>(null);
@@ -20,17 +30,20 @@ export const Instructions = () => {
     ref.current?.showModal();
   };
 
+  const getTranslationByStep = (step: number) =>
+    t(`home.instructions.steps.step_${step}`, { returnObjects: true }) as InstructionsStep;
+
   return (
     <div className='max-w-2xl md:col-span-3'>
-      <h1 className='text-3xl text-center mb-2'>How to play?</h1>
+      <h1 className='text-3xl text-center mb-2'>{t('home.instructions.title')}</h1>
       <ul className='timeline timeline-snap-icon max-md:timeline-compact timeline-vertical place-self-center'>
         {/* Step 1 */}
         <li>
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
-            <StepHeader title='Connect MetaMask wallet' />
+            <StepHeader title={getTranslationByStep(1).step_title} />
             <button className='btn btn-sm mt-1 w-48' onClick={handleConnectWallet}>
-              Connect MetaMask
+              {getTranslationByStep(1).button_title}
             </button>
           </div>
           <hr className='bg-neutral' />
@@ -41,8 +54,8 @@ export const Instructions = () => {
           <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-end'>
-            <StepHeader title='Get some Sepolia ETH' />
-            {!mobile && <p className='text-sm'>Don't worry, it's free!</p>}
+            <StepHeader title={getTranslationByStep(2).step_title} />
+            {!mobile && <p className='text-sm'>{getTranslationByStep(2).step_notice}</p>}
             <div className='container space-x-2 space-y-2 flex flex-wrap'>
               {FAUCET_LINKS.map(({ label, href }) => (
                 <a key={href} href={href} target='_blank' rel='noopener noreferrer' className='btn btn-sm mt-1 w-32'>
@@ -59,16 +72,14 @@ export const Instructions = () => {
           <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
-            <StepHeader title='Buy a ticket' />
-            {!mobile && <p className='text-sm'>To participate you will need an ETHery ticket</p>}
+            <StepHeader title={getTranslationByStep(3).step_title} />
+            {!mobile && <p className='text-sm'>{getTranslationByStep(3).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(buyRef)}>
               See details
             </button>
-            <InstructionModal refObj={buyRef}>
+            <InstructionModal t={t} refObj={buyRef}>
               <ul className='steps steps-vertical flex flex-col'>
-                <li className='step step-neutral'>Click the "Buy Ticket" button.</li>
-                <li className='step step-neutral'>Complete transaction in Metamask wallet</li>
-                <li className='step step-neutral'>We assign a new ticket number to your wallet</li>
+                <Trans i18nKey={'home.instructions.steps.step_3.modal'} components={[<li className='step step-neutral' />]} />
               </ul>
             </InstructionModal>
           </div>
@@ -80,16 +91,14 @@ export const Instructions = () => {
           <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-end mb-4 md:mb-0'>
-            <StepHeader title='Time to play!' />
-            {!mobile && <p className='text-sm'>Submit your unique 5 Numbers in range 0 and 36</p>}
+            <StepHeader title={getTranslationByStep(4).step_title} />
+            {!mobile && <p className='text-sm'>{getTranslationByStep(4).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(chooseRef)}>
               See details
             </button>
-            <InstructionModal refObj={chooseRef}>
+            <InstructionModal t={t} refObj={chooseRef}>
               <ul className='steps steps-vertical flex flex-col'>
-                <li className='step step-neutral'>Submit 5 unique numbers in range 0 and 36.</li>
-                <li className='step step-neutral'>Order doesn't matter</li>
-                <li className='step step-neutral'>Once submitted, your combination is locked and cannot be changed.</li>
+                <Trans i18nKey={'home.instructions.steps.step_4.modal'} components={[<li className='step step-neutral' />]} />
               </ul>
             </InstructionModal>
           </div>
@@ -101,10 +110,8 @@ export const Instructions = () => {
           <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
-            <StepHeader title='Wait for the Winning Combination' />
-            {!mobile && (
-              <p className='text-sm'>Blockchain will generate a random the winning combination using Chainlink VRF.</p>
-            )}
+            <StepHeader title={getTranslationByStep(5).step_title} />
+            {!mobile && <p className='text-sm'>{getTranslationByStep(5).step_notice}.</p>}
           </div>
           <hr className='bg-neutral' />
         </li>
@@ -114,63 +121,19 @@ export const Instructions = () => {
           <hr className='bg-neutral' />
           <TimelineIcon />
           <div className='timeline-end md:mb-0'>
-            <StepHeader title='Check results and Claim prize' />
-            {!mobile && (
-              <p className='text-sm'>
-                You’ll see how many numbers you matched. If you win, your reward will be sent directly to your wallet!
-              </p>
-            )}
+            <StepHeader title={getTranslationByStep(6).step_title} />
+            {!mobile && <p className='text-sm'>{getTranslationByStep(6).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(gridRef)}>
               See prizes grid
             </button>
-            <InstructionModal refObj={gridRef}>
-              <table className='table table-zebra'>
-                <thead>
-                  <tr className='bg-base-200'>
-                    <th>Matches</th>
-                    <th>Reward</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>0</th>
-                    <td>Better luck next time</td>
-                  </tr>
-                  <tr>
-                    <th>1</th>
-                    <td>Refund 80% of the ticket price</td>
-                  </tr>
-                  <tr>
-                    <th>2</th>
-                    <td>5% of the Jackpot</td>
-                  </tr>
-                  <tr>
-                    <th>3</th>
-                    <td>10% of the Jackpot</td>
-                  </tr>
-                  <tr>
-                    <th>4</th>
-                    <td>30% of the Jackpot</td>
-                  </tr>
-                  <tr>
-                    <th>5</th>
-                    <td>100% of the Jackpot (Grand Prize!)</td>
-                  </tr>
-                </tbody>
-              </table>
+            <InstructionModal t={t} refObj={gridRef}>
+              <PrizesGrid config={t('home.instructions.prize_grid', { returnObjects: true }) as PrizesGridConfig} />
             </InstructionModal>
           </div>
         </li>
       </ul>
 
-      <p className='mt-1 md:mt-5 xlg:mt-12 place-self-center'>
-        <small>
-          More details of the ETHery game can be found{' '}
-          <Link className='link' to='/faq'>
-            on the FAQ page
-          </Link>
-        </small>
-      </p>
+      <MoreDetailsNotice />
     </div>
   );
 };

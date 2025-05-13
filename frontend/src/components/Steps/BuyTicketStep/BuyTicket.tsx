@@ -1,12 +1,16 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { useBuyTicket } from './useBuyTicket';
 
 import { Loader } from '../../Loader';
 
+const tKey = 'game.step_1';
+
 export const BuyTicketStep: FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { isPurchasingTicket, buyTicketHandler, buyBatchTicketsHandler } = useBuyTicket();
 
   const goToTicketsPage = () => {
@@ -16,7 +20,7 @@ export const BuyTicketStep: FC = () => {
   return (
     <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20'>
       <h1 className='text-3xl text-center'>
-        <strong>Step 1.</strong> Purchase an ETHery ticket(s)
+        <Trans i18nKey={`${tKey}.title`} components={[<strong key={0} />]} />
       </h1>
       <div className='flex flex-col gap-2 md:flex-row'>
         <button
@@ -24,7 +28,7 @@ export const BuyTicketStep: FC = () => {
           disabled={isPurchasingTicket}
           onClick={buyTicketHandler}
         >
-          {isPurchasingTicket ? <Loader size='xl' /> : 'Buy one'}
+          {isPurchasingTicket ? <Loader size='xl' /> : t(`${tKey}.button_1`)}
         </button>
 
         <button
@@ -32,15 +36,15 @@ export const BuyTicketStep: FC = () => {
           disabled={isPurchasingTicket}
           onClick={buyBatchTicketsHandler}
         >
-          {isPurchasingTicket ? <Loader size='xl' /> : 'Buy 9, get 1 free'}
+          {isPurchasingTicket ? <Loader size='xl' /> : t(`${tKey}.button_2`)}
         </button>
       </div>
-
-      <div className='divider divider-neutral'>OR</div>
-
-      <p>Check if you have any active tickets</p>
+      <Trans
+        i18nKey={`${tKey}.divider_content`}
+        components={[<div className='divider divider-neutral' key={0} />, <p />]}
+      />
       <button className='btn btn-sm btn-outline min-w-60 text-xl h-10 md:h-12' onClick={goToTicketsPage}>
-        Check tickets list
+        {t(`${tKey}.button_3`)}
       </button>
     </div>
   );
