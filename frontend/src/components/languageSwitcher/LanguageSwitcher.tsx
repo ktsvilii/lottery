@@ -1,22 +1,22 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { UkraineIcon, USIcon } from '../../assets';
 
 export const LanguageSwitcher: FC = () => {
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
 
-  const getItemClass = (lang: string) => (currentLanguage === lang ? 'swap-off' : 'swap-on');
-
-  const changeLanguage = () => {
-    const selectedLang = document.querySelector('div.swap-on')?.innerHTML.toLowerCase();
-    i18n.changeLanguage(selectedLang);
+  const toggleLanguage = () => {
+    const newLang = currentLanguage === 'en' ? 'uk' : 'en';
+    i18n.changeLanguage(newLang);
   };
 
   return (
     <label className='swap'>
-      <input type='checkbox' checked onChange={changeLanguage} />
-      <div className={getItemClass('en')}>EN</div>
-      <div className={getItemClass('uk')}>UK</div>
+      <input type='checkbox' checked={currentLanguage === 'en'} onChange={toggleLanguage} />
+      <div className={currentLanguage === 'en' ? 'swap-on' : 'swap-off'}>
+        {currentLanguage === 'en' ? <USIcon /> : <UkraineIcon />}
+      </div>
     </label>
   );
 };

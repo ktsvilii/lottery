@@ -18,7 +18,7 @@ export const NavbarEnd: FC = () => {
   };
 
   return (
-    <div className='navbar-end space-x-6'>
+    <div className='navbar-end space-x-3'>
       <LanguageSwitcher />
       <ThemeToggler />
       {isAdmin && (

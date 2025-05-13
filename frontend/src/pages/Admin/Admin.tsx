@@ -1,9 +1,12 @@
 import { FC, useEffect } from 'react';
 
+import { Trans } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { ManageLotteryButtons, Stats, TicketsTable } from '@components';
 import { useAdmin } from '@hooks';
+
+const tKey = 'admin_panel';
 
 export const Admin: FC = () => {
   const navigate = useNavigate();
@@ -23,7 +26,9 @@ export const Admin: FC = () => {
   return (
     <>
       <h1 className='text-3xl text-center'>
-        <strong>Admin panel</strong>
+        <strong>
+          <Trans i18nKey={`${tKey}.title`} />
+        </strong>
       </h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 order-1 mt-4 lg:mt-10'>

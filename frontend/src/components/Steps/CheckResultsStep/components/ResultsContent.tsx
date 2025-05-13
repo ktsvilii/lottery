@@ -29,7 +29,6 @@ export const ResultsContent: FC<ResultsContentProps> = ({
               i18nKey={'game.step_4.rewarded_title'}
               values={{
                 matchingNumbers,
-                sufix: matchingNumbers !== 1 ? 's' : '',
                 reward: formatEther(potentialReward),
               }}
             />

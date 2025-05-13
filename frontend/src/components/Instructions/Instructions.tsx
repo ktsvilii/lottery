@@ -9,7 +9,6 @@ import { useConnectWallet, useMobile } from '@hooks';
 import { InstructionModal } from '../InstructionModal';
 
 import { MoreDetailsNotice, PrizesGrid, StepHeader } from './components';
-
 import { PrizesGridConfig } from './types';
 
 interface InstructionsStep {
@@ -77,7 +76,7 @@ export const Instructions = () => {
             <StepHeader title={getTranslationByStep(3).step_title} />
             {!mobile && <p className='text-sm'>{getTranslationByStep(3).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(buyRef)}>
-              See details
+              <p>{getTranslationByStep(3).button_title}</p>
             </button>
             <InstructionModal t={t} refObj={buyRef}>
               <ul className='steps steps-vertical flex flex-col'>
@@ -99,7 +98,7 @@ export const Instructions = () => {
             <StepHeader title={getTranslationByStep(4).step_title} />
             {!mobile && <p className='text-sm'>{getTranslationByStep(4).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(chooseRef)}>
-              See details
+              <p>{getTranslationByStep(4).button_title}</p>
             </button>
             <InstructionModal t={t} refObj={chooseRef}>
               <ul className='steps steps-vertical flex flex-col'>
@@ -132,7 +131,7 @@ export const Instructions = () => {
             <StepHeader title={getTranslationByStep(6).step_title} />
             {!mobile && <p className='text-sm'>{getTranslationByStep(6).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(gridRef)}>
-              See prizes grid
+              <p>{getTranslationByStep(6).button_title}</p>
             </button>
             <InstructionModal t={t} refObj={gridRef}>
               <PrizesGrid config={t('home.instructions.prize_grid', { returnObjects: true }) as PrizesGridConfig} />

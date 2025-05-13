@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { formatEther } from 'viem';
 
 import { PaidIcon, PendingIcon, TicketIcon } from '@assets';
@@ -9,7 +11,11 @@ interface StatsProps {
   tickets: Ticket[];
 }
 
+const tKey = 'admin_panel.stats';
+
 export const Stats: FC<StatsProps> = ({ tickets }) => {
+  const { t } = useTranslation();
+
   const pendingReward = tickets.reduce((acc, ticket) => {
     return !ticket.isRewardClaimed ? acc + ticket.potentialReward : acc;
   }, 0n);
@@ -24,7 +30,7 @@ export const Stats: FC<StatsProps> = ({ tickets }) => {
         <div className='stat-figure'>
           <TicketIcon />
         </div>
-        <div className='stat-title'>Tickets</div>
+        <div className='stat-title'>{t(`${tKey}.tickets`)}</div>
         <div className='stat-value text-xl sm:text-3xl'>{tickets.length}</div>
       </div>
 
@@ -32,7 +38,7 @@ export const Stats: FC<StatsProps> = ({ tickets }) => {
         <div className='stat-figure'>
           <PendingIcon />
         </div>
-        <div className='stat-title'>Pending reward</div>
+        <div className='stat-title'>{t(`${tKey}.pending_reward`)}</div>
         <div className='stat-value text-xl sm:text-3xl'>{formatEther(pendingReward)} ETH</div>
       </div>
 
@@ -40,7 +46,7 @@ export const Stats: FC<StatsProps> = ({ tickets }) => {
         <div className='stat-figure'>
           <PaidIcon />
         </div>
-        <div className='stat-title'>Paid reward</div>
+        <div className='stat-title'>{t(`${tKey}.paid_reward`)}</div>
         <div className='stat-value text-xl sm:text-3xl'>{formatEther(paidReward)} ETH</div>
       </div>
     </div>

@@ -10,3 +10,5 @@ export * from './PaidIcon';
 export * from './PendingIcon';
 export * from './TicketIcon';
 export * from './TimelineIcon';
+export * from './UkraineIcon';
+export * from './USIcon';

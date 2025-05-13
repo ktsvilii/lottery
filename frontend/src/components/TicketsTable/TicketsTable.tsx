@@ -1,5 +1,7 @@
 import { FC, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { ROWS_PER_PAGE } from '@constants';
 import { SortCols, SortOrder, Ticket } from '@types';
 import { filterTickets, sortTickets } from '@utils';
@@ -15,8 +17,11 @@ interface TicketsTableProps {
   allTickets: Ticket[];
   fetchAllTickets: () => Promise<void>;
 }
+const tKey = 'admin_panel';
 
 export const TicketsTable: FC<TicketsTableProps> = ({ allTickets, fetchAllTickets }) => {
+  const { t } = useTranslation();
+
   const [visibleCount, setVisibleCount] = useState(ROWS_PER_PAGE);
   const [copiedId, setCopiedId] = useState<bigint | null>(null);
   const [sortKey, setSortKey] = useState<SortCols>(SortCols.ID);
@@ -38,7 +43,7 @@ export const TicketsTable: FC<TicketsTableProps> = ({ allTickets, fetchAllTicket
           }}
         />
         <button className='btn btn-neutral' onClick={fetchAllTickets}>
-          Refresh stats
+          {t(`${tKey}.refresh_stats`)}
         </button>
       </div>
 

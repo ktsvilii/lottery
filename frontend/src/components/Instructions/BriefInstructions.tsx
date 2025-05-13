@@ -14,7 +14,7 @@ export const BriefInstructions: FC = () => {
 
   return (
     <div className='md:col-span-3'>
-      <h1 className='text-4xl text-center mb-5'>How to play?</h1>
+      <h1 className='text-4xl text-center mb-5'>{t('home.brief_instructions.title')}</h1>
       <ul className='timeline timeline-snap-icon max-sm:timeline-compact max-w-8xl timeline-vertical place-self-center'>
         {tKeys.map((title, index) => (
           <li key={id + index}>
