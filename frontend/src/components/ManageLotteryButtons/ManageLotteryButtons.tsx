@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, useState } from 'react';
 
-import { useAdmin } from '@hooks';
 import { preventNonNumericInput } from '@utils';
 
 import { Loader } from '../Loader';
+import { useManageLotteryButtons } from './useManageLotteryButtons';
 
 export const ManageLotteryButtons: FC = () => {
   const [fundJackpotAmount, setFundJackpotAmount] = useState('');
@@ -17,7 +17,7 @@ export const ManageLotteryButtons: FC = () => {
     withdrawJackpotHandler,
     withdrawOwnerBalanceHandler,
     withdrawOperationalBalanceHandler,
-  } = useAdmin();
+  } = useManageLotteryButtons();
 
   const fundJackpotAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setFundJackpotAmount(e.target.value);
@@ -52,13 +52,25 @@ export const ManageLotteryButtons: FC = () => {
           {isFundingJackpot ? <Loader size='xl' /> : 'Fund Jackpot'}
         </button>
       </div>
-      <button onClick={withdrawOwnerBalanceHandler} className='btn btn-outline btn-info btn-lg w-72 sm:h-14 px-2'>
+      <button
+        disabled={isWithdrawingOwnerBalance}
+        onClick={withdrawOwnerBalanceHandler}
+        className='btn btn-outline btn-info btn-lg w-72 sm:h-14 px-2'
+      >
         {isWithdrawingOwnerBalance ? <Loader size='xl' /> : 'Withdraw owner balance'}
       </button>
-      <button onClick={withdrawOperationalBalanceHandler} className='btn btn-outline btn-info btn-lg w-72 sm:h-14 px-2'>
+      <button
+        disabled={isWithdrawingOperationalBalance}
+        onClick={withdrawOperationalBalanceHandler}
+        className='btn btn-outline btn-info btn-lg w-72 sm:h-14 px-2'
+      >
         {isWithdrawingOperationalBalance ? <Loader size='xl' /> : 'Withdraw operation balance'}
       </button>
-      <button onClick={withdrawJackpotHandler} className='btn btn-outline btn-error btn-lg w-72 sm:h-14 px-2'>
+      <button
+        disabled={isWithdrawingJackpot}
+        onClick={withdrawJackpotHandler}
+        className='btn btn-outline btn-error btn-lg w-72 sm:h-14 px-2'
+      >
         {isWithdrawingJackpot ? <Loader size='xl' /> : 'Withdraw Jackpot'}
       </button>
     </div>
