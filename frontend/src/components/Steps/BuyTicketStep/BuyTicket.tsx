@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useBuyTicket } from './useBuyTicket';
 
-import { Loader } from '../../Loader';
+import { Loader } from '@components';
 
 export const BuyTicketStep: FC = () => {
   const navigate = useNavigate();

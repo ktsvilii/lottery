@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import { RefObject, useRef } from 'react';
 
 import { Link } from 'react-router-dom';
 import { InstructionModal } from '../InstructionModal';
-import { useConnectWallet, useMobile } from '../../hooks';
+import { useConnectWallet, useMobile } from '@hooks';
 import { StepHeader } from './components';
-import { FAUCET_LINKS } from '../../constants';
-import { TimelineIcon } from '../../assets';
+import { FAUCET_LINKS } from '@constants';
+import { TimelineIcon } from '@assets';
 
 export const Instructions = () => {
   const { handleConnectWallet } = useConnectWallet();
@@ -16,7 +16,7 @@ export const Instructions = () => {
 
   const mobile = useMobile();
 
-  const openModal = (ref: React.RefObject<HTMLDialogElement | null>) => {
+  const openModal = (ref: RefObject<HTMLDialogElement | null>) => {
     ref.current?.showModal();
   };
 

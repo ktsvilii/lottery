@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useCountdown } from './useCountdown';
 
-import { Loader } from '../../Loader';
+import { Loader } from '@components';
 
 export const CountdownStep: FC = () => {
   const { minutes, seconds, isCheckingResults, isResultReady, seeResultsHandler } = useCountdown();

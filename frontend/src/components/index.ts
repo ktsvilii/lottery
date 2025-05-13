@@ -12,3 +12,4 @@ export * from './Steps';
 export * from './TicketCard';
 export * from './TicketsTable';
 export * from './ManageLotteryButtons';
+export * from './ThemeToggler';

@@ -2,8 +2,8 @@ import { FC, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { useAdmin } from '../../hooks';
-import { ManageLotteryButtons, Stats, TicketsTable } from '../../components';
+import { useAdmin } from '@hooks';
+import { ManageLotteryButtons, Stats, TicketsTable } from '@components';
 
 export const Admin: FC = () => {
   const navigate = useNavigate();

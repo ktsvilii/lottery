@@ -3,9 +3,9 @@ import { useId, useState, Dispatch, SetStateAction } from 'react';
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 
 import { useAccount } from 'wagmi';
-import { useGameContext, useNotifications, useStepper } from '../../../providers';
 import { config } from '../../../wagmi';
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
+import { useGameContext, useNotifications, useStepper } from '@providers';
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '@constants';
 
 type UserCombination = number | null;
 

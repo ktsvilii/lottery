@@ -1,5 +1,8 @@
 import { ReactNode } from 'react';
-import { BuyTicketStep, CheckResultsStep, CountdownStep, SubmitCombinationStep } from '..';
+import { BuyTicketStep } from './BuyTicketStep';
+import { SubmitCombinationStep } from './SubmitCombinationStep';
+import { CountdownStep } from './CountdownStep';
+import { CheckResultsStep } from './CheckResultsStep';
 
 interface Step {
   id: number;

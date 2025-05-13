@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useCheckResults } from './useCheckResults';
 
-import { FallbackUI } from '../../FallbackUI';
+import { FallbackUI } from '@components';
 import { ResultsContent } from './components';
 
 export const CheckResultsStep: FC = () => {

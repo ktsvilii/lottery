@@ -1,13 +1,13 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useWatchContractEvent } from 'wagmi';
 
-import { useNotifications, useTheme } from '../../providers';
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../constants';
-import { getRandomNumberGeneratedLog } from '../../logReaders';
-import { useEffect } from 'react';
-import { THEME_KEY } from '../../constants';
-import { Theme } from '../../types';
+import { useNotifications, useTheme } from '@providers';
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '@constants';
+import { getRandomNumberGeneratedLog } from '@logReaders';
+import { THEME_KEY } from '@constants';
+import { Theme } from '@types';
 
 export const useLayout = () => {
   const navigate = useNavigate();

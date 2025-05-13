@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useStepper } from '../../providers';
+import { useStepper } from '@providers';
 
 export const StepIndicator: FC = () => {
   const { step } = useStepper();

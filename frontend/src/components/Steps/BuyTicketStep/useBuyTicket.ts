@@ -4,10 +4,9 @@ import { simulateContract, waitForTransactionReceipt, writeContract } from '@wag
 import { useAccount } from 'wagmi';
 
 import { config } from '../../../wagmi';
-import { useGameContext, useNotifications, useStepper } from '../../../providers';
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
-import { getTicketPurchasedLog } from '../../../logReaders';
-import { BATCH_TICKET_PRICE_WEI, TICKET_PRICE_WEI } from '../../../constants';
+import { useGameContext, useNotifications, useStepper } from '@providers';
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS, BATCH_TICKET_PRICE_WEI, TICKET_PRICE_WEI } from '@constants';
+import { getTicketPurchasedLog } from '@logReaders';
 
 interface UseBuyTicketReturn {
   isPurchasingTicket: boolean;

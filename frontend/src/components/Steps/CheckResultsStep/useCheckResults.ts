@@ -1,14 +1,15 @@
 import { useState } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 
 import { useAccount } from 'wagmi';
 
 import { config } from '../../../wagmi';
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
-import { useGameContext, useNotifications, useStepper } from '../../../providers';
-import { useNavigate } from 'react-router-dom';
-import { Ticket } from '../../../types';
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '@constants';
+import { useGameContext, useNotifications, useStepper } from '@providers';
+import { Ticket } from '@types';
 
 interface UseCheckResultsReturn {
   ticket: Ticket | null;

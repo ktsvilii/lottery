@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { InstructionModal } from '../InstructionModal';
 import { useStartGame } from './useStartGame';
-import { useConnectWallet } from '../../hooks';
-import { FAUCET_LINKS } from '../../constants';
+import { useConnectWallet } from '@hooks';
+import { FAUCET_LINKS } from '@constants';
 
 export const StartGame: FC = () => {
   const navigate = useNavigate();

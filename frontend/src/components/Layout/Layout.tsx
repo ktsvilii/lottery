@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 import { Header } from '../Header';
 import { useLayout } from './useLayout';
-import { useNotifications } from '../../providers';
+import { useNotifications } from '@providers';
 import { Notification } from '../Notification';
 
 export const Layout = () => {

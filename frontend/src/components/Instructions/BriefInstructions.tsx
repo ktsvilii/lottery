@@ -1,8 +1,8 @@
 import { FC, useId } from 'react';
 import { Link } from 'react-router-dom';
 import { StepHeader } from './components';
-import { BRIEF_INSTRUCTIONS_STEPS } from '../../constants';
-import { TimelineIcon } from '../../assets';
+import { BRIEF_INSTRUCTIONS_STEPS } from '@constants';
+import { TimelineIcon } from '@assets';
 
 export const BriefInstructions: FC = () => {
   const id = useId();

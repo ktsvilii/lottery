@@ -1,13 +1,13 @@
 import { FC, useState } from 'react';
-import { SortCols, SortOrder } from '../../types';
-import { ROWS_PER_PAGE } from '../../constants';
+import { SortCols, SortOrder } from '@types';
+import { ROWS_PER_PAGE } from '@constants';
 import { Loader } from '../Loader';
-import { filterTickets, sortTickets } from '../../utils';
+import { filterTickets, sortTickets } from '@utils';
 import { TicketsTableFilter } from './TicketsTableFilter';
 import { TicketsTableHeader } from './TicketsTableHeader';
 import { TicketsTableRow } from './TicketsTableRow';
 import { ScrollableContainer } from '../ScrollableContainer';
-import { useAdmin } from '../../hooks';
+import { useAdmin } from '@hooks';
 
 export const TicketsTable: FC = () => {
   const [visibleCount, setVisibleCount] = useState(ROWS_PER_PAGE);

@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Ticket, TicketStatus } from '../../types';
-import { useGameContext } from '../../providers';
-import { getTicketStatus, setStepByTicketStatus } from '../../utils';
+import { Ticket, TicketStatus } from '@types';
+import { useGameContext } from '@providers';
+import { getTicketStatus, setStepByTicketStatus } from '@utils';
 
 interface TicketCardProps {
   ticket: Ticket;

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useSubmitCombination } from './useSubmitCombination';
-import { Loader } from '../../Loader';
-import { preventNonNumericInput } from '../../../utils';
+import { Loader } from '@components';
+import { preventNonNumericInput } from '@utils';
 
 export const SubmitCombinationStep: FC = () => {
   const {

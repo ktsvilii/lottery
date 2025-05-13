@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { formatEther } from 'viem';
-import { Ticket } from '../../types';
-import { CheckIcon, CopyIcon } from '../../assets';
+import { Ticket } from '@types';
+import { CheckIcon, CopyIcon } from '@assets';
 
 interface Props {
   ticket: Ticket;

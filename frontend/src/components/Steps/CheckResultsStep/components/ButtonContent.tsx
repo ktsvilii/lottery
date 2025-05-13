@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Loader } from '../../../Loader';
+import { Loader } from '@components';
 
 interface ButtonContentProps {
   isRewardClaimed: boolean;

@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Loader } from '../../components';
-import { useFetchTickets } from '../../hooks';
+import { Loader } from '@components';
+import { useFetchTickets } from '@hooks';
 import { useTickets } from './useTickets';
 import { TicketList, TicketTabs } from './components';
-import { TicketTabStatus } from '../../types';
+import { TicketTabStatus } from '@types';
 
 export const Tickets: FC = () => {
   const navigate = useNavigate();
