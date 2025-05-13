@@ -1,11 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
+import { readContract, simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
+import { useCallback, useEffect, useState } from 'react';
+import { parseEther } from 'viem';
 import { useAccount, useReadContract } from 'wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../constants';
-import { Ticket } from '../types';
-import { readContract, simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
-import { config } from '../wagmi';
 import { useNotifications } from '../providers';
-import { parseEther } from 'viem';
+import { Ticket } from '../types';
+import { config } from '../wagmi';
 
 interface AdminReturns {
   isAdmin: boolean;
