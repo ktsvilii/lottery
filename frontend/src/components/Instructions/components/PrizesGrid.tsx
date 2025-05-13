@@ -3,7 +3,7 @@ import { PrizesGridConfig } from '../types';
 
 type Props = { config: PrizesGridConfig };
 
-const PrizesGrid: FC<Props> = ({ config }) => {
+export const PrizesGrid: FC<Props> = ({ config }) => {
   return (
     <table className='table table-zebra'>
       <thead>
@@ -23,5 +23,3 @@ const PrizesGrid: FC<Props> = ({ config }) => {
     </table>
   );
 };
-
-export default PrizesGrid;

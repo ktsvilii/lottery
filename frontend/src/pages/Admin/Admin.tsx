@@ -1,14 +1,17 @@
 import { FC, useEffect } from 'react';
 
+import { Trans } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useAdmin } from '../../hooks';
-import { ManageLotteryButtons, Stats, TicketsTable } from '../../components';
+import { ManageLotteryButtons, Stats, TicketsTable } from '@components';
+import { useAdmin } from '@hooks';
+
+const tKey = 'admin_panel';
 
 export const Admin: FC = () => {
   const navigate = useNavigate();
 
-  const { isAdmin, allTickets } = useAdmin();
+  const { isAdmin, allTickets, fetchAllTickets } = useAdmin();
 
   useEffect(() => {
     if (!isAdmin) {
@@ -16,10 +19,16 @@ export const Admin: FC = () => {
     }
   }, [isAdmin, navigate]);
 
+  useEffect(() => {
+    fetchAllTickets();
+  }, []);
+
   return (
     <>
       <h1 className='text-3xl text-center'>
-        <strong>Admin panel</strong>
+        <strong>
+          <Trans i18nKey={`${tKey}.title`} />
+        </strong>
       </h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 order-1 mt-4 lg:mt-10'>
@@ -32,7 +41,7 @@ export const Admin: FC = () => {
         </div>
         <div className='lg:col-span-3 sm:col-span-full order-2 md:order-3 lg:order-2'>
           <div className='space-y-5'>
-            <TicketsTable />
+            <TicketsTable allTickets={allTickets} fetchAllTickets={fetchAllTickets} />
           </div>
         </div>
       </div>

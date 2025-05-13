@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { useAccount, useBalance, useConnect, useSwitchChain } from 'wagmi';
-import { sepolia } from 'viem/chains';
 import { QueryObserverResult } from '@tanstack/react-query';
 import { GetBalanceErrorType } from 'viem';
+import { sepolia } from 'viem/chains';
+import { useAccount, useBalance, useConnect, useSwitchChain } from 'wagmi';
 
 interface ConnectWalletReturns {
   address: string | undefined;

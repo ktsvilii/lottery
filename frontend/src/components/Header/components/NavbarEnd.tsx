@@ -1,8 +1,10 @@
 import { FC } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
-import { ThemeToggler } from '../../ThemeToggler';
-import { useAdmin } from '../../../hooks';
+import { ThemeToggler } from '@components';
+import { useAdmin } from '@hooks';
+
 import { LanguageSwitcher } from '../../languageSwitcher';
 
 export const NavbarEnd: FC = () => {
@@ -16,7 +18,7 @@ export const NavbarEnd: FC = () => {
   };
 
   return (
-    <div className='navbar-end space-x-6'>
+    <div className='navbar-end space-x-3'>
       <LanguageSwitcher />
       <ThemeToggler />
       {isAdmin && (

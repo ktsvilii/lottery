@@ -1,10 +1,17 @@
 import { ChangeEvent, FC, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { preventNonNumericInput } from '../../utils';
 import { Loader } from '../Loader';
-import { useAdmin } from '../../hooks';
+
+const tKey = 'admin_panel.manage_buttons';
+
+import { useManageLotteryButtons } from './useManageLotteryButtons';
 
 export const ManageLotteryButtons: FC = () => {
+  const { t } = useTranslation();
+
   const [fundJackpotAmount, setFundJackpotAmount] = useState('');
 
   const {
@@ -16,7 +23,7 @@ export const ManageLotteryButtons: FC = () => {
     withdrawJackpotHandler,
     withdrawOwnerBalanceHandler,
     withdrawOperationalBalanceHandler,
-  } = useAdmin();
+  } = useManageLotteryButtons();
 
   const fundJackpotAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setFundJackpotAmount(e.target.value);
@@ -48,17 +55,17 @@ export const ManageLotteryButtons: FC = () => {
           disabled={!fundJackpotAmount}
           className='btn btn-outline btn-success btn-lg w-48 sm:h-14 px-2 join-item'
         >
-          {isFundingJackpot ? <Loader size='xl' /> : 'Fund Jackpot'}
+          {isFundingJackpot ? <Loader size='xl' /> : t(`${tKey}.fund_jackpot`)}
         </button>
       </div>
       <button onClick={withdrawOwnerBalanceHandler} className='btn btn-outline btn-info btn-lg w-72 sm:h-14 px-2'>
-        {isWithdrawingOwnerBalance ? <Loader size='xl' /> : 'Withdraw owner balance'}
+        {isWithdrawingOwnerBalance ? <Loader size='xl' /> : t(`${tKey}.withdraw_owner`)}
       </button>
       <button onClick={withdrawOperationalBalanceHandler} className='btn btn-outline btn-info btn-lg w-72 sm:h-14 px-2'>
-        {isWithdrawingOperationalBalance ? <Loader size='xl' /> : 'Withdraw operation balance'}
+        {isWithdrawingOperationalBalance ? <Loader size='xl' /> : t(`${tKey}.withdraw_operational`)}
       </button>
       <button onClick={withdrawJackpotHandler} className='btn btn-outline btn-error btn-lg w-72 sm:h-14 px-2'>
-        {isWithdrawingJackpot ? <Loader size='xl' /> : 'Withdraw Jackpot'}
+        {isWithdrawingJackpot ? <Loader size='xl' /> : t(`${tKey}.withdraw_jackpot`)}
       </button>
     </div>
   );

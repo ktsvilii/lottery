@@ -1,7 +1,8 @@
 import { FC } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
-import { useGameContext } from '../../providers';
+import { useGameContext } from '@providers';
 
 export const FallbackUI: FC = () => {
   const navigate = useNavigate();

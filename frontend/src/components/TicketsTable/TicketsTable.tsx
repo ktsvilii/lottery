@@ -1,22 +1,32 @@
 import { FC, useState } from 'react';
-import { SortCols, SortOrder } from '../../types';
-import { ROWS_PER_PAGE } from '../../constants';
+
+import { useTranslation } from 'react-i18next';
+
+import { ROWS_PER_PAGE } from '@constants';
+import { SortCols, SortOrder, Ticket } from '@types';
+import { filterTickets, sortTickets } from '@utils';
+
 import { Loader } from '../Loader';
-import { filterTickets, sortTickets } from '../../utils';
+import { ScrollableContainer } from '../ScrollableContainer';
+
 import { TicketsTableFilter } from './TicketsTableFilter';
 import { TicketsTableHeader } from './TicketsTableHeader';
 import { TicketsTableRow } from './TicketsTableRow';
-import { ScrollableContainer } from '../ScrollableContainer';
-import { useAdmin } from '../../hooks';
 
-export const TicketsTable: FC = () => {
+interface TicketsTableProps {
+  allTickets: Ticket[];
+  fetchAllTickets: () => Promise<void>;
+}
+const tKey = 'admin_panel';
+
+export const TicketsTable: FC<TicketsTableProps> = ({ allTickets, fetchAllTickets }) => {
+  const { t } = useTranslation();
+
   const [visibleCount, setVisibleCount] = useState(ROWS_PER_PAGE);
   const [copiedId, setCopiedId] = useState<bigint | null>(null);
   const [sortKey, setSortKey] = useState<SortCols>(SortCols.ID);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC);
   const [filterText, setFilterText] = useState('');
-
-  const { allTickets, fetchAllTickets } = useAdmin();
 
   const sortedTickets = sortTickets(allTickets, sortKey, sortOrder);
   const filteredTickets = filterTickets(sortedTickets, filterText);
@@ -33,7 +43,7 @@ export const TicketsTable: FC = () => {
           }}
         />
         <button className='btn btn-neutral' onClick={fetchAllTickets}>
-          Refresh stats
+          {t(`${tKey}.refresh_stats`)}
         </button>
       </div>
 
@@ -45,18 +55,26 @@ export const TicketsTable: FC = () => {
           <TicketsTableHeader sortKey={sortKey} sortOrder={sortOrder} onSort={setSortKey} toggleOrder={setSortOrder} />
 
           <tbody>
-            {visibleTickets.map(ticket => (
-              <TicketsTableRow
-                key={ticket.id.toString()}
-                ticket={ticket}
-                copiedId={copiedId}
-                onCopy={id => {
-                  navigator.clipboard.writeText(ticket.owner);
-                  setCopiedId(id);
-                  setTimeout(() => setCopiedId(null), 800);
-                }}
-              />
-            ))}
+            {visibleTickets.length ? (
+              visibleTickets.map(ticket => (
+                <TicketsTableRow
+                  key={ticket.id.toString()}
+                  ticket={ticket}
+                  copiedId={copiedId}
+                  onCopy={id => {
+                    navigator.clipboard.writeText(ticket.owner);
+                    setCopiedId(id);
+                    setTimeout(() => setCopiedId(null), 800);
+                  }}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className='text-xl md:text-center'>
+                  {t(`${tKey}.nothing_to_display`)}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         {visibleCount < filteredTickets.length && (

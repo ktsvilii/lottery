@@ -1,4 +1,5 @@
-import React, { RefObject } from 'react';
+import { RefObject } from 'react';
+
 import { TFunction } from 'i18next';
 
 type Props = {

@@ -1,12 +1,14 @@
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
 
-import { WagmiProvider } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { config } from './wagmi';
-import './locales/i18next';
+import { createRoot } from 'react-dom/client';
+import { WagmiProvider } from 'wagmi';
 
-import App from './App.tsx';
+import { config } from 'src/wagmi';
+
+import App from './App';
+
+import './locales/i18next';
 
 const queryClient = new QueryClient();
 
@@ -17,5 +19,5 @@ createRoot(document.getElementById('root')!).render(
         <App />
       </QueryClientProvider>
     </WagmiProvider>
-  </StrictMode>
+  </StrictMode>,
 );

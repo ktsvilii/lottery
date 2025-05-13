@@ -1,10 +1,11 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
-import { Ticket, TicketStatus } from '../../types';
-import { useGameContext } from '../../providers';
-import { getTicketStatus, setStepByTicketStatus } from '../../utils';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
+import { useGameContext } from '@providers';
+import { Ticket, TicketStatus } from '@types';
+import { getTicketStatus, setStepByTicketStatus } from '@utils';
 
 interface TicketCardProps {
   ticket: Ticket;
@@ -36,7 +37,7 @@ export const TicketCard: FC<TicketCardProps> = ({ ticket }) => {
     potentialReward,
     isRewardClaimed,
     winningCombinationGenerated,
-    playerCombinationSubmitted
+    playerCombinationSubmitted,
   );
 
   const handleTicketClick = (ticketStatus: TicketStatus) => {

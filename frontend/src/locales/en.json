@@ -1,219 +1,260 @@
 {
-    "header": {
-        "jackpot": "Jackpot",
-        "nav": {
-            "home": "Home",
-            "FAQ": "FAQ"
-        }
+  "header": {
+    "jackpot": "Jackpot",
+    "nav": {
+      "home": "Home",
+      "FAQ": "FAQ"
+    }
+  },
+  "home": {
+    "start_game": {
+      "logged_in": {
+        "content": "Ready to play?",
+        "button": "Let's start!"
+      },
+      "logged_out": {
+        "content": "Connect your wallet",
+        "button": "Connect MetaMask"
+      },
+      "not_enough_ETH": "Not enough Sepolia ETH",
+      "faucets_label": "You can get Sepolia ETH at faucets for free!",
+      "rescan_button": "Rescan Sepolia ETH balance",
+      "rescan_proccessing": "Rescanning...",
+      "close_button": "close"
     },
-    "home": {
-        "start_game": {
-            "logged_in": {
-                "content": "Ready to play?",
-                "button": "Let's start!"
-            },
-            "logged_out": {
-                "content": "Connect your wallet",
-                "button": "Connect MetaMask"
-            },
-            "not_enough_ETH": "Not enough Sepolia ETH",
-            "faucets_label": "You can get Sepolia ETH at faucets for free!",
-            "rescan_button": "Rescan Sepolia ETH balance",
-            "rescan_proccessing": "Rescanning...",
-            "close_button": "close"
-        },
-        "brief_instructions": {
-            "step1": "Connect MetaMask wallet",
-            "step2": "Get some Sepolia ETH",
-            "step3": "Buy a ticket",
-            "step4": "Submit your 5 Lucky Numbers",
-            "step5": "Check results and Claim your prize"
-        },
-        "instructions": {
-            "title": "How to play?",
-            "steps": {
-                "step_1": {
-                    "step_title": "Connect MetaMask wallet",
-                    "button_title": "Connect MetaMask"
-                },
-                "step_2": {
-                    "step_title": "Get some Sepolia ETH",
-                    "step_notice": "Don't worry, it's free!"
-                },
-                "step_3": {
-                    "step_title": "Buy a ticket",
-                    "step_notice": "To participate you will need an ETHery ticket",
-                    "button_title": "See details",
-                    "modal": "<0>Click the 'Buy Ticket' button.</0> <0 className='step step-neutral'>Complete transaction in Metamask wallet</0> <0 className='step step-neutral'>We assign a new ticket number to your wallet</0>"
-                },
-                "step_4": {
-                    "step_title": "Time to play!",
-                    "step_notice": "Submit your unique 5 Numbers in range 0 and 36",
-                    "button_title": "See details",
-                    "modal": "<0>Submit 5 unique numbers in range 0 and 36.</0> <0>Order doesn't matter</0> <0>Once submitted, your combination is locked and cannot be changed.</0>"
-                },
-                "step_5": {
-                    "step_title": "Wait for the Winning Combination",
-                    "step_notice": "Blockchain will generate a random the winning combination using Chainlink VRF."
-                },
-                "step_6": {
-                    "step_title": "Check results and Claim prize",
-                    "step_notice": "You’ll see how many numbers you matched. If you win, your reward will be sent directly to your wallet!",
-                    "button_title": "See prizes grid"
-                }
-            },
-            "prize_grid": {
-                "title_1": "Matches",
-                "title_2": "Reward",
-                "rows": {
-                    "row_0": "Better luck next time",
-                    "row_1": "Refund 80% of the ticket price",
-                    "row_2": "5% of the Jackpot",
-                    "row_3": "10% of the Jackpot",
-                    "row_4": "30% of the Jackpot",
-                    "row_5": "100% of the Jackpot (Grand Prize!)"
-                }
-            }
-        },
-        "details_note": "<0>More details of the ETHery game can be found</0> <1>on the FAQ page</1>"
+    "brief_instructions": {
+      "title": "How to play?",
+      "steps": {
+        "step1": "Connect MetaMask wallet",
+        "step2": "Get some Sepolia ETH",
+        "step3": "Buy a ticket",
+        "step4": "Submit your 5 Lucky Numbers",
+        "step5": "Check results and Claim your prize"
+      }
     },
-    "FAQ": {
-        "column_1": {
-            "item_1": {
-                "question": "What is this game about?",
-                "answer": "This is a blockchain-based lottery game where players purchase a ticket, submit a set of 5 numbers, and have a chance to win rewards depending on how many of their numbers match a randomly generated winning combination."
-            },
-            "item_2": {
-                "question": "How do I participate?",
-                "answer": "Buy a ticket by paying exactly 0.0001 ETH.<0/>Submit your combination of 5 unique numbers (0–36).<0/>Wait for the Chainlink VRF to generate the winning combination.<0/>Get your result and see if you’ve won!"
-            },
-            "item_3": {
-                "question": "How are the winning numbers chosen?",
-                "answer": "The contract uses Chainlink VRF to securely generate a random number. This number is used to derive 5 unique winning numbers between 0 and 36."
-            },
-            "item_4": {
-                "question": "What are the rules for choosing my numbers?",
-                "answer": "You must submit 5 unique numbers between 0 and 36. Duplicates or invalid ranges will cause your entry to be rejected."
-            },
-            "item_5": {
-                "question": "How much does a ticket cost?",
-                "answer": "Each ticket costs exactly 0.0001 ETH."
-            },
-            "item_6": {
-                "question": "What are the prizes?",
-                "answer": "2 matches: 0.0001 ETH<0/> 3 matches: 5% of the jackpot<0/> 4 matches: 30% of the jackpot<0/> 5 matches: 100% of the jackpot<0/>"
-            }
-        },
-        "column_2": {
-            "item_1": {
-                "question": "Where does the ticket money go?",
-                "answer": "85% goes to the jackpot<0/> 10% to operations<0/> 5% to the contract owner<0/>"
-            },
-            "item_2": {
-                "question": "How do I claim my reward?",
-                "answer": "When the results are ready, you will automatically get a transaction to your MetaMask with amount of your reward if you’ve won."
-            },
-            "item_3": {
-                "question": "What happens if I don't win?",
-                "answer": "If you match fewer than 2 numbers, you won’t receive a reward — but you can try again by purchasing a new ticket!"
-            },
-            "item_4": {
-                "question": "Is the lottery fair and secure?",
-                "answer": "Yes. It uses Chainlink VRF to ensure tamper-proof and verifiable randomness."
-            },
-            "item_5": {
-                "question": "Can the contract owner withdraw funds?",
-                "answer": "The owner can only withdraw their 5% share and the 10% operations fund. The jackpot can only be won by players."
-            },
-            "item_6": {
-                "question": "Can I send ETH directly to the contract?",
-                "answer": "Yes, but this only increases the jackpot and doesn't buy you a ticket. Always use the 'Buy Ticket' function to enter the game."
-            }
-        }
-    },
-    "game": {
+    "instructions": {
+      "title": "How to play?",
+      "steps": {
         "step_1": {
-            "title": "<0>Step 1.</0> Purchase an ETHery ticket(s)",
-            "button_1": "Buy one",
-            "button_2": "Buy 9, get 1 free",
-            "button_3": "Check tickets list",
-            "divider_content": "<0>OR</0> <1>Check if you have any active tickets</1>",
-            "stepper_title": "Buy ETHery Ticket"
+          "step_title": "Connect MetaMask wallet",
+          "button_title": "Connect MetaMask"
         },
         "step_2": {
-            "title": "<0>Step 2.</0> Enter and submit a combination of <1>5 unique</1> numbers",
-            "invalid_value": "Must be between 0 to 36",
-            "not_uniq": "Each number must be unique",
-            "button": "Submit combination",
-            "stepper_title": "Submit Combination"
+          "step_title": "Get some Sepolia ETH",
+          "step_notice": "Don't worry, it's free!"
         },
         "step_3": {
-            "title": "<0>Step 3.</0> Wait until we generate random combination for you",
-            "result_ready": "Results are ready, you can check your reward.",
-            "result_pending": "<0>We will inform you when results are ready.</0> <0>This should not take more then:</0>",
-            "min": "min",
-            "sec": "sec",
-            "button": "See Results",
-            "stepper_title": "Get Random Combination"
+          "step_title": "Buy a ticket",
+          "step_notice": "To participate you will need an ETHery ticket",
+          "button_title": "See details",
+          "modal": "<0>Click the 'Buy Ticket' button.</0> <0 className='step step-neutral'>Complete transaction in Metamask wallet</0> <0 className='step step-neutral'>We assign a new ticket number to your wallet</0>"
         },
         "step_4": {
-            "title": "<0>Step 4.</0> Check Results for ticket #{{id}}",
-            "player_combi": "Your combination",
-            "win_combi": "Winning combination",
-            "button_1": "Play again",
-            "button_2": "Return to homepage",
-            "divider_content": "OR",
-            "rewarded_title": "You matched {{matchingNumbers}} number{{sufix}}. Your reward is {{reward}} ETH.",
-            "not_rewarded_title": "You have 0 matches. Better luck next time.",
-            "reward_not_claimed": "Claim Reward",
-            "reward_claimed": "Reward is already claimed",
-            "stepper_title": "Check Results"
+          "step_title": "Time to play!",
+          "step_notice": "Submit your unique 5 Numbers in range 0 and 36",
+          "button_title": "See details",
+          "modal": "<0>Submit 5 unique numbers in range 0 and 36.</0> <0>Order doesn't matter</0> <0>Once submitted, your combination is locked and cannot be changed.</0>"
+        },
+        "step_5": {
+          "step_title": "Wait for the Winning Combination",
+          "step_notice": "Blockchain will generate a random the winning combination using Chainlink VRF"
+        },
+        "step_6": {
+          "step_title": "Check results and Claim prize",
+          "step_notice": "You’ll see how many numbers you matched. If you win, your reward will be sent directly to your wallet!",
+          "button_title": "See prizes grid"
         }
+      },
+      "prize_grid": {
+        "title_1": "Matches",
+        "title_2": "Reward",
+        "rows": {
+          "row_0": "Better luck next time",
+          "row_1": "0.0007 ether",
+          "row_2": "0.0012 ether",
+          "row_3": "0.01 ether",
+          "row_4": "0.1 ether",
+          "row_5": "100% of the Jackpot (Grand Prize!)"
+        }
+      }
     },
-    "tickets": {
-        "title": "Your tickets",
-        "go_back": "Go back",
-        "empty_list": "No tickets to display",
-        "tabs": {
-            "all": "All",
-            "active": "Active",
-            "rewards_available": "Rewards Available",
-            "claimed": "Claimed",
-            "no_reward": "No Reward"
-        },
-        "ticket_card": {
-            "ticket_number": "Ticket number",
-            "player_combi": "Your combination",
-            "status_label": "Status:",
-            "statuses": {
-                "reward_available": "Reward available",
-                "reward_claimed": "Reward claimed",
-                "no_reward": "No reward",
-                "combination_submitted": "Combination submitted",
-                "waiting_for_result": "Waiting for result",
-                "purchased": "Purchased"
-            }
-
-        }
+    "details_note": "<0>More details of the ETHery game can be found</0> <1>on the FAQ page</1>"
+  },
+  "admin_panel": {
+    "title": "Admin panel",
+    "stats": {
+      "tickets": "Tickets",
+      "pending_reward": "Pending reward",
+      "paid_reward": "Paid reward"
     },
-    "notifications": {
-        "random_number_generated": {
-            "content": "Winning combination was generated for ticket #{{ticketId}}",
-            "button": "See tickets page"
-        },
-        "buy_ticket": {
-            "success_1_ticket": "Ticket purchased successfully",
-            "success_10_ticket": "Batch of 10 tickets purchased successfully",
-            "error_message": "Error during ticket purchase"
-        },
-        "claim_reward": {
-            "success_message": "Reward claimed successfuly",
-            "error_message": "Error during reward claiming"
-        },
-        "submit_combi": {
-            "success_message": "Combination submited",
-            "error_message": "Error during combination confirmation"
-        }
-        
+    "filter": "Filter by Ticket # or Owner",
+    "refresh_stats": "Refresh stats",
+    "table": {
+      "ticket_id": "Ticket #",
+      "owner": "Owner",
+      "matched": "Matched",
+      "reward": "Reward (ETH)",
+      "is_claimed": "Is claimed"
+    },
+    "nothing_to_display": "No tickets to display",
+    "manage_buttons": {
+      "fund_jackpot": "Fund Jackpot",
+      "withdraw_owner": "Withdraw owner balance",
+      "withdraw_operational": "Withdraw operation balance",
+      "withdraw_jackpot": "Withdraw Jackpot"
     }
+  },
+  "FAQ": {
+    "column_1": {
+      "item_1": {
+        "question": "What is this game about?",
+        "answer": "This is a blockchain-based lottery game where players purchase a ticket, submit a set of 5 numbers, and have a chance to win rewards depending on how many of their numbers match a randomly generated winning combination."
+      },
+      "item_2": {
+        "question": "How do I participate?",
+        "answer": "Buy a ticket by paying exactly 0.001 ETH.<0/>Submit your combination of 5 unique numbers (0–36).<0/>Wait for the Chainlink VRF to generate the winning combination.<0/>Get your result and see if you’ve won!"
+      },
+      "item_3": {
+        "question": "How are the winning numbers chosen?",
+        "answer": "The contract uses Chainlink VRF to securely generate a random number. This number is used to derive 5 unique winning numbers between 0 and 36."
+      },
+      "item_4": {
+        "question": "What are the rules for choosing my numbers?",
+        "answer": "You must submit 5 unique numbers between 0 and 36. Duplicates or invalid ranges will cause your entry to be rejected."
+      },
+      "item_5": {
+        "question": "How much does a ticket cost?",
+        "answer": "Each ticket costs exactly 0.001 ETH."
+      },
+      "item_6": {
+        "question": "What are the prizes?",
+        "answer": "0 matches: Better luck next time!<0/>1 match: 0.0007 ETH<0/>2 matches: 0.0012 ETH<0/> 3 matches: 0.01 ETH<0/> 4 matches: 0.1 ETH<0/> 5 matches: 100% of the jackpot<0/>"
+      }
+    },
+    "column_2": {
+      "item_1": {
+        "question": "Where does the ticket money go?",
+        "answer": "90% goes to the jackpot<0/> 5% to operations<0/> 5% to the contract owner<0/>"
+      },
+      "item_2": {
+        "question": "How do I claim my reward?",
+        "answer": "When the results are ready, you will automatically get a transaction to your MetaMask with amount of your reward if you’ve won."
+      },
+      "item_3": {
+        "question": "What happens if I don't win?",
+        "answer": "If you match fewer than 2 numbers, you won’t receive a reward - but you can try again by purchasing a new ticket!"
+      },
+      "item_4": {
+        "question": "Is the lottery fair and secure?",
+        "answer": "Yes. It uses Chainlink VRF to ensure tamper-proof and verifiable randomness."
+      },
+      "item_5": {
+        "question": "Can the contract owner withdraw funds?",
+        "answer": "Funds are withdrawable by the owner at any time. This system is based on mutual trust."
+      },
+      "item_6": {
+        "question": "Can I send ETH directly to the contract?",
+        "answer": "Yes, but this only increases the jackpot and doesn't buy you a ticket. Always use the 'Buy Ticket' function to enter the game."
+      }
+    }
+  },
+  "game": {
+    "step_1": {
+      "title": "<0>Step 1.</0> Purchase an ETHery ticket(s)",
+      "button_1": "Buy one",
+      "button_2": "Buy 9, get 1 free",
+      "button_3": "Check tickets list",
+      "divider_content": "<0>OR</0> <1>Check if you have any active tickets</1>",
+      "stepper_title": "Buy ETHery Ticket"
+    },
+    "step_2": {
+      "title": "<0>Step 2.</0> Enter and submit a combination of <1>5 unique</1> numbers",
+      "invalid_value": "Must be between 0 to 36",
+      "not_uniq": "Each number must be unique",
+      "button": "Submit combination",
+      "stepper_title": "Submit Combination"
+    },
+    "step_3": {
+      "title": "<0>Step 3.</0> Wait until we generate random combination for you",
+      "result_ready": "Results are ready, you can check your reward.",
+      "result_pending": "<0>We will inform you when results are ready.</0> <0>This should not take more then:</0>",
+      "min": "min",
+      "sec": "sec",
+      "button": "See Results",
+      "stepper_title": "Get Random Combination"
+    },
+    "step_4": {
+      "title": "<0>Step 4.</0> Check Results for ticket #{{id}}",
+      "player_combi": "Your combination",
+      "win_combi": "Winning combination",
+      "button_1": "Play again",
+      "button_2": "Return to homepage",
+      "divider_content": "OR",
+      "rewarded_title": "You matched {{matchingNumbers}} number{{sufix}}. Your reward is {{reward}} ETH.",
+      "not_rewarded_title": "You have 0 matches. Better luck next time.",
+      "reward_not_claimed": "Claim Reward",
+      "reward_claimed": "Reward is already claimed",
+      "stepper_title": "Check Results"
+    }
+  },
+  "tickets": {
+    "title": "Your tickets",
+    "go_back": "Go back",
+    "empty_list": "No tickets to display",
+    "tabs": {
+      "all": "All",
+      "active": "Active",
+      "rewards_available": "Rewards Available",
+      "claimed": "Claimed",
+      "no_reward": "No Reward"
+    },
+    "ticket_card": {
+      "ticket_number": "Ticket number",
+      "player_combi": "Your combination",
+      "status_label": "Status:",
+      "statuses": {
+        "reward_available": "Reward available",
+        "reward_claimed": "Reward claimed",
+        "no_reward": "No reward",
+        "combination_submitted": "Combination submitted",
+        "waiting_for_result": "Waiting for result",
+        "purchased": "Purchased"
+      }
+    }
+  },
+  "notifications": {
+    "random_number_generated": {
+      "content": "Winning combination was generated for ticket #{{ticketId}}",
+      "button": "See tickets page"
+    },
+    "buy_ticket": {
+      "success_1_ticket": "Ticket purchased successfully",
+      "success_10_ticket": "Batch of 10 tickets purchased successfully",
+      "error_message": "Error during ticket purchase"
+    },
+    "claim_reward": {
+      "success_message": "Reward claimed successfuly",
+      "error_message": "Error during reward claiming"
+    },
+    "submit_combi": {
+      "success_message": "Combination submited",
+      "error_message": "Error during combination confirmation"
+    },
+    "funding_jackpot": {
+      "success_message": "Jackpot funded successfully",
+      "error_message": "Error during funding jackpot"
+    },
+    "withdrawing_jackpot": {
+      "success_message": "Jackpot withdrawn successfully",
+      "error_message": "Error during withdrawing jackpot"
+    },
+    "withdrawing_owner_balance": {
+      "success_message": "Owner balance withdrawn successfully",
+      "error_message": "Error during withdrawing owner balance"
+    },
+    "withdrawing_operational_balance": {
+      "success_message": "Operational balance withdrawn successfully",
+      "error_message": "Error during withdrawing operational balance"
+    }
+  }
 }
