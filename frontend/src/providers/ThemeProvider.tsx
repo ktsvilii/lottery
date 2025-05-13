@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { THEME_KEY } from '../constants/constants';
+import { THEME_KEY } from '../constants';
 import { Theme } from '../types';
 
 interface ThemeContextType {

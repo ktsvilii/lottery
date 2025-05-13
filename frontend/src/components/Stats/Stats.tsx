@@ -19,13 +19,13 @@ export const Stats: FC<StatsProps> = ({ tickets }) => {
   }, 0n);
 
   return (
-    <div className='stats shadow stats-vertical'>
+    <div className='stats shadow stats-vertical lg:stats-horizontal w-72 lg:w-auto'>
       <div className='stat'>
         <div className='stat-figure'>
           <TicketIcon />
         </div>
         <div className='stat-title'>Tickets</div>
-        <div className='stat-value text-3xl'>{tickets.length}</div>
+        <div className='stat-value text-xl sm:text-3xl'>{tickets.length}</div>
       </div>
 
       <div className='stat'>
@@ -33,7 +33,7 @@ export const Stats: FC<StatsProps> = ({ tickets }) => {
           <PendingIcon />
         </div>
         <div className='stat-title'>Pending reward</div>
-        <div className='stat-value text-3xl'>{formatEther(pendingReward)} ETH</div>
+        <div className='stat-value text-xl sm:text-3xl'>{formatEther(pendingReward)} ETH</div>
       </div>
 
       <div className='stat'>
@@ -41,7 +41,7 @@ export const Stats: FC<StatsProps> = ({ tickets }) => {
           <PaidIcon />
         </div>
         <div className='stat-title'>Paid reward</div>
-        <div className='stat-value text-3xl'>{formatEther(paidReward)} ETH</div>
+        <div className='stat-value text-xl sm:text-3xl'>{formatEther(paidReward)} ETH</div>
       </div>
     </div>
   );

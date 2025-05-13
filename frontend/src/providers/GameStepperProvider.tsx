@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { CURRENT_STEP, STEPPER_STEPS_COUNT } from '../constants/constants';
+import { CURRENT_STEP, STEPPER_STEPS_COUNT } from '../constants';
 
 interface StepContextType {
   step: number;

@@ -61,5 +61,5 @@ export const filterTickets = (tickets: Ticket[], query: string): Ticket[] => {
 
 export const preventNonNumericInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'].includes(e.key)) return;
-  if (!/^\d$/.test(e.key)) e.preventDefault();
+  if (!/^\d|\.$/.test(e.key)) e.preventDefault();
 };

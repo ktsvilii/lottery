@@ -1,16 +1,14 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
 import { useAdmin } from '../../hooks';
-import { Stats, TicketsTable } from '../../components';
-import { preventNonNumericInput } from '../../utils';
+import { ManageLotteryButtons, Stats, TicketsTable } from '../../components';
 
 export const Admin: FC = () => {
   const navigate = useNavigate();
 
   const { isAdmin, allTickets } = useAdmin();
-  const [fundJackpotAmount, setFundJackpotAmount] = useState('');
 
   useEffect(() => {
     if (!isAdmin) {
@@ -18,45 +16,23 @@ export const Admin: FC = () => {
     }
   }, [isAdmin, navigate]);
 
-  const fundJackpotAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setFundJackpotAmount(e.target.value);
-  };
-
   return (
     <>
       <h1 className='text-3xl text-center'>
         <strong>Admin panel</strong>
       </h1>
-      <div className='max-w-12xl mx-auto grid grid-cols-1 xl:grid-cols-5 lg:mt-10'>
-        <div className='max-w-8xl md:col-span-3 space-y-5 place-items-center'>
-          <TicketsTable tickets={allTickets} />
-        </div>
-        <div className='md:col-span-1 ml-5'>
+
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 order-1 mt-4 lg:mt-10'>
+        <div className='order-1 col-span-1 md:order-1 lg:col-span-5 flex lg:justify-center'>
           <Stats tickets={allTickets} />
         </div>
-        <div className='md:col-span-1'>
-          <div className='flex flex-col gap-3'>
-            <div className='flex gap-2'>
-              <input
-                type='text'
-                value={fundJackpotAmount}
-                onChange={fundJackpotAmountHandler}
-                onKeyDown={preventNonNumericInput}
-                placeholder='ETH'
-                className='input input-xl text-md p-2 max-w-30'
-              />
-              <button
-                className='btn btn-outline btn-success btn-lg max-w-40 w-full h-14 px-2'
-                disabled={!fundJackpotAmount}
-              >
-                Fund Jackpot
-              </button>
-            </div>
 
-            <button className='btn btn-outline btn-info btn-lg max-w-72 h-14 px-2'>Withdraw owner balance</button>
-
-            <button className='btn btn-outline btn-info btn-lg max-w-72 h-14 px-2'>Withdraw operation balance</button>
-            <button className='btn btn-outline btn-error btn-lg max-w-72 h-14 px-2'>Withdraw Jackpot</button>
+        <div className='lg:order-3 col-span-1 lg:col-span-2 md:order-2 order-2'>
+          <ManageLotteryButtons />
+        </div>
+        <div className='lg:col-span-3 sm:col-span-full order-2 md:order-3 lg:order-2'>
+          <div className='space-y-5'>
+            <TicketsTable />
           </div>
         </div>
       </div>

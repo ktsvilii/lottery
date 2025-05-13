@@ -6,7 +6,7 @@ import { useGameContext, useStepper } from '../../../providers';
 import { config } from '../../../wagmi';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 import { Ticket } from '../../../types';
-import { COUNTDOWN_DURATION, COUNTDOWN_STORAGE_KEY } from '../../../constants/constants';
+import { COUNTDOWN_DURATION, COUNTDOWN_STORAGE_KEY } from '../../../constants';
 
 interface UseCountdownReturn {
   isCheckingResults: boolean;

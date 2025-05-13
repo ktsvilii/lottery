@@ -11,3 +11,4 @@ export * from './StepIndicator';
 export * from './Steps';
 export * from './TicketCard';
 export * from './TicketsTable';
+export * from './ManageLotteryButtons';

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { InstructionModal } from '../InstructionModal';
 import { useConnectWallet, useMobile } from '../../hooks';
 import { StepHeader } from './components';
-import { FAUCET_LINKS } from '../../constants/constants';
+import { FAUCET_LINKS } from '../../constants';
 import { TimelineIcon } from '../../assets';
 
 export const Instructions = () => {

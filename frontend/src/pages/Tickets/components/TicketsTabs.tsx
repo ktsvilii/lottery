@@ -20,7 +20,7 @@ export const TicketTabs: FC<TicketTabsProps> = ({ activeTab, setActiveTab }) => 
       <a
         key={status}
         role='tab'
-        className={`tab text-xs px-3 ${activeTab === status ? 'active' : ''}`}
+        className={`tab text-xs px-2 md:px-5 ${activeTab === status ? 'active' : ''}`}
         aria-selected={activeTab === status}
         tabIndex={activeTab === status ? 0 : -1}
         onClick={() => setActiveTab(status)}

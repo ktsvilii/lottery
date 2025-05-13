@@ -12,7 +12,7 @@ export const TicketsTableFilter: FC<Props> = ({ value, onChange }) => (
       placeholder='Filter by Ticket # or Owner'
       value={value}
       onChange={e => onChange(e.target.value)}
-      className='input w-full max-w-xs'
+      className='input max-w-72 min-w-48'
     />
   </div>
 );
