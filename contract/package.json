@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "rollup": "^2.0.0",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "hardhat": "^2.23.0"
   },

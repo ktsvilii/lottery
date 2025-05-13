@@ -1,8 +1,9 @@
 import tailwindcss from '@tailwindcss/vite';
+import path from 'path';
 import { defineConfig } from 'vite';
-
+import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
-  plugins: [tailwindcss()],
+  plugins: [tailwindcss(), tsconfigPaths()],
   server: {
     open: true,
   },
@@ -11,7 +12,7 @@ export default defineConfig({
   },
   esbuild: {
     target: 'esnext',
-    platform: 'neutral',
+    platform: 'linux',
   },
   resolve: {
     alias: {
