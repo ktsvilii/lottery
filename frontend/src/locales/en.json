@@ -24,11 +24,13 @@
     },
     "brief_instructions": {
       "title": "How to play?",
-      "step1": "Connect MetaMask wallet",
-      "step2": "Get some Sepolia ETH",
-      "step3": "Buy a ticket",
-      "step4": "Submit your 5 Lucky Numbers",
-      "step5": "Check results and Claim your prize"
+      "steps": {
+        "step1": "Connect MetaMask wallet",
+        "step2": "Get some Sepolia ETH",
+        "step3": "Buy a ticket",
+        "step4": "Submit your 5 Lucky Numbers",
+        "step5": "Check results and Claim your prize"
+      }
     },
     "instructions": {
       "title": "How to play?",
@@ -55,7 +57,7 @@
         },
         "step_5": {
           "step_title": "Wait for the Winning Combination",
-          "step_notice": "Blockchain will generate a random the winning combination using Chainlink VRF."
+          "step_notice": "Blockchain will generate a random the winning combination using Chainlink VRF"
         },
         "step_6": {
           "step_title": "Check results and Claim prize",
@@ -94,6 +96,7 @@
       "reward": "Reward (ETH)",
       "is_claimed": "Is claimed"
     },
+    "nothing_to_display": "No tickets to display",
     "manage_buttons": {
       "fund_jackpot": "Fund Jackpot",
       "withdraw_owner": "Withdraw owner balance",
@@ -236,6 +239,22 @@
     "submit_combi": {
       "success_message": "Combination submited",
       "error_message": "Error during combination confirmation"
+    },
+    "funding_jackpot": {
+      "success_message": "Jackpot funded successfully",
+      "error_message": "Error during funding jackpot"
+    },
+    "withdrawing_jackpot": {
+      "success_message": "Jackpot withdrawn successfully",
+      "error_message": "Error during withdrawing jackpot"
+    },
+    "withdrawing_owner_balance": {
+      "success_message": "Owner balance withdrawn successfully",
+      "error_message": "Error during withdrawing owner balance"
+    },
+    "withdrawing_operational_balance": {
+      "success_message": "Operational balance withdrawn successfully",
+      "error_message": "Error during withdrawing operational balance"
     }
   }
 }

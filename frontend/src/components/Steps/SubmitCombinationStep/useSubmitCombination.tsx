@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useId, useState } from 'react';
+
 import { useTranslation } from 'react-i18next';
 
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
@@ -6,8 +7,7 @@ import { useAccount } from 'wagmi';
 
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '@constants';
 import { useGameContext, useNotifications, useStepper } from '@providers';
-
-import { config } from '../../../wagmi';
+import { config } from 'src/wagmi';
 
 type UserCombination = number | null;
 

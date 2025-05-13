@@ -4,10 +4,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRoot } from 'react-dom/client';
 import { WagmiProvider } from 'wagmi';
 
-import './locales/i18next';
-import { config } from './wagmi';
+import { config } from 'src/wagmi';
 
 import App from './App';
+
+import './locales/i18next';
 
 const queryClient = new QueryClient();
 

@@ -720,9 +720,9 @@ export interface Lottery extends BaseContract {
 
   withdrawJackpot: TypedContractMethod<[], [void], "payable">;
 
-  withdrawOperationsBalance: TypedContractMethod<[], [void], "nonpayable">;
+  withdrawOperationsBalance: TypedContractMethod<[], [void], "payable">;
 
-  withdrawOwnerBalance: TypedContractMethod<[], [void], "nonpayable">;
+  withdrawOwnerBalance: TypedContractMethod<[], [void], "payable">;
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
@@ -874,10 +874,10 @@ export interface Lottery extends BaseContract {
   ): TypedContractMethod<[], [void], "payable">;
   getFunction(
     nameOrSignature: "withdrawOperationsBalance"
-  ): TypedContractMethod<[], [void], "nonpayable">;
+  ): TypedContractMethod<[], [void], "payable">;
   getFunction(
     nameOrSignature: "withdrawOwnerBalance"
-  ): TypedContractMethod<[], [void], "nonpayable">;
+  ): TypedContractMethod<[], [void], "payable">;
 
   getEvent(
     key: "CoordinatorSet"

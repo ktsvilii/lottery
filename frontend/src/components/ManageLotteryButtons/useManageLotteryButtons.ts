@@ -1,12 +1,13 @@
 import { useCallback, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 import { parseEther } from 'viem';
 import { useAccount } from 'wagmi';
 
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '@constants';
 import { useNotifications } from '@providers';
-
 import { config } from 'src/wagmi';
 
 interface ManageLotteryButtonsReturns {
@@ -20,7 +21,11 @@ interface ManageLotteryButtonsReturns {
   withdrawOperationalBalanceHandler: () => Promise<void>;
 }
 
+const tKey = 'notifications';
+
 export const useManageLotteryButtons = (): ManageLotteryButtonsReturns => {
+  const { t } = useTranslation();
+
   const { address } = useAccount();
 
   const [isFundingJackpot, setIsFundingJackpot] = useState(false);
@@ -39,9 +44,10 @@ export const useManageLotteryButtons = (): ManageLotteryButtonsReturns => {
         args?: unknown[];
         setLoading: (flag: boolean) => void;
         successMessage: string;
+        errorMessage: string;
       },
     ) => {
-      const { setLoading, value, args = [], successMessage } = options;
+      const { setLoading, value, args = [], successMessage, errorMessage } = options;
       setLoading(true);
       try {
         const { request } = await simulateContract(config, {
@@ -59,7 +65,7 @@ export const useManageLotteryButtons = (): ManageLotteryButtonsReturns => {
         toggleNotification({ content: successMessage, type: 'success' });
       } catch (err) {
         console.error(`${actionName} failed:`, err);
-        toggleNotification({ content: `Error during ${actionName}`, type: 'error' });
+        toggleNotification({ content: errorMessage, type: 'error' });
         throw err;
       } finally {
         setLoading(false);
@@ -73,28 +79,32 @@ export const useManageLotteryButtons = (): ManageLotteryButtonsReturns => {
       value: parseEther(value),
       args: [parseEther(value)],
       setLoading: setIsFundingJackpot,
-      successMessage: `Jackpot funded successfully for ${value} ETH`,
+      successMessage: t(`${tKey}.funding_jackpot.success_message`),
+      errorMessage: t(`${tKey}.funding_jackpot.error_message`),
     });
   };
 
   const withdrawJackpotHandler = async () => {
     await writeAction('withdrawing jackpot', 'withdrawJackpot', {
       setLoading: setIsWithdrawingJackpot,
-      successMessage: 'Jackpot withdrawn successfully',
+      successMessage: t(`${tKey}.withdrawing_jackpot.success_message`),
+      errorMessage: t(`${tKey}.withdrawing_jackpot.error_message`),
     });
   };
 
   const withdrawOwnerBalanceHandler = async () => {
     await writeAction('withdrawing owner balance', 'withdrawOwnerBalance', {
       setLoading: setIsWithdrawingOwnerBalance,
-      successMessage: 'Owner balance withdrawn successfully',
+      successMessage: t(`${tKey}.withdrawing_owner_balance.success_message`),
+      errorMessage: t(`${tKey}.withdrawing_owner_balance.error_message`),
     });
   };
 
   const withdrawOperationalBalanceHandler = async () => {
     await writeAction('withdrawing operational balance', 'withdrawOperationsBalance', {
       setLoading: setIsWithdrawingOperationalBalance,
-      successMessage: 'Operational balance withdrawn successfully',
+      successMessage: t(`${tKey}.withdrawing_operational_balance.success_message`),
+      errorMessage: t(`${tKey}.withdrawing_operational_balance.error_message`),
     });
   };
 

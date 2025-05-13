@@ -1115,14 +1115,14 @@ export const Lottery_ABI = [
     inputs: [],
     name: 'withdrawOperationsBalance',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
     inputs: [],
     name: 'withdrawOwnerBalance',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {

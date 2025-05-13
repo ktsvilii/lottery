@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 interface TicketsTableFilterProps {
   value: string;
   onChange: (value: string) => void;
@@ -8,6 +10,8 @@ interface TicketsTableFilterProps {
 const tKey = 'admin_panel';
 
 export const TicketsTableFilter: FC<TicketsTableFilterProps> = ({ value, onChange }) => {
+  const { t } = useTranslation();
+
   return (
     <div className='mb-2'>
       <input

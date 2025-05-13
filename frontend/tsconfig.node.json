@@ -2,12 +2,19 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "ES2022",
-    "lib": ["ES2023"],
+    "lib": ["ES2023", "DOM"],
     "module": "ESNext",
     "skipLibCheck": true,
     "composite": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
 
+    "maxNodeModuleJsDepth": 5,
+    "disableSizeLimit": true,
+    "declaration": true,
+    "declarationMap": true,
     "paths": {
+      "src/*": ["./src/*"],
       "@assets": ["./src/assets/index.ts"],
       "@components": ["./src/components/index.ts"],
       "@constants": ["./src/constants/index.ts"],
@@ -33,5 +40,6 @@
     "noUncheckedSideEffectImports": true,
     "jsx": "react-jsx"
   },
-  "include": ["vite.config.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.json", "src/types/**/*.ts", "vite.config.js"],
+  "exclude": ["node_modules", "dist", "**/*.d.ts"]
 }

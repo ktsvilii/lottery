@@ -9,7 +9,7 @@ import { MoreDetailsNotice, StepHeader } from './components';
 export const BriefInstructions: FC = () => {
   const id = useId();
   const { t } = useTranslation();
-  const steps = t('home.brief_instructions', { returnObjects: true }) as Record<string, string>;
+  const steps = t('home.brief_instructions.steps', { returnObjects: true }) as Record<string, string>;
   const tKeys = Object.keys(steps);
 
   return (
@@ -20,7 +20,7 @@ export const BriefInstructions: FC = () => {
           <li key={id + index}>
             {index !== 0 && <hr className='bg-neutral' />}
             <TimelineIcon />
-            <div className={`mb-7 ${index % 2 === 0 ? 'timeline-start sm:text-end' : 'timeline-end'}`}>
+            <div className={`mb-4 md:mb-7 ${index % 2 === 0 ? 'timeline-start sm:text-end' : 'timeline-end'}`}>
               <StepHeader title={steps[title]} />
             </div>
             {index < tKeys.length - 1 && <hr className='bg-neutral' />}
