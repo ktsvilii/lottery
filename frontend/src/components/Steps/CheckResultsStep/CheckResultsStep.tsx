@@ -28,11 +28,11 @@ export const CheckResultsStep: FC = () => {
       </h1>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
         <div className='bg-black border-1 border-white p-4 min-w-80 text-xl md:text-2xl text-white'>
-          <p>Your combination</p>
+          <p>{t(`${tKey}.player_combi`)}</p>
           <p>{playerCombinationResult}</p>
         </div>
         <div className='bg-white  border-1 border-white p-4 min-w-80 text-xl md:text-2xl text-black'>
-          <p>Winning combination</p>
+          <p>{t(`${tKey}.win_combi`)}</p>
           <p>{winningCombinationResult}</p>
         </div>
       </div>

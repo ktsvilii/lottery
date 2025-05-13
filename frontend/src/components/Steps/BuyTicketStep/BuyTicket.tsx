@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { Trans, useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { useBuyTicket } from './useBuyTicket';
 

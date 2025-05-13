@@ -2,7 +2,7 @@
   "header": {
     "jackpot": "Скарб",
     "nav": {
-      "home": "Додому",
+      "home": "Додому, до хати",
       "FAQ": "Шо-шо?"
     }
   },
@@ -23,17 +23,18 @@
       "close_button": "Закрити"
     },
     "brief_instructions": {
+      "title": "Шо по правилах?",
       "step1": "Підключаєш MetaMask гаманець",
       "step2": "Береш Sepolia ETH",
       "step3": "Тариш купони",
-      "step4": "Закинь свої 5 фартових чисел, братуха",
+      "step4": "Закинь свої 5 фартових чисел, братан",
       "step5": "Глянь, шо випало, і забери свій навар"
     },
     "instructions": {
       "title": "Шо по правилах?",
       "steps": {
         "step_1": {
-          "step_title": "Підключай гаманець",
+          "step_title": "Підключаєш гаманець",
           "button_title": "Підключити MetaMask"
         },
         "step_2": {
@@ -48,169 +49,192 @@
         },
         "step_4": {
           "step_title": "Час лудоманити!",
-          "step_notice": "Закинь свої 5 фартових чисел, від 0 до 36, братуха",
+          "step_notice": "Закинь свої 5 фартових чисел, від 0 до 36, братан",
           "button_title": "Детальніше",
-          "modal": "<0>Закидуєш свої 5 фартових чисел, від 0 до 36</0> <0>Порядок не грає ролі.</0> <0>Відправив - то це з кінцями, більше не поміняєш. ДумайТЕ.</0>"
+          "modal": "<0>Закидуєш свої 5 фартових чисел, від 0 до 36</0> <0>Порядок не грає ролі.</0> <0>Відправив - то це з кінцями. ДумайТЕ.</0>"
         },
         "step_5": {
-          "step_title": "Wait for the Winning Combination",
-          "step_notice": "Blockchain will generate a random the winning combination using Chainlink VRF."
+          "step_title": "Очікуй свою доленосну п’ятірку",
+          "step_notice": "Рандом вирішить усе - Chainlink VRF кине кубик у блокчейні"
         },
         "step_6": {
-          "step_title": "Check results and Claim prize",
-          "step_notice": "You’ll see how many numbers you matched. If you win, your reward will be sent directly to your wallet!",
-          "button_title": "See prizes grid"
+          "step_title": "Глянь, шо зівпало, і забери свій навар",
+          "step_notice": "Дивишся, скільки вгадав - і якщо твоя п’ятірка дала жару, можеш забрати ефірчики на гаманець!",
+          "button_title": "Оцінюй, які шанси на куш."
         }
       },
       "prize_grid": {
-        "title_1": "Matches",
-        "title_2": "Reward",
+        "title_1": "Совпадіння",
+        "title_2": "Наварчик",
         "rows": {
-          "row_0": "Better luck next time",
-          "row_1": "Refund 80% of the ticket price",
-          "row_2": "5% of the Jackpot",
-          "row_3": "10% of the Jackpot",
-          "row_4": "30% of the Jackpot",
-          "row_5": "100% of the Jackpot (Grand Prize!)"
+          "row_0": "Цього разу не зайшло, зато набиваєш руку.",
+          "row_1": "0.0007 ефірчика",
+          "row_2": "0.0012 ефірчика",
+          "row_3": "0.01 ефірчика",
+          "row_4": "0.1 ефірчика",
+          "row_5": "100% джекпоту - вся котлета твоя!"
         }
       }
     },
-    "details_note": "<0>More details of the ETHery game can be found</0> <1>on the FAQ page</1>"
+    "details_note": "<0>Хочеш розібратись? Всі питання на</0> <1>шо-шо?</1>"
+  },
+  "admin_panel": {
+    "title": "Адмінська коморка",
+    "stats": {
+      "tickets": "Купонів",
+      "pending_reward": "Скіко не забрали",
+      "paid_reward": "Скіко забрали"
+    },
+    "filter": "Фільтруй по купонах чи овнеру",
+    "refresh_stats": "Підгрузити свіженьке",
+    "table": {
+      "ticket_id": "Купон #",
+      "owner": "Овнер",
+      "matched": "Зівпало",
+      "reward": "Нагорода (ETH)",
+      "is_claimed": "Чи забрав"
+    },
+    "manage_buttons": {
+      "fund_jackpot": "Поповнити скарб",
+      "withdraw_owner": "Забрати комісії",
+      "withdraw_operational": "Забрати операційний баланс",
+      "withdraw_jackpot": "Рагпул (ой, забрати джекпот)"
+    }
   },
   "FAQ": {
     "column_1": {
       "item_1": {
-        "question": "What is this game about?",
-        "answer": "This is a blockchain-based lottery game where players purchase a ticket, submit a set of 5 numbers, and have a chance to win rewards depending on how many of their numbers match a randomly generated winning combination."
+        "question": "Шо за двіжуха?",
+        "answer": "Це блокчейни. Купуєш купон, ставиш 5 чисел, а потім дивишся, скільки в тебе збіглося з рандомно-згенереною виграшною комбінацією. Виграєш залежно від того, скільки вгадав."
       },
       "item_2": {
-        "question": "How do I participate?",
-        "answer": "Buy a ticket by paying exactly 0.0001 ETH.<0/>Submit your combination of 5 unique numbers (0–36).<0/>Wait for the Chainlink VRF to generate the winning combination.<0/>Get your result and see if you’ve won!"
+        "question": "Як залетіти в двіжуху?",
+        "answer": "Купуєш купон за 0.001 ефірчика.<0/>Закидуєш свої 5 фартових чисел, від 0 до 36.<0/>Рандом вирішить усе - Chainlink VRF кине кубик у блокчейні.<0/>Глянь, шо зівпало, і забери свій навар!"
       },
       "item_3": {
-        "question": "How are the winning numbers chosen?",
-        "answer": "The contract uses Chainlink VRF to securely generate a random number. This number is used to derive 5 unique winning numbers between 0 and 36."
+        "question": "Шо, хто тут рішає, які числа виграють?",
+        "answer": "Контракт юзає Chainlink VRF, щоб генерити рандомне число, яке потім дає 5 унікальних виграшних чисел від 0 до 36."
       },
       "item_4": {
-        "question": "What are the rules for choosing my numbers?",
-        "answer": "You must submit 5 unique numbers between 0 and 36. Duplicates or invalid ranges will cause your entry to be rejected."
+        "question": "Шо, як правильно вибирати свої числа? Є якісь правила?",
+        "answer": "Задаєш 5 чисел від 0 до 36, і вони мають бути унікальні. Якщо будуть повтори чи неправильний діапазон - все, піши пропало."
       },
       "item_5": {
-        "question": "How much does a ticket cost?",
-        "answer": "Each ticket costs exactly 0.0001 ETH."
+        "question": "Шо, почом купони?",
+        "answer": "Купони по 0.001 ефірчика, братан."
       },
       "item_6": {
-        "question": "What are the prizes?",
-        "answer": "2 matches: 0.0001 ETH<0/> 3 matches: 5% of the jackpot<0/> 4 matches: 30% of the jackpot<0/> 5 matches: 100% of the jackpot<0/>"
+        "question": "Шо по навару?",
+        "answer": "Якшо нема совпадінь - Ну шо, цього разу не зайшло, зато набиваєш руку.<0/>Якшо одне совпадіння - забирай 0.0007 ефірчика<0/>Якшо два совпадіння - забирай 0.0012 ефірчика<0/>Якшо три совпадіння - забирай 0.01 ефірчика<0/>Якшо чотири совпадіння - забирай 0.1 ефірчика<0/>Ну а якщо все вгадав - красавчік, весь скарб твій!<0/>"
       }
     },
     "column_2": {
       "item_1": {
-        "question": "Where does the ticket money go?",
-        "answer": "85% goes to the jackpot<0/> 10% to operations<0/> 5% to the contract owner<0/>"
+        "question": "Куди йде бабло за купон, братан?",
+        "answer": "90% іде в куш<0/> 5% типу підтримка і вся хрінь<0/> 5% а тебе це єбать нє должно<0/>"
       },
       "item_2": {
-        "question": "How do I claim my reward?",
-        "answer": "When the results are ready, you will automatically get a transaction to your MetaMask with amount of your reward if you’ve won."
+        "question": "Як забрати той куш, якщо виграв?",
+        "answer": "Так а шо, там буде кнопка 'Забрать бабло'"
       },
       "item_3": {
-        "question": "What happens if I don't win?",
-        "answer": "If you match fewer than 2 numbers, you won’t receive a reward — but you can try again by purchasing a new ticket!"
+        "question": "Шо буде, якщо не виграю?",
+        "answer": "Так а шо, ну цього разу не зайшло, зато набиваєш руку."
       },
       "item_4": {
-        "question": "Is the lottery fair and secure?",
-        "answer": "Yes. It uses Chainlink VRF to ensure tamper-proof and verifiable randomness."
+        "question": "Тут все по-нашому і безпечно, чи шо?",
+        "answer": "Та, братан ми тут накрутили Chainlink VRF. Короче рандом 100 процентний, нє панікуй."
       },
       "item_5": {
-        "question": "Can the contract owner withdraw funds?",
-        "answer": "The owner can only withdraw their 5% share and the 10% operations fund. The jackpot can only be won by players."
+        "question": "Може той, хто рулить контрактом, знімати з нього капусту?",
+        "answer": "Ну по факту да, але ми тут за чесність."
       },
       "item_6": {
-        "question": "Can I send ETH directly to the contract?",
-        "answer": "Yes, but this only increases the jackpot and doesn't buy you a ticket. Always use the 'Buy Ticket' function to enter the game."
+        "question": "А якщо я просто зашлю ефірчик на контракт - це спрацює?",
+        "answer": "Та ну можна, але це просто підкине в джекпот - білет собі так не купиш. Завжди тицяй 'Купить купон', щоб увійти в гру."
       }
     }
   },
   "game": {
     "step_1": {
-      "title": "<0>Step 1.</0> Purchase an ETHery ticket(s)",
-      "button_1": "Buy one",
-      "button_2": "Buy 9, get 1 free",
-      "button_3": "Check tickets list",
-      "divider_content": "<0>OR</0> <1>Check if you have any active tickets</1>",
-      "stepper_title": "Buy ETHery Ticket"
+      "title": "<0>Крок 1.</0> Затарь купон(и) ETHery",
+      "button_1": "Купить купон",
+      "button_2": "Взяв 9, а 1 в нагрузку іде",
+      "button_3": "Список купонів",
+      "divider_content": "<0>АБО</0> <1>Перевір свій список купонів</1>",
+      "stepper_title": "Затарь купон(и) ETHery"
     },
     "step_2": {
-      "title": "<0>Step 2.</0> Enter and submit a combination of <1>5 unique</1> numbers",
-      "invalid_value": "Must be between 0 to 36",
-      "not_uniq": "Each number must be unique",
-      "button": "Submit combination",
-      "stepper_title": "Submit Combination"
+      "title": "<0>Крок 2.</0> Закинь свої <1>5 неповторних </1>чисел",
+      "invalid_value": "Не тупи, числа тільки від 0 до 36!",
+      "not_uniq": "Не дублюй числа, нє доводі до грєха",
+      "button": "Відправляй свою п’ятірочку",
+      "stepper_title": "Відправляй свою п’ятірочку"
     },
     "step_3": {
-      "title": "<0>Step 3.</0> Wait until we generate random combination for you",
-      "result_ready": "Results are ready, you can check your reward.",
-      "result_pending": "<0>We will inform you when results are ready.</0> <0>This should not take more then:</0>",
-      "min": "min",
-      "sec": "sec",
-      "button": "See Results",
-      "stepper_title": "Get Random Combination"
+      "title": "<0>Крок 3.</0> Тримайся, залишилося щє трошки",
+      "result_ready": "Результати готові, дивись шо по ітогу",
+      "result_pending": "<0>Не панікуй, ми маякнем як будуть готові результати</0> <0>Тут все швидко, не більше ніж:</0>",
+      "min": "мінут",
+      "sec": "сєкунд",
+      "button": "Ну і шо там?",
+      "stepper_title": "Генеримо рандом"
     },
     "step_4": {
-      "title": "<0>Step 4.</0> Check Results for ticket #{{id}}",
-      "player_combi": "Your combination",
-      "win_combi": "Winning combination",
-      "button_1": "Play again",
-      "button_2": "Return to homepage",
-      "divider_content": "OR",
-      "rewarded_title": "You matched {{matchingNumbers}} number{{sufix}}. Your reward is {{reward}} ETH.",
-      "not_rewarded_title": "You have 0 matches. Better luck next time.",
-      "reward_not_claimed": "Claim Reward",
-      "reward_claimed": "Reward is already claimed",
-      "stepper_title": "Check Results"
+      "title": "<0>Крок 4.</0> Ітогі купона #{{id}}",
+      "player_combi": "Те шо ти ввів",
+      "win_combi": "Те шо нагенерили",
+      "button_1": "Давай щє",
+      "button_2": "Додому, до хати",
+      "divider_content": "АБО",
+      "rewarded_title": "Ти вгадав {{matchingNumbers}} число або чисел(сорі не придумали перевод). Твій куш {{reward}} ефірчика.",
+      "not_rewarded_title": "Цього разу не зайшло, зато набиваєш руку.",
+      "reward_not_claimed": "Забрать бабло",
+      "reward_claimed": "Та ти уже забрав все, нам оставь трошки",
+      "stepper_title": "Ітогі"
     }
   },
   "tickets": {
-    "title": "Your tickets",
-    "go_back": "Go back",
-    "empty_list": "No tickets to display",
+    "title": "Твої купони",
+    "go_back": "Додому, до хати",
+    "empty_list": "Купонів нема, іди купляй",
     "tabs": {
-      "active": "Active",
-      "rewards_available": "Rewards Available",
-      "claimed": "Claimed",
-      "no_reward": "No Reward"
+      "active": "Активні",
+      "rewards_available": "Є наварчик",
+      "claimed": "Уже забрав",
+      "no_reward": "Тут голяк"
     },
     "ticket_card": {
-      "ticket_number": "Ticket number",
-      "player_combi": "Your combination",
-      "status_label": "Status:",
+      "ticket_number": "Номєр купона",
+      "player_combi": "Те шо ти ввів",
+      "status_label": "Статус:",
       "statuses": {
-        "reward_available": "Reward available",
-        "reward_claimed": "Reward claimed",
-        "no_reward": "No reward",
-        "combination_submitted": "Combination submitted",
-        "waiting_for_result": "Waiting for result",
-        "purchased": "Purchased"
+        "reward_available": "Є наварчик",
+        "reward_claimed": "Уже забрав",
+        "no_reward": "Тут голяк",
+        "combination_submitted": "В процесі",
+        "waiting_for_result": "Очікуємо рандом",
+        "purchased": "Тіко купив"
       }
     }
   },
   "notifications": {
     "random_number_generated": {
-      "content": "Winning combination was generated for ticket #{{ticketId}}",
-      "button": "See tickets page"
+      "content": "Комбінація виграшу вже готова для купона #{{ticketId}}",
+      "button": "До купонів"
     },
     "buy_ticket": {
-      "success_1_ticket": "Ticket purchased successfully",
-      "success_10_ticket": "Batch of 10 tickets purchased successfully",
-      "error_message": "Error during ticket purchase"
+      "success_1_ticket": "Все ок, квиток твій",
+      "success_10_ticket": "Купив цілу пачку з 10 квитків, все ок",
+      "error_message": "Йой, сталася халепа при покупкє купонів"
     },
     "claim_reward": {
-      "success_message": "Reward claimed successfuly",
-      "error_message": "Error during reward claiming"
+      "success_message": "Наварчик вже в гаманці",
+      "error_message": "Йой, сталася халепа при отриманні нагороди"
     },
     "submit_combi": {
-      "success_message": "Combination submited",
-      "error_message": "Error during combination confirmation"
+      "success_message": "Комбінацію забили, чекаємо результатів",
+      "error_message": "Йой, сталася халепа при сабміті комбінації"
     }
   }
 }

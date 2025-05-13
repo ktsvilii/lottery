@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
-import { InstructionModal } from '../InstructionModal';
-import { useConnectWallet, useMobile } from '../../hooks';
-import { StepHeader, MoreDetailsNotice } from './components';
-import { FAUCET_LINKS } from '../../constants';
 import { TimelineIcon } from '../../assets';
+import { FAUCET_LINKS } from '../../constants';
+import { useConnectWallet, useMobile } from '../../hooks';
+import { InstructionModal } from '../InstructionModal';
+import { MoreDetailsNotice, StepHeader } from './components';
 import PrizesGrid from './components/PrizesGrid';
 
 import { PrizesGridConfig } from './types';
@@ -75,11 +75,14 @@ export const Instructions = () => {
             <StepHeader title={getTranslationByStep(3).step_title} />
             {!mobile && <p className='text-sm'>{getTranslationByStep(3).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(buyRef)}>
-              See details
+              <p>{getTranslationByStep(3).button_title}</p>
             </button>
             <InstructionModal t={t} refObj={buyRef}>
               <ul className='steps steps-vertical flex flex-col'>
-                <Trans i18nKey={'home.instructions.steps.step_3.modal'} components={[<li className='step step-neutral' />]} />
+                <Trans
+                  i18nKey={'home.instructions.steps.step_3.modal'}
+                  components={[<li className='step step-neutral' />]}
+                />
               </ul>
             </InstructionModal>
           </div>
@@ -94,11 +97,14 @@ export const Instructions = () => {
             <StepHeader title={getTranslationByStep(4).step_title} />
             {!mobile && <p className='text-sm'>{getTranslationByStep(4).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(chooseRef)}>
-              See details
+              <p>{getTranslationByStep(4).button_title}</p>
             </button>
             <InstructionModal t={t} refObj={chooseRef}>
               <ul className='steps steps-vertical flex flex-col'>
-                <Trans i18nKey={'home.instructions.steps.step_4.modal'} components={[<li className='step step-neutral' />]} />
+                <Trans
+                  i18nKey={'home.instructions.steps.step_4.modal'}
+                  components={[<li className='step step-neutral' />]}
+                />
               </ul>
             </InstructionModal>
           </div>
@@ -124,7 +130,7 @@ export const Instructions = () => {
             <StepHeader title={getTranslationByStep(6).step_title} />
             {!mobile && <p className='text-sm'>{getTranslationByStep(6).step_notice}</p>}
             <button className='btn btn-sm mt-1 w-48' onClick={() => openModal(gridRef)}>
-              See prizes grid
+              <p>{getTranslationByStep(6).button_title}</p>
             </button>
             <InstructionModal t={t} refObj={gridRef}>
               <PrizesGrid config={t('home.instructions.prize_grid', { returnObjects: true }) as PrizesGridConfig} />
