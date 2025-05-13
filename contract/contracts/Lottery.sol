@@ -382,7 +382,8 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         return result;
     }
 
-    function fundJackpot(uint256 amount) external {
+    function fundJackpot(uint256 amount) external payable {
+        require(msg.value == amount, "Incorrect ETH amount sent");
         jackpot += amount;
         emit FundJackpot(msg.sender, amount);
     }
@@ -405,7 +406,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         emit OperationsBalanceWithdraw(contractOwner, amount);
     }
 
-    function withdrawJackpot() external _onlyOwner {
+    function withdrawJackpot() external payable _onlyOwner {
         require(jackpot > 0, "Nothing to withdraw");
         uint256 amount = jackpot;
         jackpot = 0;

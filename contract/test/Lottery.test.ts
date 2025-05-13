@@ -512,15 +512,25 @@ describe('Lottery contract', () => {
 
     it('Should fund jackpot', async () => {
       const amount = parseEther('1.0');
-      const oldJackpot = await lottery.connect(owner).getJackpot();
+      const oldJackpot = await lottery.getJackpot();
       expect(oldJackpot).to.eq(0);
 
-      const tx = await lottery.connect(owner).fundJackpot(amount);
+      const tx = await lottery.connect(owner).fundJackpot(amount, { value: amount });
 
-      const newJackpot = await lottery.connect(owner).getJackpot();
+      const newJackpot = await lottery.getJackpot();
       expect(newJackpot).to.eq(amount);
 
       await expect(tx).to.emit(lottery, 'FundJackpot').withArgs(owner, amount);
+    });
+
+    it('Should not fund jackpot if value is deffer from the sent amount', async () => {
+      const amount = parseEther('1.0');
+      const oldJackpot = await lottery.getJackpot();
+      expect(oldJackpot).to.eq(0);
+
+      await expect(lottery.connect(owner).fundJackpot(amount, { value: parseEther('0.01') })).to.be.revertedWith(
+        'Incorrect ETH amount sent',
+      );
     });
 
     it('Should return ticket info for ticket owner', async () => {
