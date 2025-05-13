@@ -1,10 +1,13 @@
 import { FC, RefObject, useCallback, useRef } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
-import { InstructionModal } from '../InstructionModal';
-import { useStartGame } from './useStartGame';
-import { useConnectWallet } from '@hooks';
 import { FAUCET_LINKS } from '@constants';
+import { useConnectWallet } from '@hooks';
+
+import { InstructionModal } from '../InstructionModal';
+
+import { useStartGame } from './useStartGame';
 
 export const StartGame: FC = () => {
   const navigate = useNavigate();

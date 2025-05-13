@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { useCheckResults } from './useCheckResults';
-
 import { FallbackUI } from '@components';
+
 import { ResultsContent } from './components';
+import { useCheckResults } from './useCheckResults';
 
 export const CheckResultsStep: FC = () => {
   const { ticket, isClaimingRewards, playAgainHandler, goHomeHandler, claimRewardHandler } = useCheckResults();

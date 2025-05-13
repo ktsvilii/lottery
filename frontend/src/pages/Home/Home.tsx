@@ -3,8 +3,8 @@ import { FC, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import { BriefInstructions, Instructions, StartGame } from '@components';
-import { useGameContext, useStepper } from '@providers';
 import { CURRENT_STEP } from '@constants';
+import { useGameContext, useStepper } from '@providers';
 
 export const Home: FC = () => {
   const { setCurrentStep } = useStepper();

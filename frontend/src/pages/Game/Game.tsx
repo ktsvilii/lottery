@@ -1,10 +1,10 @@
 import { FC, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
-import { useStepper } from '@providers';
-import { StepIndicator } from '@components';
-import { StepsSchema } from '@components';
+import { StepIndicator, StepsSchema } from '@components';
 import { useConnectWallet } from '@hooks';
+import { useStepper } from '@providers';
 
 export const Game: FC = () => {
   const navigate = useNavigate();

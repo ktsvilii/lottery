@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 
-import { Ticket } from '@types';
 import { ScrollableContainer, TicketCard } from '@components';
 import { TICKETS_PER_PAGE } from '@constants';
+import { Ticket } from '@types';
 
 interface TicketListProps {
   tickets: Ticket[];

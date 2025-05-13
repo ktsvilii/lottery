@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import { TicketTabStatus } from '@types';
 
 interface TicketTabsProps {

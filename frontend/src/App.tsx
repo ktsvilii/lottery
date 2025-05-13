@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
-import { Admin, FAQ, Game, Home, Tickets } from './pages';
 import { FallbackUI, Layout } from './components';
+import { Admin, FAQ, Game, Home, Tickets } from './pages';
 
 const App: FC = () => {
   return (

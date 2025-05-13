@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
-import { useCountdown } from './useCountdown';
-
 import { Loader } from '@components';
+
+import { useCountdown } from './useCountdown';
 
 export const CountdownStep: FC = () => {
   const { minutes, seconds, isCheckingResults, isResultReady, seeResultsHandler } = useCountdown();

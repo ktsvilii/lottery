@@ -1,8 +1,9 @@
 import { ChangeEvent, FC, useState } from 'react';
 
-import { preventNonNumericInput } from '@utils';
-import { Loader } from '../Loader';
 import { useAdmin } from '@hooks';
+import { preventNonNumericInput } from '@utils';
+
+import { Loader } from '../Loader';
 
 export const ManageLotteryButtons: FC = () => {
   const [fundJackpotAmount, setFundJackpotAmount] = useState('');

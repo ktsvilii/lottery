@@ -2,19 +2,23 @@ import { FC, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { useAdmin } from '@hooks';
 import { ManageLotteryButtons, Stats, TicketsTable } from '@components';
+import { useAdmin } from '@hooks';
 
 export const Admin: FC = () => {
   const navigate = useNavigate();
 
-  const { isAdmin, allTickets } = useAdmin();
+  const { isAdmin, allTickets, fetchAllTickets } = useAdmin();
 
   useEffect(() => {
     if (!isAdmin) {
       navigate('/');
     }
   }, [isAdmin, navigate]);
+
+  useEffect(() => {
+    fetchAllTickets();
+  }, []);
 
   return (
     <>

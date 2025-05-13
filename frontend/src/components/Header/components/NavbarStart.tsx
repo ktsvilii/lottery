@@ -2,12 +2,10 @@ import { FC, useEffect, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { formatEther } from 'viem';
-
-import { useGetJackpot } from '@hooks';
-
-import { Loader } from '@components';
 import { BurgerMenuIcon } from '@assets';
+import { Loader } from '@components';
+import { useGetJackpot } from '@hooks';
+import { formatEther } from 'viem';
 
 export const NavbarStart: FC = () => {
   const { jackpot, refetchJackpot } = useGetJackpot();

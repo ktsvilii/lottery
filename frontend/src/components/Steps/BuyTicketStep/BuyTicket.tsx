@@ -1,9 +1,10 @@
 import { FC } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
-import { useBuyTicket } from './useBuyTicket';
-
 import { Loader } from '@components';
+
+import { useBuyTicket } from './useBuyTicket';
 
 export const BuyTicketStep: FC = () => {
   const navigate = useNavigate();

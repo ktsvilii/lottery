@@ -2,9 +2,8 @@ import { FC } from 'react';
 
 import { formatEther } from 'viem';
 
+import { PaidIcon, PendingIcon, TicketIcon } from '@assets';
 import { Ticket } from '@types';
-
-import { PaidIcon, TicketIcon, PendingIcon } from '@assets';
 
 interface StatsProps {
   tickets: Ticket[];

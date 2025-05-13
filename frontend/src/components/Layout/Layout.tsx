@@ -1,9 +1,11 @@
 import { Outlet } from 'react-router-dom';
 
-import { Header } from '../Header';
-import { useLayout } from './useLayout';
 import { useNotifications } from '@providers';
+
+import { Header } from '../Header';
 import { Notification } from '../Notification';
+
+import { useLayout } from './useLayout';
 
 export const Layout = () => {
   const { notification } = useNotifications();
