@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { readContract } from '@wagmi/core';
 import { useAccount, useWatchContractEvent } from 'wagmi';
 
+import { config } from 'src/wagmi';
+
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../constants';
 import { Ticket } from '../types';
-import { config } from '../wagmi';
 
 interface UseFetchTicketsReturn {
   tickets: Ticket[] | null;

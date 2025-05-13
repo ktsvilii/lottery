@@ -118,7 +118,7 @@ export const Instructions = () => {
           <TimelineIcon />
           <div className='timeline-start md:text-end mb-4 md:mb-0'>
             <StepHeader title={getTranslationByStep(5).step_title} />
-            {!mobile && <p className='text-sm'>{getTranslationByStep(5).step_notice}.</p>}
+            {!mobile && <p className='text-sm'>{getTranslationByStep(5).step_notice}</p>}
           </div>
           <hr className='bg-neutral' />
         </li>

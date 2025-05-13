@@ -55,18 +55,26 @@ export const TicketsTable: FC<TicketsTableProps> = ({ allTickets, fetchAllTicket
           <TicketsTableHeader sortKey={sortKey} sortOrder={sortOrder} onSort={setSortKey} toggleOrder={setSortOrder} />
 
           <tbody>
-            {visibleTickets.map(ticket => (
-              <TicketsTableRow
-                key={ticket.id.toString()}
-                ticket={ticket}
-                copiedId={copiedId}
-                onCopy={id => {
-                  navigator.clipboard.writeText(ticket.owner);
-                  setCopiedId(id);
-                  setTimeout(() => setCopiedId(null), 800);
-                }}
-              />
-            ))}
+            {visibleTickets.length ? (
+              visibleTickets.map(ticket => (
+                <TicketsTableRow
+                  key={ticket.id.toString()}
+                  ticket={ticket}
+                  copiedId={copiedId}
+                  onCopy={id => {
+                    navigator.clipboard.writeText(ticket.owner);
+                    setCopiedId(id);
+                    setTimeout(() => setCopiedId(null), 800);
+                  }}
+                />
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className='text-xl md:text-center'>
+                  {t(`${tKey}.nothing_to_display`)}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         {visibleCount < filteredTickets.length && (

@@ -388,7 +388,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         emit FundJackpot(msg.sender, amount);
     }
 
-    function withdrawOwnerBalance() public _onlyOwner {
+    function withdrawOwnerBalance() public payable _onlyOwner {
         require(ownerBalance > 0, "Nothing to withdraw");
         uint256 amount = ownerBalance;
         ownerBalance = 0;
@@ -397,7 +397,7 @@ contract Lottery is VRFConsumerBaseV2Plus, ReentrancyGuard {
         emit OwnerBalanceWithdraw(contractOwner, amount);
     }
 
-    function withdrawOperationsBalance() public _onlyOwner {
+    function withdrawOperationsBalance() public payable _onlyOwner {
         require(operationsBalance > 0, "Nothing to withdraw");
         uint256 amount = operationsBalance;
         operationsBalance = 0;

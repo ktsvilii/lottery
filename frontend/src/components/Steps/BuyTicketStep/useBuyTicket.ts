@@ -1,16 +1,15 @@
 import { useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
-import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
 
 import { BATCH_TICKET_PRICE_WEI, LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS, TICKET_PRICE_WEI } from '@constants';
 import { getTicketPurchasedLog } from '@logReaders';
 import { useGameContext, useNotifications, useStepper } from '@providers';
-
-import { config } from '../../../wagmi';
+import { config } from 'src/wagmi';
 
 interface UseBuyTicketReturn {
   isPurchasingTicket: boolean;
