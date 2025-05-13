@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-interface Props {
+interface TicketsTableFilterProps {
   value: string;
   onChange: (value: string) => void;
 }
 
-export const TicketsTableFilter: FC<Props> = ({ value, onChange }) => (
+export const TicketsTableFilter: FC<TicketsTableFilterProps> = ({ value, onChange }) => (
   <div className='mb-2'>
     <input
       type='text'

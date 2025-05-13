@@ -1,22 +1,27 @@
 import { FC, useState } from 'react';
-import { SortCols, SortOrder } from '../../types';
-import { ROWS_PER_PAGE } from '../../constants';
+
+import { ROWS_PER_PAGE } from '@constants';
+import { SortCols, SortOrder, Ticket } from '@types';
+import { filterTickets, sortTickets } from '@utils';
+
 import { Loader } from '../Loader';
-import { filterTickets, sortTickets } from '../../utils';
+import { ScrollableContainer } from '../ScrollableContainer';
+
 import { TicketsTableFilter } from './TicketsTableFilter';
 import { TicketsTableHeader } from './TicketsTableHeader';
 import { TicketsTableRow } from './TicketsTableRow';
-import { ScrollableContainer } from '../ScrollableContainer';
-import { useAdmin } from '../../hooks';
 
-export const TicketsTable: FC = () => {
+interface TicketsTableProps {
+  allTickets: Ticket[];
+  fetchAllTickets: () => Promise<void>;
+}
+
+export const TicketsTable: FC<TicketsTableProps> = ({ allTickets, fetchAllTickets }) => {
   const [visibleCount, setVisibleCount] = useState(ROWS_PER_PAGE);
   const [copiedId, setCopiedId] = useState<bigint | null>(null);
   const [sortKey, setSortKey] = useState<SortCols>(SortCols.ID);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC);
   const [filterText, setFilterText] = useState('');
-
-  const { allTickets, fetchAllTickets } = useAdmin();
 
   const sortedTickets = sortTickets(allTickets, sortKey, sortOrder);
   const filteredTickets = filterTickets(sortedTickets, filterText);

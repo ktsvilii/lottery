@@ -1,12 +1,14 @@
-import React, { useRef } from 'react';
+import { RefObject, useRef } from 'react';
+
 import { Trans, useTranslation } from 'react-i18next';
 
+import { TimelineIcon } from '@assets';
+import { FAUCET_LINKS } from '@constants';
+import { useConnectWallet, useMobile } from '@hooks';
+
 import { InstructionModal } from '../InstructionModal';
-import { useConnectWallet, useMobile } from '../../hooks';
-import { StepHeader, MoreDetailsNotice } from './components';
-import { FAUCET_LINKS } from '../../constants';
-import { TimelineIcon } from '../../assets';
-import PrizesGrid from './components/PrizesGrid';
+
+import { MoreDetailsNotice, PrizesGrid, StepHeader } from './components';
 
 import { PrizesGridConfig } from './types';
 
@@ -26,7 +28,7 @@ export const Instructions = () => {
 
   const mobile = useMobile();
 
-  const openModal = (ref: React.RefObject<HTMLDialogElement | null>) => {
+  const openModal = (ref: RefObject<HTMLDialogElement | null>) => {
     ref.current?.showModal();
   };
 
@@ -79,7 +81,10 @@ export const Instructions = () => {
             </button>
             <InstructionModal t={t} refObj={buyRef}>
               <ul className='steps steps-vertical flex flex-col'>
-                <Trans i18nKey={'home.instructions.steps.step_3.modal'} components={[<li className='step step-neutral' />]} />
+                <Trans
+                  i18nKey={'home.instructions.steps.step_3.modal'}
+                  components={[<li className='step step-neutral' />]}
+                />
               </ul>
             </InstructionModal>
           </div>
@@ -98,7 +103,10 @@ export const Instructions = () => {
             </button>
             <InstructionModal t={t} refObj={chooseRef}>
               <ul className='steps steps-vertical flex flex-col'>
-                <Trans i18nKey={'home.instructions.steps.step_4.modal'} components={[<li className='step step-neutral' />]} />
+                <Trans
+                  i18nKey={'home.instructions.steps.step_4.modal'}
+                  components={[<li className='step step-neutral' />]}
+                />
               </ul>
             </InstructionModal>
           </div>

@@ -1,4 +1,4 @@
-import { Ticket, TicketTabStatus } from '../../types';
+import { Ticket, TicketTabStatus } from '@types';
 
 export const useTickets = (tickets?: Ticket[]) => {
   const sortByNewestId = (a: Ticket, b: Ticket) => Number(b.id) - Number(a.id);

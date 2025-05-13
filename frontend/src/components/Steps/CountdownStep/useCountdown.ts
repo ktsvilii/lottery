@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
+
+import { COUNTDOWN_DURATION, COUNTDOWN_STORAGE_KEY, LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '@constants';
+import { useGameContext, useStepper } from '@providers';
+import { Ticket } from '@types';
 import { readContract } from '@wagmi/core';
 import { useAccount, useWatchContractEvent } from 'wagmi';
 
-import { useGameContext, useStepper } from '../../../providers';
 import { config } from '../../../wagmi';
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
-import { Ticket } from '../../../types';
-import { COUNTDOWN_DURATION, COUNTDOWN_STORAGE_KEY } from '../../../constants';
 
 interface UseCountdownReturn {
   isCheckingResults: boolean;

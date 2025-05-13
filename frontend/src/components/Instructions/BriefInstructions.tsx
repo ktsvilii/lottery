@@ -1,8 +1,10 @@
 import { FC, useId } from 'react';
+
 import { useTranslation } from 'react-i18next';
 
-import { TimelineIcon } from '../../assets';
-import { StepHeader, MoreDetailsNotice } from './components';
+import { TimelineIcon } from '@assets';
+
+import { MoreDetailsNotice, StepHeader } from './components';
 
 export const BriefInstructions: FC = () => {
   const id = useId();

@@ -1,4 +1,4 @@
-import { Log, parseAbiItem, decodeEventLog } from 'viem';
+import { decodeEventLog, Log, parseAbiItem } from 'viem';
 
 import { LOTTERY_CONTRACT_ADDRESS } from '../constants';
 

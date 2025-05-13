@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react';
 
-import { NotificationProps, useNotifications } from '../../providers';
-import { NOTIFICATION_TIMEOUT } from '../../constants';
-import { NotificationIcon } from '../../assets';
+import { NotificationIcon } from '@assets';
+import { NOTIFICATION_TIMEOUT } from '@constants';
+import { NotificationProps, useNotifications } from '@providers';
 
 export const Notification: FC<NotificationProps> = ({ content, type, button }) => {
   const { toggleNotification } = useNotifications();

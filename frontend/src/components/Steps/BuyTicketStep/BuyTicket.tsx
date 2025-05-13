@@ -1,10 +1,11 @@
 import { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { Trans, useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
+import { Loader } from '@components';
 
 import { useBuyTicket } from './useBuyTicket';
-
-import { Loader } from '../../Loader';
 
 const tKey = 'game.step_1';
 

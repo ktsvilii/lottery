@@ -1,5 +1,5 @@
-import { BlackThemeIcon, LightThemeIcon } from '../../assets';
-import { useTheme } from '../../providers';
+import { BlackThemeIcon, LightThemeIcon } from '@assets';
+import { useTheme } from '@providers';
 
 export const ThemeToggler = () => {
   const { theme, setTheme } = useTheme();
