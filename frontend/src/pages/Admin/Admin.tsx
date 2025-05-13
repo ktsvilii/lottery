@@ -36,7 +36,7 @@ export const Admin: FC = () => {
         </div>
         <div className='lg:col-span-3 sm:col-span-full order-2 md:order-3 lg:order-2'>
           <div className='space-y-5'>
-            <TicketsTable />
+            <TicketsTable allTickets={allTickets} fetchAllTickets={fetchAllTickets} />
           </div>
         </div>
       </div>
