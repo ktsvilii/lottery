@@ -1,4 +1,5 @@
 export * from './FallbackUI';
+export * from './FAQItem';
 export * from './Header';
 export * from './InstructionModal';
 export * from './Instructions';
