@@ -4,7 +4,7 @@ import { isMobile } from 'react-device-detect';
 
 import { BriefInstructions, Instructions, StartGame } from '../../components';
 import { useGameContext, useStepper } from '../../providers';
-import { CURRENT_STEP } from '../../constants/constants';
+import { CURRENT_STEP } from '../../constants';
 
 export const Home: FC = () => {
   const { setCurrentStep } = useStepper();

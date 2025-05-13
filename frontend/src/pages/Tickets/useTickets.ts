@@ -4,6 +4,7 @@ export const useTickets = (tickets?: Ticket[]) => {
   const sortByNewestId = (a: Ticket, b: Ticket) => Number(b.id) - Number(a.id);
 
   return {
+    [TicketTabStatus.ALL]: tickets || [],
     [TicketTabStatus.ACTIVE]:
       tickets
         ?.filter(

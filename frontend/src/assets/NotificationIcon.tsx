@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-const NotificationIcon: FC<{ iconType: 'success' | 'error' }> = ({ iconType }) => {
+export const NotificationIcon: FC<{ iconType: 'success' | 'error' }> = ({ iconType }) => {
   const svgPath =
     iconType === 'success'
       ? 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
@@ -12,5 +12,3 @@ const NotificationIcon: FC<{ iconType: 'success' | 'error' }> = ({ iconType }) =
     </svg>
   );
 };
-
-export default NotificationIcon;

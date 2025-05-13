@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useSubmitCombination } from './useSubmitCombination';
 import { Loader } from '../../Loader';
+import { preventNonNumericInput } from '../../../utils';
 
 export const SubmitCombinationStep: FC = () => {
   const {
@@ -8,7 +9,6 @@ export const SubmitCombinationStep: FC = () => {
     isSubmittingCombination,
     baseId,
     hasDuplicates,
-    preventNonNumericInput,
     handleChange,
     isValid,
     submitPlayerCombinationHandler,

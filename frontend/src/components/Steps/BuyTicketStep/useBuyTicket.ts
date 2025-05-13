@@ -7,7 +7,7 @@ import { config } from '../../../wagmi';
 import { useGameContext, useNotifications, useStepper } from '../../../providers';
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 import { getTicketPurchasedLog } from '../../../logReaders';
-import { BATCH_TICKET_PRICE_WEI, TICKET_PRICE_WEI } from '../../../constants/constants';
+import { BATCH_TICKET_PRICE_WEI, TICKET_PRICE_WEI } from '../../../constants';
 
 interface UseBuyTicketReturn {
   isPurchasingTicket: boolean;

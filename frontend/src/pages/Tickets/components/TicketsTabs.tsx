@@ -7,6 +7,7 @@ interface TicketTabsProps {
 }
 
 const TABS: { label: string; status: TicketTabStatus }[] = [
+  { label: 'All', status: TicketTabStatus.ALL },
   { label: 'Active', status: TicketTabStatus.ACTIVE },
   { label: 'Rewards Available', status: TicketTabStatus.REWARDS_AVAILABLE },
   { label: 'Claimed', status: TicketTabStatus.REWARDS_CLAIMED },
@@ -19,7 +20,7 @@ export const TicketTabs: FC<TicketTabsProps> = ({ activeTab, setActiveTab }) => 
       <a
         key={status}
         role='tab'
-        className={`tab text-xs px-3 ${activeTab === status ? 'active' : ''}`}
+        className={`tab text-xs px-2 md:px-5 ${activeTab === status ? 'active' : ''}`}
         aria-selected={activeTab === status}
         tabIndex={activeTab === status ? 0 : -1}
         onClick={() => setActiveTab(status)}

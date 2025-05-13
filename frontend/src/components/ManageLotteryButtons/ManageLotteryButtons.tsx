@@ -1,0 +1,65 @@
+import { ChangeEvent, FC, useState } from 'react';
+
+import { preventNonNumericInput } from '../../utils';
+import { Loader } from '../Loader';
+import { useAdmin } from '../../hooks';
+
+export const ManageLotteryButtons: FC = () => {
+  const [fundJackpotAmount, setFundJackpotAmount] = useState('');
+
+  const {
+    isFundingJackpot,
+    isWithdrawingJackpot,
+    isWithdrawingOwnerBalance,
+    isWithdrawingOperationalBalance,
+    fundJackpotHandler,
+    withdrawJackpotHandler,
+    withdrawOwnerBalanceHandler,
+    withdrawOperationalBalanceHandler,
+  } = useAdmin();
+
+  const fundJackpotAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setFundJackpotAmount(e.target.value);
+  };
+
+  const handleFundJackpot = async () => {
+    if (!fundJackpotAmount) return;
+
+    try {
+      await fundJackpotHandler(fundJackpotAmount);
+      setFundJackpotAmount('');
+    } catch (err) {
+      console.error('Invalid jackpot amount', err);
+    }
+  };
+
+  return (
+    <div className='flex flex-col gap-3'>
+      <div className='join w-72'>
+        <input
+          className='input sm:input-xl input-lg text-md p-2 join-item'
+          placeholder='ETH'
+          value={fundJackpotAmount}
+          onChange={fundJackpotAmountHandler}
+          onKeyDown={preventNonNumericInput}
+        />
+        <button
+          onClick={handleFundJackpot}
+          disabled={!fundJackpotAmount}
+          className='btn btn-outline btn-success btn-lg w-48 sm:h-14 px-2 join-item'
+        >
+          {isFundingJackpot ? <Loader size='xl' /> : 'Fund Jackpot'}
+        </button>
+      </div>
+      <button onClick={withdrawOwnerBalanceHandler} className='btn btn-outline btn-info btn-lg w-72 sm:h-14 px-2'>
+        {isWithdrawingOwnerBalance ? <Loader size='xl' /> : 'Withdraw owner balance'}
+      </button>
+      <button onClick={withdrawOperationalBalanceHandler} className='btn btn-outline btn-info btn-lg w-72 sm:h-14 px-2'>
+        {isWithdrawingOperationalBalance ? <Loader size='xl' /> : 'Withdraw operation balance'}
+      </button>
+      <button onClick={withdrawJackpotHandler} className='btn btn-outline btn-error btn-lg w-72 sm:h-14 px-2'>
+        {isWithdrawingJackpot ? <Loader size='xl' /> : 'Withdraw Jackpot'}
+      </button>
+    </div>
+  );
+};

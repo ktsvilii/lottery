@@ -14,6 +14,24 @@ export const useGetJackpot = () => {
   useWatchContractEvent({
     address: LOTTERY_CONTRACT_ADDRESS,
     abi: LOTTERY_ABI,
+    eventName: 'JackpotWithdraw',
+    onLogs() {
+      refetchJackpot();
+    },
+  });
+
+  useWatchContractEvent({
+    address: LOTTERY_CONTRACT_ADDRESS,
+    abi: LOTTERY_ABI,
+    eventName: 'FundJackpot',
+    onLogs() {
+      refetchJackpot();
+    },
+  });
+
+  useWatchContractEvent({
+    address: LOTTERY_CONTRACT_ADDRESS,
+    abi: LOTTERY_ABI,
     eventName: 'Distribute',
     onLogs() {
       refetchJackpot();

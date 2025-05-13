@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { FAQ, Game, Home, Tickets } from './pages';
+import { Admin, FAQ, Game, Home, Tickets } from './pages';
 import { FallbackUI, Layout } from './components';
 
 const App: FC = () => {
@@ -14,6 +14,7 @@ const App: FC = () => {
           <Route path='/faq' element={<FAQ />} />
           <Route path='/game' element={<Game />} />
           <Route path='/tickets' element={<Tickets />} />
+          <Route path='/admin' element={<Admin />} />
           <Route path='*' element={<FallbackUI />} />
         </Route>
       </Routes>

@@ -611,11 +611,7 @@ export interface Lottery extends BaseContract {
     "nonpayable"
   >;
 
-  fundJackpot: TypedContractMethod<
-    [amount: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
+  fundJackpot: TypedContractMethod<[amount: BigNumberish], [void], "payable">;
 
   getAllTickets: TypedContractMethod<
     [],
@@ -722,7 +718,7 @@ export interface Lottery extends BaseContract {
     "nonpayable"
   >;
 
-  withdrawJackpot: TypedContractMethod<[], [void], "nonpayable">;
+  withdrawJackpot: TypedContractMethod<[], [void], "payable">;
 
   withdrawOperationsBalance: TypedContractMethod<[], [void], "nonpayable">;
 
@@ -771,7 +767,7 @@ export interface Lottery extends BaseContract {
   ): TypedContractMethod<[ticketId: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "fundJackpot"
-  ): TypedContractMethod<[amount: BigNumberish], [void], "nonpayable">;
+  ): TypedContractMethod<[amount: BigNumberish], [void], "payable">;
   getFunction(
     nameOrSignature: "getAllTickets"
   ): TypedContractMethod<[], [Lottery.LotteryTicketStructOutput[]], "view">;
@@ -875,7 +871,7 @@ export interface Lottery extends BaseContract {
   ): TypedContractMethod<[to: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "withdrawJackpot"
-  ): TypedContractMethod<[], [void], "nonpayable">;
+  ): TypedContractMethod<[], [void], "payable">;
   getFunction(
     nameOrSignature: "withdrawOperationsBalance"
   ): TypedContractMethod<[], [void], "nonpayable">;

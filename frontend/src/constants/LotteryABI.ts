@@ -623,7 +623,7 @@ export const Lottery_ABI = [
     ],
     name: 'fundJackpot',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -1108,7 +1108,7 @@ export const Lottery_ABI = [
     inputs: [],
     name: 'withdrawJackpot',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
