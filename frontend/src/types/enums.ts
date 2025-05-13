@@ -1,10 +1,10 @@
 export enum TicketStatus {
-  REWARD_AVAILABLE = 'Reward available',
-  REWARD_CLAIMED = 'Reward claimed',
-  NO_REWARD = 'No reward',
-  COMBINATION_SUBMITTED = 'Combination submitted',
-  WAITING_FOR_RESULTS = 'Waiting for result',
-  PURCHASED = 'Purchased',
+  REWARD_AVAILABLE = 'reward_available',
+  REWARD_CLAIMED = 'reward_claimed',
+  NO_REWARD = 'no_reward',
+  COMBINATION_SUBMITTED = 'combination_submitted',
+  WAITING_FOR_RESULTS = 'waiting_for_result',
+  PURCHASED = 'purchased',
 }
 
 export enum TicketTabStatus {

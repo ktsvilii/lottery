@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Loader } from '@components';
 import { useFetchTickets } from '@hooks';
@@ -11,6 +12,7 @@ import { useTickets } from './useTickets';
 
 export const Tickets: FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { tickets, isFetchingTickets, fetchUserTicketsHandler } = useFetchTickets();
   const categorized = useTickets(tickets ?? []);
 
@@ -32,15 +34,15 @@ export const Tickets: FC = () => {
         ) : (
           <div className='flex flex-col items-center justify-start h-full w-full gap-5'>
             <h1 className='text-3xl text-center'>
-              <strong>Your tickets</strong>
+              <strong>{t('tickets.title')}</strong>
             </h1>
 
-            <TicketTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+            <TicketTabs t={t} activeTab={activeTab} setActiveTab={setActiveTab} />
 
             <TicketList tickets={renderTickets} />
 
             <button className='btn btn-sm btn-outline min-w-72 text-xl h-16' onClick={() => navigate(-1)}>
-              Go back
+              {t('tickets.go_back')}
             </button>
           </div>
         )}

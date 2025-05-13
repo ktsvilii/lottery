@@ -1,9 +1,13 @@
 import { FC } from 'react';
 
+import { Trans, useTranslation } from 'react-i18next';
+
 import { Loader } from '@components';
 import { preventNonNumericInput } from '@utils';
 
 import { useSubmitCombination } from './useSubmitCombination';
+
+const tKey = 'game.step_2';
 
 export const SubmitCombinationStep: FC = () => {
   const {
@@ -15,12 +19,12 @@ export const SubmitCombinationStep: FC = () => {
     isValid,
     submitPlayerCombinationHandler,
   } = useSubmitCombination();
+  const { t } = useTranslation();
 
   return (
     <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20'>
       <h1 className='text-3xl text-center mb-5'>
-        <strong>Step 2.</strong> Enter and submit a combination of <strong className='underline'>5 unique</strong>{' '}
-        numbers
+        <Trans i18nKey={`${tKey}.title`} components={[<strong key={0} />, <strong key={1} className='underline' />]} />
       </h1>
 
       <div className='flex flex-row gap-4 mb-4 justify-center'>
@@ -40,19 +44,19 @@ export const SubmitCombinationStep: FC = () => {
               min='0'
               max='36'
             />
-            <p className='validator-hint text-sm text-gray-500 mt-1'>Must be between 0 to 36</p>
+            <p className='validator-hint text-sm text-gray-500 mt-1'>{t(`${tKey}.invalid_value`)}</p>
           </div>
         ))}
       </div>
 
-      {hasDuplicates && <p className='text-red-500 text-sm'>Each number must be unique.</p>}
+      {hasDuplicates && <p className='text-red-500 text-sm'>{t(`${tKey}.not_uniq`)}</p>}
 
       <button
         className='btn btn-sm btn-outline min-w-72 text-xl h-16'
         disabled={!isValid() || isSubmittingCombination}
         onClick={submitPlayerCombinationHandler}
       >
-        {isSubmittingCombination ? <Loader size='xl' /> : 'Submit combination'}
+        {isSubmittingCombination ? <Loader size='xl' /> : t(`${tKey}.button`)}
       </button>
     </div>
   );

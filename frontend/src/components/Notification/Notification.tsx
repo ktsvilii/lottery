@@ -6,6 +6,7 @@ import { NotificationProps, useNotifications } from '@providers';
 
 export const Notification: FC<NotificationProps> = ({ content, type, button }) => {
   const { toggleNotification } = useNotifications();
+  const notifClassName = type === 'error' ? 'alert-error' : 'alert-success';
 
   useEffect(() => {
     setTimeout(() => {
@@ -14,7 +15,7 @@ export const Notification: FC<NotificationProps> = ({ content, type, button }) =
   }, []);
 
   return (
-    <div role='alert' className={`alert alert-${type} fixed bottom-4 right-4 min-w-48 w-auto h-12 flex`}>
+    <div role='alert' className={`alert ${notifClassName} fixed bottom-4 right-4 min-w-48 w-auto h-12 flex`}>
       <NotificationIcon iconType={type} />
       <span>{content}</span>
       {button ? (

@@ -1,5 +1,6 @@
 import { FC, RefObject, useCallback, useRef } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { FAUCET_LINKS } from '@constants';
@@ -11,6 +12,7 @@ import { useStartGame } from './useStartGame';
 
 export const StartGame: FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { address, isEnoughETH, isFaucetVisited, isRescanning, handleRescan, handleIsFaucetVisited } = useStartGame();
   const { handleConnectWallet } = useConnectWallet();
@@ -25,8 +27,8 @@ export const StartGame: FC = () => {
 
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const heading = address ? 'Ready to play?' : 'Connect your wallet';
-  const buttonLabel = address ? "Let's start!" : 'Connect MetaMask';
+  const heading = t(`home.start_game.${address ? 'logged_in' : 'logged_out'}.content`);
+  const buttonLabel = t(`home.start_game.${address ? 'logged_in' : 'logged_out'}.button`);
   const buttonHandler = address ? handleStartGame : handleConnectWallet;
 
   return (
@@ -36,9 +38,9 @@ export const StartGame: FC = () => {
         {buttonLabel}
       </button>
 
-      <InstructionModal refObj={modalRef as RefObject<HTMLDialogElement>}>
-        <h3 className='text-xl font-bold text-center'>Not enough Sepolia ETH</h3>
-        <p className='text-lg mt-5 text-center'>You can get Sepolia ETH at faucets for free!</p>
+      <InstructionModal refObj={modalRef as RefObject<HTMLDialogElement>} t={t}>
+        <h3 className='text-xl font-bold text-center'>{t('home.start_game.not_enough_ETH')}</h3>
+        <p className='text-lg mt-5 text-center'>{t('home.start_game.faucets_label')}</p>
 
         <div className='container mt-5 flex flex-wrap justify-center gap-4'>
           {FAUCET_LINKS.map(({ label, href }) => (
@@ -59,7 +61,7 @@ export const StartGame: FC = () => {
             disabled={!isFaucetVisited || isRescanning}
             onClick={handleRescan}
           >
-            {isRescanning ? 'Rescanning...' : 'Rescan Sepolia ETH balance'}
+            {t(`home.start_game.${isRescanning ? 'rescan_proccessing' : 'rescan_button'}`)}
           </button>
         </div>
       </InstructionModal>

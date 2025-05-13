@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useWatchContractEvent } from 'wagmi';
 
 import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS, THEME_KEY } from '@constants';
 import { getRandomNumberGeneratedLog } from '@logReaders';
 import { useNotifications, useTheme } from '@providers';
 import { Theme } from '@types';
-import { useWatchContractEvent } from 'wagmi';
+
+const tKey = 'notifications.random_number_generated';
 
 export const useLayout = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { toggleNotification } = useNotifications.getState();
   const { setTheme } = useTheme.getState();
@@ -30,10 +34,10 @@ export const useLayout = () => {
         const { ticketId } = getRandomNumberGeneratedLog(logs);
 
         toggleNotification({
-          content: `Winning combination was generated for ticket #${ticketId}`,
+          content: t(`${tKey}.content`, { ticketId }),
           type: 'success',
           button: {
-            title: 'See tickets page',
+            title: t(`${tKey}.button`),
             action: () => navigate('/tickets'),
           },
         });

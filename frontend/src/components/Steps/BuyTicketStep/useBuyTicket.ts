@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { simulateContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
+import { useTranslation } from 'react-i18next';
 import { useAccount } from 'wagmi';
 
 import { BATCH_TICKET_PRICE_WEI, LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS, TICKET_PRICE_WEI } from '@constants';
@@ -17,8 +18,11 @@ interface UseBuyTicketReturn {
   buyBatchTicketsHandler: () => Promise<void>;
 }
 
+const tKey = 'notifications.buy_ticket';
+
 export const useBuyTicket = (): UseBuyTicketReturn => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { address } = useAccount();
   const { nextStep } = useStepper();
   const { setTicketState } = useGameContext();
@@ -65,7 +69,7 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
       onSuccess?.(txHash);
     } catch (error) {
       console.error(`Error during ${functionName} purchase:`, error);
-      toggleNotification({ content: 'Error during ticket purchase', type: 'error' });
+      toggleNotification({ content: t(`${tKey}.error_message`), type: 'error' });
     } finally {
       setIsPurchasingTicket(false);
     }
@@ -76,7 +80,7 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
       functionName: 'buyTicket',
       value: TICKET_PRICE_WEI,
       onSuccess: () => nextStep(),
-      successMessage: 'Ticket purchased successfully',
+      successMessage: t(`${tKey}.success_1_ticket`),
     });
 
   const buyBatchTicketsHandler = () =>
@@ -84,7 +88,7 @@ export const useBuyTicket = (): UseBuyTicketReturn => {
       functionName: 'buyBatchTickets',
       value: BATCH_TICKET_PRICE_WEI,
       onSuccess: () => navigate('/tickets'),
-      successMessage: 'Batch of 10 tickets purchased successfully',
+      successMessage: t(`${tKey}.success_10_ticket`),
     });
 
   return {

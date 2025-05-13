@@ -3,14 +3,14 @@ import { FC } from 'react';
 import { ArrowDownIcon, ArrowUpIcon } from '@assets';
 import { SortCols, SortOrder } from '@types';
 
-interface Props {
+interface TicketsTableHeaderProps {
   sortKey: SortCols;
   sortOrder: SortOrder;
   onSort: (key: SortCols) => void;
   toggleOrder: (fn: (prev: SortOrder) => SortOrder) => void;
 }
 
-export const TicketsTableHeader: FC<Props> = ({ sortKey, sortOrder, onSort, toggleOrder }) => {
+export const TicketsTableHeader: FC<TicketsTableHeaderProps> = ({ sortKey, sortOrder, onSort, toggleOrder }) => {
   const renderSortArrow = (key: string) => {
     if (sortKey !== key) return null;
     return sortOrder === SortOrder.ASC ? <ArrowUpIcon /> : <ArrowDownIcon />;

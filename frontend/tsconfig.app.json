@@ -8,6 +8,8 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "rootDir": "src",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
 
     "baseUrl": ".",
     "paths": {

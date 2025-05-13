@@ -1,27 +1,24 @@
 import { FC } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { Loader } from '@components';
 
 import { useCountdown } from './useCountdown';
 
+const tKey = 'game.step_3';
+
 export const CountdownStep: FC = () => {
   const { minutes, seconds, isCheckingResults, isResultReady, seeResultsHandler } = useCountdown();
+  const { t } = useTranslation();
 
   return (
     <div className='flex flex-col items-center justify-start h-full w-full gap-5 md:pt-20'>
       <h1 className='text-3xl text-center mb-5'>
-        <strong>Step 3.</strong> Wait until we generate random combination for you
+        <Trans i18nKey={`${tKey}.title`} components={[<strong key={0} />]} />
       </h1>
 
       <div className='text-center'>
-        {isResultReady ? (
-          <p>Results are ready, you can check your reward.</p>
-        ) : (
-          <>
-            <p>We will inform you when results are ready.</p>
-            <p>This should not take more then:</p>
-          </>
-        )}
+        <Trans i18nKey={`${tKey}.result_${isResultReady ? 'ready' : 'pending'}`} components={[<p />]} />
       </div>
 
       <div className='grid grid-flow-col gap-5 text-center auto-cols-max'>
@@ -35,7 +32,7 @@ export const CountdownStep: FC = () => {
               {minutes}
             </span>
           </span>
-          min
+          {t(`${tKey}.min`)}
         </div>
         <div className='flex flex-col p-2 bg-neutral rounded-box text-neutral-content'>
           <span className='countdown font-mono text-5xl'>
@@ -47,7 +44,7 @@ export const CountdownStep: FC = () => {
               {seconds}
             </span>
           </span>
-          sec
+          {t(`${tKey}.sec`)}
         </div>
       </div>
       <button
@@ -55,7 +52,7 @@ export const CountdownStep: FC = () => {
         onClick={seeResultsHandler}
         disabled={!!minutes || !!seconds}
       >
-        {isCheckingResults ? <Loader size='xl' /> : 'See Results'}
+        {isCheckingResults ? <Loader size='xl' /> : t(`${tKey}.button`)}
       </button>
     </div>
   );

@@ -1,23 +1,26 @@
 import { FC } from 'react';
 
+import { TFunction } from 'i18next';
+
 import { TicketTabStatus } from '@types';
 
 interface TicketTabsProps {
   activeTab: TicketTabStatus;
   setActiveTab: (tab: TicketTabStatus) => void;
+  t: TFunction;
 }
 
-const TABS: { label: string; status: TicketTabStatus }[] = [
-  { label: 'All', status: TicketTabStatus.ALL },
-  { label: 'Active', status: TicketTabStatus.ACTIVE },
-  { label: 'Rewards Available', status: TicketTabStatus.REWARDS_AVAILABLE },
-  { label: 'Claimed', status: TicketTabStatus.REWARDS_CLAIMED },
-  { label: 'No Reward', status: TicketTabStatus.NO_REWARD },
+const TABS: { tKey: string; status: TicketTabStatus }[] = [
+  { tKey: 'all', status: TicketTabStatus.ALL },
+  { tKey: 'active', status: TicketTabStatus.ACTIVE },
+  { tKey: 'rewards_available', status: TicketTabStatus.REWARDS_AVAILABLE },
+  { tKey: 'claimed', status: TicketTabStatus.REWARDS_CLAIMED },
+  { tKey: 'no_reward', status: TicketTabStatus.NO_REWARD },
 ];
 
-export const TicketTabs: FC<TicketTabsProps> = ({ activeTab, setActiveTab }) => (
+export const TicketTabs: FC<TicketTabsProps> = ({ activeTab, setActiveTab, t }) => (
   <div role='tablist' className='tabs tabs-border'>
-    {TABS.map(({ label, status }) => (
+    {TABS.map(({ tKey, status }) => (
       <a
         key={status}
         role='tab'
@@ -26,7 +29,7 @@ export const TicketTabs: FC<TicketTabsProps> = ({ activeTab, setActiveTab }) => 
         tabIndex={activeTab === status ? 0 : -1}
         onClick={() => setActiveTab(status)}
       >
-        {label}
+        {t(`tickets.tabs.${tKey}`)}
       </a>
     ))}
   </div>

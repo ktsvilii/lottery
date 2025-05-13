@@ -1,18 +1,22 @@
 import { FC } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { useStepper } from '@providers';
 
 export const StepIndicator: FC = () => {
   const { step } = useStepper();
+  const { t } = useTranslation();
 
   const isStepCompleted = (index: number) => step + 1 > index;
 
   return (
     <ul className='steps steps-vertical sm:steps-horizontal w-full'>
-      <li className={`step ${isStepCompleted(0) ? 'step-neutral' : ''}`}>Buy ETHery Ticket</li>
-      <li className={`step ${isStepCompleted(1) ? 'step-neutral' : ''}`}>Submit Combination</li>
-      <li className={`step ${isStepCompleted(2) ? 'step-neutral' : ''}`}>Get Random Combination</li>
-      <li className={`step ${isStepCompleted(3) ? 'step-neutral' : ''}`}>Check Results</li>
+      {[...Array(4)].map((_, index) => (
+        <li key={index} className={`step ${isStepCompleted(index) ? 'step-neutral' : ''}`}>
+          {t(`game.step_${index + 1}.stepper_title`)}
+        </li>
+      ))}
     </ul>
   );
 };
