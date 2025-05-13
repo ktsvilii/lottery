@@ -9,6 +9,7 @@ import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../../constants';
 import { useGameContext, useNotifications, useStepper } from '../../../providers';
 import { useNavigate } from 'react-router-dom';
 import { Ticket } from '../../../types';
+import { useTranslation } from 'react-i18next';
 
 interface UseCheckResultsReturn {
   ticket: Ticket | null;
@@ -18,8 +19,11 @@ interface UseCheckResultsReturn {
   playAgainHandler: () => void;
 }
 
+const tKey = 'notifications.claim_reward';
+
 export const useCheckResults = (): UseCheckResultsReturn => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { address } = useAccount();
   const { toggleNotification } = useNotifications();
 
@@ -43,14 +47,14 @@ export const useCheckResults = (): UseCheckResultsReturn => {
       await waitForTransactionReceipt(config, { hash: txHash });
       setTicketState({ isRewardClaimed: true });
       toggleNotification({
-        content: 'Reward claimed successfuly',
+        content: t(`${tKey}.success_message`),
         type: 'success',
       });
 
       return txHash;
     } catch (err) {
       toggleNotification({
-        content: 'Error during reward claiming',
+        content: t(`${tKey}.error_message`),
         type: 'error',
       });
       console.error('Submitting combination failed:', err);

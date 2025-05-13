@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Trans } from 'react-i18next';
 
 import { formatEther } from 'viem';
 
@@ -24,8 +25,14 @@ export const ResultsContent: FC<ResultsContentProps> = ({
       {potentialReward ? (
         <div className='container flex flex-col gap-3'>
           <p>
-            You matched {matchingNumbers} number{matchingNumbers !== 1 && 's'}. Your reward is{' '}
-            {formatEther(potentialReward)} ETH.
+            <Trans
+              i18nKey={'game.step_4.rewarded_title'}
+              values={{
+                matchingNumbers,
+                sufix: matchingNumbers !== 1 ? 's' : '',
+                reward: formatEther(potentialReward),
+              }}
+            />
           </p>
           <ButtonContent
             isRewardClaimed={isRewardClaimed}
@@ -34,7 +41,9 @@ export const ResultsContent: FC<ResultsContentProps> = ({
           />
         </div>
       ) : (
-        <p>You have 0 matches. Better luck next time.</p>
+        <p>
+          <Trans i18nKey={'game.step_4.not_rewarded_title'} />
+        </p>
       )}
     </>
   );
