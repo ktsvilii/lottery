@@ -1,7 +1,8 @@
 import { FC } from 'react';
 
-import { useStepper } from '../../providers';
 import { useTranslation } from 'react-i18next';
+
+import { useStepper } from '@providers';
 
 export const StepIndicator: FC = () => {
   const { step } = useStepper();

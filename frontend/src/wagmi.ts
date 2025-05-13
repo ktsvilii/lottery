@@ -1,4 +1,4 @@
-import { http, createConfig, webSocket } from '@wagmi/core';
+import { createConfig, http, webSocket } from '@wagmi/core';
 import { mainnet, sepolia } from '@wagmi/core/chains';
 import { metaMask } from 'wagmi/connectors';
 

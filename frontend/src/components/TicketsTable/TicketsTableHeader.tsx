@@ -1,9 +1,11 @@
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ArrowDownIcon, ArrowUpIcon } from '../../assets';
-import { SortCols, SortOrder } from '../../types';
 
-interface Props {
+import { useTranslation } from 'react-i18next';
+
+import { ArrowDownIcon, ArrowUpIcon } from '@assets';
+import { SortCols, SortOrder } from '@types';
+
+interface TicketsTableHeaderProps {
   sortKey: SortCols;
   sortOrder: SortOrder;
   onSort: (key: SortCols) => void;
@@ -12,7 +14,7 @@ interface Props {
 
 const tKey = 'admin_panel.table';
 
-export const TicketsTableHeader: FC<Props> = ({ sortKey, sortOrder, onSort, toggleOrder }) => {
+export const TicketsTableHeader: FC<TicketsTableHeaderProps> = ({ sortKey, sortOrder, onSort, toggleOrder }) => {
   const { t } = useTranslation();
 
   const renderSortArrow = (key: string) => {

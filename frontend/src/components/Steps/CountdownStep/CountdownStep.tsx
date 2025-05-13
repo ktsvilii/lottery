@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
-import { useCountdown } from './useCountdown';
+import { Loader } from '@components';
 
-import { Loader } from '../../Loader';
+import { useCountdown } from './useCountdown';
 
 const tKey = 'game.step_3';
 

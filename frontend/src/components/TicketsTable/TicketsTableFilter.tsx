@@ -1,16 +1,13 @@
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
-interface Props {
+interface TicketsTableFilterProps {
   value: string;
   onChange: (value: string) => void;
 }
 
 const tKey = 'admin_panel';
 
-export const TicketsTableFilter: FC<Props> = ({ value, onChange }) => {
-  const { t } = useTranslation();
-
+export const TicketsTableFilter: FC<TicketsTableFilterProps> = ({ value, onChange }) => {
   return (
     <div className='mb-2'>
       <input

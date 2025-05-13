@@ -1,9 +1,11 @@
 import { FC } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
-import { useAdmin } from '../../../hooks';
+import { ThemeToggler } from '@components';
+import { useAdmin } from '@hooks';
+
 import { LanguageSwitcher } from '../../languageSwitcher';
-import { ThemeToggler } from '../../ThemeToggler';
 
 export const NavbarEnd: FC = () => {
   const navigate = useNavigate();

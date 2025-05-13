@@ -1,13 +1,14 @@
-import React, { useRef } from 'react';
+import { RefObject, useRef } from 'react';
+
 import { Trans, useTranslation } from 'react-i18next';
 
-import { TimelineIcon } from '../../assets';
-import { FAUCET_LINKS } from '../../constants';
-import { useConnectWallet, useMobile } from '../../hooks';
-import { InstructionModal } from '../InstructionModal';
-import { MoreDetailsNotice, StepHeader } from './components';
-import PrizesGrid from './components/PrizesGrid';
+import { TimelineIcon } from '@assets';
+import { FAUCET_LINKS } from '@constants';
+import { useConnectWallet, useMobile } from '@hooks';
 
+import { InstructionModal } from '../InstructionModal';
+
+import { MoreDetailsNotice, PrizesGrid, StepHeader } from './components';
 import { PrizesGridConfig } from './types';
 
 interface InstructionsStep {
@@ -26,7 +27,7 @@ export const Instructions = () => {
 
   const mobile = useMobile();
 
-  const openModal = (ref: React.RefObject<HTMLDialogElement | null>) => {
+  const openModal = (ref: RefObject<HTMLDialogElement | null>) => {
     ref.current?.showModal();
   };
 

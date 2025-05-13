@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Loader } from '../../../Loader';
+import { Loader } from '@components';
 
 interface ButtonContentProps {
   isRewardClaimed: boolean;

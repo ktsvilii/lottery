@@ -1,9 +1,11 @@
 import { FC } from 'react';
+
 import { Trans, useTranslation } from 'react-i18next';
 
+import { Loader } from '@components';
+import { preventNonNumericInput } from '@utils';
+
 import { useSubmitCombination } from './useSubmitCombination';
-import { Loader } from '../../Loader';
-import { preventNonNumericInput } from '../../../utils';
 
 const tKey = 'game.step_2';
 

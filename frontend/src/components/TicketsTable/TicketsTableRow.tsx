@@ -1,15 +1,17 @@
 import { FC } from 'react';
-import { formatEther } from 'viem';
-import { Ticket } from '../../types';
-import { CheckIcon, CopyIcon } from '../../assets';
 
-interface Props {
+import { formatEther } from 'viem';
+
+import { CheckIcon, CopyIcon } from '@assets';
+import { Ticket } from '@types';
+
+interface TicketsTableProps {
   ticket: Ticket;
   copiedId: bigint | null;
   onCopy: (id: bigint) => void;
 }
 
-export const TicketsTableRow: FC<Props> = ({ ticket, copiedId, onCopy }) => {
+export const TicketsTableRow: FC<TicketsTableProps> = ({ ticket, copiedId, onCopy }) => {
   const { id, owner, matchingNumbers, potentialReward, isRewardClaimed } = ticket;
   return (
     <tr>

@@ -1,11 +1,11 @@
 import { FC } from 'react';
 
-import { Ticket } from '../../types';
-
 import { useTranslation } from 'react-i18next';
+
 import { formatEther } from 'viem';
 
-import { PaidIcon, PendingIcon, TicketIcon } from '../../assets';
+import { PaidIcon, PendingIcon, TicketIcon } from '@assets';
+import { Ticket } from '@types';
 
 interface StatsProps {
   tickets: Ticket[];

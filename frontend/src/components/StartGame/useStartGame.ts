@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useConnectWallet } from '../../hooks';
+import { useConnectWallet } from '@hooks';
 
 interface UseStartGameReturn {
   address?: string;

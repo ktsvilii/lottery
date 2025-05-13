@@ -1,7 +1,9 @@
 import { FC, useId } from 'react';
+
 import { useTranslation } from 'react-i18next';
 
-import { TimelineIcon } from '../../assets';
+import { TimelineIcon } from '@assets';
+
 import { MoreDetailsNotice, StepHeader } from './components';
 
 export const BriefInstructions: FC = () => {

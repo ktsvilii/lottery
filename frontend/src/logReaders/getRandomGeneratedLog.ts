@@ -1,4 +1,5 @@
-import { Log, parseAbiItem, decodeEventLog } from 'viem';
+import { decodeEventLog, Log, parseAbiItem } from 'viem';
+
 import { LOTTERY_CONTRACT_ADDRESS } from '../constants';
 
 const randomNumberGeneratedEvent = parseAbiItem('event RandomNumberGenerated(uint256 indexed ticketId)');

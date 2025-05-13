@@ -1,24 +1,27 @@
 import { FC, useEffect } from 'react';
 
+import { Trans } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { Trans } from 'react-i18next';
-
-import { ManageLotteryButtons, Stats, TicketsTable } from '../../components';
-import { useAdmin } from '../../hooks';
+import { ManageLotteryButtons, Stats, TicketsTable } from '@components';
+import { useAdmin } from '@hooks';
 
 const tKey = 'admin_panel';
 
 export const Admin: FC = () => {
   const navigate = useNavigate();
 
-  const { isAdmin, allTickets } = useAdmin();
+  const { isAdmin, allTickets, fetchAllTickets } = useAdmin();
 
   useEffect(() => {
     if (!isAdmin) {
       navigate('/');
     }
   }, [isAdmin, navigate]);
+
+  useEffect(() => {
+    fetchAllTickets();
+  }, []);
 
   return (
     <>
@@ -38,7 +41,7 @@ export const Admin: FC = () => {
         </div>
         <div className='lg:col-span-3 sm:col-span-full order-2 md:order-3 lg:order-2'>
           <div className='space-y-5'>
-            <TicketsTable />
+            <TicketsTable allTickets={allTickets} fetchAllTickets={fetchAllTickets} />
           </div>
         </div>
       </div>

@@ -1,10 +1,11 @@
 import { FC } from 'react';
+
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useGameContext } from '../../providers';
-import { Ticket, TicketStatus } from '../../types';
-import { getTicketStatus, setStepByTicketStatus } from '../../utils';
+import { useGameContext } from '@providers';
+import { Ticket, TicketStatus } from '@types';
+import { getTicketStatus, setStepByTicketStatus } from '@utils';
 
 interface TicketCardProps {
   ticket: Ticket;

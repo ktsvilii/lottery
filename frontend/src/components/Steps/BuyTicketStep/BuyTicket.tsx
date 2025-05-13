@@ -3,9 +3,9 @@ import { FC } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useBuyTicket } from './useBuyTicket';
+import { Loader } from '@components';
 
-import { Loader } from '../../Loader';
+import { useBuyTicket } from './useBuyTicket';
 
 const tKey = 'game.step_1';
 

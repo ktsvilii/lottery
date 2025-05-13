@@ -2,11 +2,12 @@ import { ChangeEvent, FC, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { useAdmin } from '../../hooks';
 import { preventNonNumericInput } from '../../utils';
 import { Loader } from '../Loader';
 
 const tKey = 'admin_panel.manage_buttons';
+
+import { useManageLotteryButtons } from './useManageLotteryButtons';
 
 export const ManageLotteryButtons: FC = () => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ export const ManageLotteryButtons: FC = () => {
     withdrawJackpotHandler,
     withdrawOwnerBalanceHandler,
     withdrawOperationalBalanceHandler,
-  } = useAdmin();
+  } = useManageLotteryButtons();
 
   const fundJackpotAmountHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setFundJackpotAmount(e.target.value);

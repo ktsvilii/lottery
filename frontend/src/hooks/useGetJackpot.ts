@@ -1,5 +1,6 @@
 import { useAccount, useReadContract, useWatchContractEvent } from 'wagmi';
-import { LOTTERY_CONTRACT_ADDRESS, LOTTERY_ABI } from '../constants';
+
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../constants';
 
 export const useGetJackpot = () => {
   const { address } = useAccount();

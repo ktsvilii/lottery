@@ -3,12 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import { Link } from 'react-router-dom';
 
+import { BurgerMenuIcon } from '@assets';
+import { Loader } from '@components';
+import { useGetJackpot } from '@hooks';
 import { formatEther } from 'viem';
-
-import { useGetJackpot } from '../../../hooks';
-
-import { Loader } from '../../Loader';
-import { BurgerMenuIcon } from '../../../assets';
 
 export const NavbarStart: FC = () => {
   const { jackpot, refetchJackpot } = useGetJackpot();

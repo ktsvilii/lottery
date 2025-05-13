@@ -1,14 +1,13 @@
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { useWatchContractEvent } from 'wagmi';
 
-import { useNotifications, useTheme } from '../../providers';
-import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS } from '../../constants';
-import { getRandomNumberGeneratedLog } from '../../logReaders';
-import { useEffect } from 'react';
-import { THEME_KEY } from '../../constants';
-import { Theme } from '../../types';
+import { LOTTERY_ABI, LOTTERY_CONTRACT_ADDRESS, THEME_KEY } from '@constants';
+import { getRandomNumberGeneratedLog } from '@logReaders';
+import { useNotifications, useTheme } from '@providers';
+import { Theme } from '@types';
 
 const tKey = 'notifications.random_number_generated';
 

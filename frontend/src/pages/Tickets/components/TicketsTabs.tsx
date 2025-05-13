@@ -1,6 +1,8 @@
 import { FC } from 'react';
-import { TicketTabStatus } from '../../../types';
+
 import { TFunction } from 'i18next';
+
+import { TicketTabStatus } from '@types';
 
 interface TicketTabsProps {
   activeTab: TicketTabStatus;

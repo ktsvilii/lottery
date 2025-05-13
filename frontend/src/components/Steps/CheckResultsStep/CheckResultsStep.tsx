@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
-import { useCheckResults } from './useCheckResults';
+import { FallbackUI } from '@components';
 
-import { FallbackUI } from '../../FallbackUI';
 import { ResultsContent } from './components';
+import { useCheckResults } from './useCheckResults';
 
 const tKey = 'game.step_4';
 
