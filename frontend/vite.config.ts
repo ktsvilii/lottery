@@ -14,7 +14,6 @@ export default defineConfig({
   },
   esbuild: {
     target: 'esnext',
-    platform: 'neutral',
   },
   resolve: {
     alias: {
