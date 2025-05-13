@@ -24,6 +24,9 @@
     "wagmi": "^2.15.1",
     "zustand": "^5.0.4"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.6.1"
+  },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/node": "^22.15.17",
