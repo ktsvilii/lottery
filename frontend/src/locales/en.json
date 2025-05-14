@@ -47,7 +47,7 @@
           "step_title": "Buy a ticket",
           "step_notice": "To participate you will need an ETHery ticket",
           "button_title": "See details",
-          "modal": "<0>Click the 'Buy Ticket' button.</0> <0 className='step step-neutral'>Complete transaction in Metamask wallet</0> <0 className='step step-neutral'>We assign a new ticket number to your wallet</0>"
+          "modal": "<0>Click the 'Buy Ticket' button.</0> <0>Complete transaction in Metamask wallet</0> <0>We assign a new ticket number to your wallet</0>"
         },
         "step_4": {
           "step_title": "Time to play!",
