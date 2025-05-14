@@ -190,7 +190,7 @@
       "button_1": "Play again",
       "button_2": "Return to homepage",
       "divider_content": "OR",
-      "rewarded_title": "You matched {{matchingNumbers}} number{{sufix}}. Your reward is {{reward}} ETH.",
+      "rewarded_title": "You matched {{matchingNumbers}} number. Your reward is {{reward}} ETH.",
       "not_rewarded_title": "You have 0 matches. Better luck next time.",
       "reward_not_claimed": "Claim Reward",
       "reward_claimed": "Reward is already claimed",

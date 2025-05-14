@@ -190,7 +190,7 @@
       "button_1": "Давай щє",
       "button_2": "Додому, до хати",
       "divider_content": "АБО",
-      "rewarded_title": "Ти вгадав {{matchingNumbers}} число або чисел(сорі не придумали перевод). Твій куш {{reward}} ефірчика.",
+      "rewarded_title": "Ти вгадав {{matchingNumbers}} число або чисел (сорі не придумали перевод). Твій куш {{reward}} ефірчика.",
       "not_rewarded_title": "Цього разу не зайшло, зато набиваєш руку.",
       "reward_not_claimed": "Забрать бабло",
       "reward_claimed": "Та ти уже забрав все, нам оставь трошки",
